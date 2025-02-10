@@ -22,13 +22,7 @@
 		<link rel="stylesheet" href="assets/css/scroll-up.css">
 		<link rel="stylesheet" href="assets/css/style.css">
 		<link rel="stylesheet" href="assets/css/responsive.css">
-		<script>
-			$(document).ready(function () {
-		        $("#range").change(function () {
-		          $("#rangeValue").text(this.value);
-		        });
-		      });
-		</script>
+	
 	</head>
 	<body>
 		<!-- Start Header -->
@@ -91,12 +85,118 @@
 				</form>
 			</div>
 			
-			<div class="container-search-result">
-			<!-- 필터 가격대 파트 -->
-				<div class="price-container">
+			<div class="container-searchpage" id="main-page">
+				<div class="slider-filter" >
+				<!-- 가격대 -->
+					<div class="pirce-filter">
+						<div class="pirce-filter-top">
+							<h6>가격대</h6>
+						</div>
+						<div class="pirce-filter-middle">
+							<input type="range" min="0" max="10000000" step="10000" value="10000000">
+						</div>
+					</div>
 					
+				<!-- 호텔 성급 -->
+					<div class="hotal-star">
+						<div class="hotal-star-text">
+							<hr>
+							<span id='hotal-text'><h6>호텔성급</h6></span>
+						</div>
+						<div class="hotal-star-button">
+							<input type="button" value="2">
+							<input type="button" value="3">
+							<input type="button" value="4">
+							<input type="button" value="5">
+							
+						</div>
+					</div>
+				
+				<!-- 투숙객 평점 -->
+					<div class="hotal-star">
+						<div class="visitor-grade">
+							<hr>
+							<span id='visitor-grade-text'><h6>투숙객 평점</h6></span>
+						</div>
+						<div class="visitor-grade-button">
+							<input type="button" value="3+">
+							<input type="button" value="3.5+">
+							<input type="button" value="4+">
+							<input type="button" value="4.5+">
+					</div>
+				</div>
+				</div>
+				<div class="search-result">
+					<li class="comment wow fadeInUp">
+						<div class="single-search-hotal">
+							<div class="single-comment-name">
+								<a id="hotal-name">호텔 이름</a>
+								&emsp;<a id="single-hotal-star">호텔 성급</a>
+							</div>
+							<div class="float-start com-img">
+								<img src="assets/img/blog/avator/1.jpg" alt="">
+								<a href="#" class="creplay"><i class="ph ph-arrow-bend-up-left"></i></a>
+							</div>
+							<div class="com-content">
+								<p>고객 리뷰</p><br>
+								<p>룸 정보</p>
+							</div>
+							<div class="com-content-pirce">
+								<p id="content-pirce-text">가격</p><br>
+								<input type="button" style="float:right;" value="예약 하기" id="reservation-pirce">
+							</div>
+						</div>
+						<div class="single-search-hotal">
+							<div class="single-comment-name">
+								<a id="hotal-name">호텔 이름</a>
+								&emsp;<a id="single-hotal-star">호텔 성급</a>
+							</div>
+							<div class="float-start com-img">
+								<img src="assets/img/blog/avator/1.jpg" alt="">
+								<a href="#" class="creplay"><i class="ph ph-arrow-bend-up-left"></i></a>
+							</div>
+							<div class="com-content">
+								<p>고객 리뷰</p><br>
+								<p>룸 정보</p>
+							</div>
+							<div class="com-content-pirce">
+								<p id="content-pirce-text">가격</p><br>
+								<input type="button" style="float:right;" value="예약 하기" id="reservation-pirce">
+							</div>
+						</div>
+						<div class="single-search-hotal">
+							<div class="single-comment-name">
+								<a id="hotal-name">호텔 이름</a>
+								&emsp;<a id="single-hotal-star">호텔 성급</a>
+							</div>
+							<div class="float-start com-img">
+								<img src="assets/img/blog/avator/1.jpg" alt="">
+								<a href="#" class="creplay"><i class="ph ph-arrow-bend-up-left"></i></a>
+							</div>
+							<div class="com-content">
+								<p>고객 리뷰</p><br>
+								<p>룸 정보</p>
+							</div>
+							<div class="com-content-pirce">
+								<p id="content-pirce-text">가격</p><br>
+								<input type="button" style="float:right;" value="예약 하기" id="reservation-pirce">
+							</div>
+						</div>
+					</li>
 				</div>
 			</div>
+			<!-- <div class="container-search-result">
+			필터 가격대 파트
+				<div class="pirce-container">
+					<div class="pirce-first-line">
+						<span id="title">가격대</span>
+						<span id="range">(0~120,000원)</span>
+					</div>
+					<div class="pirce-rangebar">
+						<input id="rangebar" type="Range" min="0" max="100000000" step="5">
+					</div>
+				</div>
+			</div> -->
 		</section>
 		
 		<!-- Start Features -->
