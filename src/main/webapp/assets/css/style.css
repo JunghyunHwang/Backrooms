@@ -1019,7 +1019,7 @@ a:focus{
 	position: absolute;
 	left: -93px;
 	bottom: 115px;
-	z-index: ;
+
 	width: 145px;
 }
 .about_content {
@@ -2333,3 +2333,41 @@ li.comment{
 	border-color: var(--yellow);
 }
 
+#item-box-id{
+	margin: 150px;
+	padding: 21px;
+	width:1000px;
+	height:400px;
+	border: 2px solid #BBBBBB;
+	border-radius:15px;
+}
+#box-in-item{
+	margin: 30px;
+	padding: 20px;
+	text-align:center;
+}
+
+.search{
+	display: flex;
+    justify-content: center;
+	/* position:relative;
+	width:300px; */
+}
+
+#search-text{
+	width:100%;
+	border: 1px solid #BBBBBB;
+	padding: 10px;
+	border-radius:8px;
+	font-size:14px;
+	margin-right:10px;
+}
+#search-button{
+	border-radius:8px;
+	background-color:var(--yellow);
+	border-color:var(--yellow);
+	color:white;
+}
+#search-container{
+	margin-bottom:20px;
+}
