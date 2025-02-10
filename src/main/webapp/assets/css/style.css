@@ -2371,3 +2371,38 @@ li.comment{
 #search-container{
 	margin-bottom:20px;
 }
+
+.container-searchpage{
+	display:grid;
+	grid-template-columns: 250px auto 200px;
+}
+.slider-filter{
+	margin-top:30px;
+	margin-left:50px;
+	display:grid;
+	grid-template-row:repeat(3, 1fr);
+	padding: 10px;
+	border: 1px solid #d9d9d9;
+	border-radius: 8px;
+	margin-bottom: 20px;
+}
+.hotal-star-button{
+	margin-top:10px;
+	
+}
+.visitor-grade-button{
+	margin-top:10px;
+}
+#content-pirce-text{
+	display:blok;
+	text-align:right;
+}
+.single-search-hotal{
+	overflow: hidden;
+	border: 1px solid #d9d9d9;
+	padding: 35px;
+	border-radius: 8px;
+	margin-top:30px;
+	margin-left:20px;
+	margin-bottom: 20px;
+}
