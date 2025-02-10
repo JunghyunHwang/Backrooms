@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>상세 페이지</title>
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+		<!-- CSS Files -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">			
+		<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+		<link rel='stylesheet' href='assets/css/bootstrap-datepicker.css'>
+		<link rel="stylesheet" href="assets/css/animate.css">
+		<link rel="stylesheet" href="assets/icons/fontawesome/css/all.min.css">
+		<link rel="stylesheet" href="assets/css/meanmenu.css">
+		<link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+		<link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
+		<link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+		<link rel="stylesheet" href="assets/css/niceselect.css">
+		<link rel="stylesheet" href="assets/css/YouTubePopUp.css">
+		<link rel="stylesheet" href="assets/css/scroll-up.css">
+		<link rel="stylesheet" href="assets/css/style.css">
+		<link rel="stylesheet" href="assets/css/responsive.css">
+		<link rel="stylesheet" href="assets/css/hotel-details.css">
+	</head>
+
+    <body>
+	
+		<!-- Start Preloader -->
+		<div class="preloader_wrap">
+			 <div class="preloader">
+				<span style="--i:1"></span>
+				<span style="--i:2"></span>
+				<span style="--i:3"></span>
+				<span style="--i:4"></span>
+				<span style="--i:5"></span>
+				<span style="--i:6"></span>
+				<span style="--i:7"></span>
+				<span style="--i:8"></span>
+				<span style="--i:9"></span>
+				<span style="--i:10"></span>
+				<span style="--i:11"></span>
+				<span style="--i:12"></span>
+				<span style="--i:13"></span>
+				<span style="--i:14"></span>
+				<span style="--i:15"></span>
+				<span style="--i:16"></span>
+				<span style="--i:17"></span>
+				<span style="--i:18"></span>
+				<span style="--i:19"></span>
+				<span style="--i:20"></span>
+				<h2>Trvelo</h2>
+				<div class="preloader_icon fa-solid fa-jet-fighter"></div>
+			  </div>
+		</div>
+		<!-- End Preloader -->
+
+		<!-- Offcanvas Area Start -->
+		<div class="fix-area">
+			<div class="offcanvas__info">
+				<div class="offcanvas__wrapper">
+					<div class="offcanvas__content">
+						<div class="offcanvas__top d-flex justify-content-between align-items-center">
+							<div class="offcanvas__logo">
+								<a href="index.html">
+									<img src="assets/img/logo.svg" alt="edutec">
+								</a>
+							</div>
+							<div class="offcanvas__close">
+								<button>
+									<i class="fas fa-times"></i>
+								</button>
+							</div>
+						</div>
+						<div class="mobile-menu fix mb-3"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="offcanvas__overlay"></div>
+	
+		<!-- Start Header -->
+		<header id="tr_header">
+			<div class="container">
+				<div class="row">
+					<div class="col-xl-2 col-md-3 align-self-center">
+						<div class="site_logo">
+							<a href="index.html"><img src="assets/img/logo.svg" alt="Trvelo"></a>	
+						</div>
+					</div><!-- End Col -->		
+
+					<div class="col-xl-10 col-md-9">
+						<div class="header_right d-flex justify-content-end">
+							<nav class="main-menu align-self-center">
+								<ul>
+									<li><a href="index.html">Home</a></li>
+									<li><a href="about.html">About</a></li>
+									<li><a href="tour.html">Tour</a></li>
+									<li><a href="services.html">Services</a></li>
+									<li><a href="#">Pages <i class="fa-solid fa-chevron-down"></i></a>
+										<ul class="sub-menu">
+											<li><a href="blog.html">Blog List</a></li>
+											<li><a href="blog-details.html">Blog Details</a></li>
+											<li><a href="tour.html">Tour</a></li>
+											<li><a href="tour-details.html">Tour Details</a></li>
+										</ul>
+									</li>
+									<li><a href="contact.html">Contact</a></li>
+								</ul>
+							</nav>
+							
+							<div class="call_us d-flex align-self-center">
+								<i class="ph ph-headset align-self-center"></i>
+								<div class="call_content align-self-center">
+									<span>Call Us</span>
+									<a href="tel:+8801546857487">+8801546857487</a>
+								</div>
+							</div>
+							
+							<a href="#" class="green_btn align-self-center">Login / Register <i class="ph ph-arrow-right"></i></a>
+							<div class="header__hamburger d-xl-none my-auto">
+								<div class="sidebar__toggle">
+									<i class="ph ph-list"></i>
+								</div>
+							</div>
+						</div>
+					</div><!-- End Col -->
+				</div>
+			</div>
+		</header>
+		<!-- End Header -->
+		
+		<!-- Start Banner -->
+		<section class="main_banner" style="background-image: url(assets/img/bg/banner_bg.jpg);">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 text-center">
+						<h1>Blog Details</h1>
+						<p><a href="#">Home</a> <i class="ph ph-caret-double-right"></i> Blog Details</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- End Start Banner -->
+
+        <!-- Start Searh filter -->
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-10 col-lg-12 col-md-10 col-10 mx-auto text-center">
+					<div class="tr_search_filter">
+						<form action="#" class="d-flex justify-content-center" method="post">
+							<div class="tr_search_location">
+								<label for="trs_location">Location*</label>
+								<select id="trs_location">
+									<option>Dubai Oasis</option>
+									<option>Barcelona Beach</option>
+									<option>Caribbean Cove</option>
+									<option>Dubai Oasis</option>
+									<option>London Luxe</option>
+									<option>Maldives Haven</option>
+								</select>
+							</div>		
+
+							<div class="check_in">
+								<label for="checkin_field">Check - In*</label>
+								<div class="trdate_picker date" id="tr_dpicker1">
+									<input type="text" class="form-control" placeholder="Check In Date" id="checkin_field">
+									<span class="input-group-append">
+										<i class="fa-solid fa-calendar-days"></i>
+									</span>
+								</div>
+							</div>		
+
+							<div class="check_out">
+								<label for="checkout_field">Check - Out*</label>
+								<div class="trdate_picker date" id="tr_dpicker2">
+									<input type="text" class="form-control" placeholder="Check Out Date" id="checkout_field">
+									<span class="input-group-append">
+										<i class="fa-solid fa-calendar-days"></i>
+									</span>
+								</div>
+							</div>		
+
+							<div class="adut_box">
+								<label>Adult*</label>
+								<select>
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+									<option>6</option>
+									<option>7</option>
+									<option>8</option>
+									<option>9</option>
+									<option>10</option>
+								</select>
+							</div>
+							
+							<button type="submit">Search <i class="ph ph-magnifying-glass"></i></button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>		
+		<!-- End Searh filter -->
+
+		<!-- Start hotel info -->
+		<section class="p-3">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 wow fadeIn">
+						<div class="section-hotel-details">
+							<div class="hotel-details-meta">
+								<div class="hotel-info d-flex justify-content-between align-items-center rounded">
+									<div>
+										<div><h4>호텔 이름</h4></div>
+										<a href="#">지도에서 보기</a>
+									</div>
+									<div class="text-primary fw-bold fs-4">
+										250,663원
+										<button type="button" class="btn btn-primary btn-lg">객실 선택</button>
+									</div>
+								</div>
+							</div>
+							<div class="gallery-grid">
+								<img src="assets/img/sample/hotel-main.jpg" id="main-image" class="img-fluid photo-thumbnail" data-bs-toggle="modal" data-bs-target="#photoModal">
+								<img src="assets/img/sample/room1.jpg" class="img-fluid photo-thumbnail" data-bs-toggle="modal" data-bs-target="#photoModal">
+								<img src="assets/img/sample/lobby.jpg" class="img-fluid photo-thumbnail" data-bs-toggle="modal" data-bs-target="#photoModal">
+								<img src="assets/img/sample/room2.jpg" class="img-fluid photo-thumbnail" data-bs-toggle="modal" data-bs-target="#photoModal">
+								<img src="assets/img/sample/room3.jpg" class="img-fluid photo-thumbnail" data-bs-toggle="modal" data-bs-target="#photoModal">
+								<img src="assets/img/sample/lobby2.jpg" class="img-fluid photo-thumbnail" data-bs-toggle="modal" data-bs-target="#photoModal">
+								<img src="assets/img/sample/locker.jpg" class="img-fluid photo-thumbnail" class="img-fluid photo-thumbnail" data-bs-toggle="modal" data-bs-target="#photoModal">
+								<div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+									<div class="modal-dialog modal-lg">
+										<div class="modal-content">
+										<div class="modal-header">
+										<h5 class="modal-title" id="photoModalLabel">호텔 사진</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+										<h6>호텔 외관</h6>
+										<img src="assets/img/sample/hotel-main.jpg" class="img-fluid mb-3" alt="호텔 외관">
+
+										<h6>객실</h6>
+										<div class="row">
+											<div class="col-md-4">
+											<img src="assets/img/sample/room1.jpg" class="img-fluid" alt="객실1">
+											</div>
+											<div class="col-md-4">
+											<img src="assets/img/sample/room2.jpg" class="img-fluid" alt="객실2">
+											</div>
+											<div class="col-md-4">
+											<img src="assets/img/sample/room3.jpg" class="img-fluid" alt="객실3">
+											</div>
+										</div>
+										</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="section-hotel-details">
+							<h4>방 이름</h4>
+							<div class="d-flex flex-row">
+								<div class="d-flex flex-column">
+									<div class="room-meta-item">
+										<img src="assets/img/sample/detail-room.jpg" class="room-img" alt="">
+									</div>
+									<div>
+										침대
+									</div>
+									<div>
+										흡연 가능 여부
+									</div>
+									<div>
+										크기
+									</div>
+									<div>
+										와이파이
+									</div>
+									<div>
+										에어컨
+									</div>
+									<div>
+										욕실
+									</div>
+								</div>
+								<div class="mx-4 flex-grow-1">
+									<div class="row bg-light fw-bold text-center py-2 border">
+										<div class="col-6">객실 옵션 상세</div>
+										<div class="col-2">정원</div>
+										<div class="col-4">오늘의 요금</div>
+									</div>
+									<div class="row align-items-center p-3 m-50">
+										<!-- 객실 옵션 -->
+										<div class="col-6">
+											<p>🍽 높은 퀄리티의 조식 (선택)</p>
+											<p>🔄 부분 환불 가능</p>
+											<p>⚡ 대기 없이 바로확정!</p>
+											<p>💳 온라인 사전 결제</p>
+										</div>
+								
+										<!-- 정원 -->
+										<div class="col-2 text-center">
+											👤
+										</div>
+								
+										<!-- 가격 및 예약 -->
+										<div class="col-4 text-end">
+											<p>총금액: 345,574원</p>
+											<button class="btn btn-primary">예약</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="section-hotel-details">
+							<div>
+								<h4>투숙객 리뷰</h4>
+							</div>
+							<div class="d-flex flex-row">
+								<div class="section-hotel-review p-3 mx-2 mt-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+									<div class="d-flex flex-row">
+										<div class="profile-img">
+											<img src="assets/img/sample/default-profile-picture.jpg" alt="프로필 이미지" width="32" height="32">
+										</div>
+										<div data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+											<div class="uesr-name mx-1">
+												name
+											</div>
+											<div class="review-time mx-1">
+												2025년 02월 09일
+											</div>
+										</div>
+									</div>
+									<div>
+										Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequuntur, facere?
+									</div>
+								</div>
+								<div class="section-hotel-review p-3 mx-2 mt-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+									<div class="d-flex flex-row">
+										<div class="profile-img">
+											<img src="assets/img/sample/default-profile-picture.jpg" alt="프로필 이미지" width="32" height="32">
+										</div>
+										<div>
+											<div class="uesr-name mx-1">
+												name
+											</div>
+											<div class="review-time mx-1">
+												2025년 02월 09일
+											</div>
+										</div>
+									</div>
+									<div>
+										Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequuntur, facere?
+									</div>
+								</div>
+								<div class="section-hotel-review p-3 mx-2 mt-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+									<div class="d-flex flex-row">
+										<div class="profile-img">
+											<img src="assets/img/sample/default-profile-picture.jpg" alt="프로필 이미지" width="32" height="32">
+										</div>
+										<div>
+											<div class="uesr-name mx-1">
+												name
+											</div>
+											<div class="review-time mx-1">
+												2025년 02월 09일
+											</div>
+										</div>
+									</div>
+									<div>
+										Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequuntur, facere?
+									</div>
+								</div>
+							</div>
+							<div class="text-center">
+								<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">더 보기</button>
+							</div>
+							<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+								<div class="offcanvas-header">
+								  <h5 class="offcanvas-title" id="offcanvasRightLabel">투숙객 리뷰</h5>
+								  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+								</div>
+								<div class="offcanvas-body">
+									<div class="section-hotel-review p-3 mx-2">
+										<div class="d-flex flex-row">
+											<div class="profile-img">
+												<img src="assets/img/sample/default-profile-picture.jpg" alt="프로필 이미지" width="32" height="32">
+											</div>
+											<div>
+												<div class="uesr-name mx-1">
+													name
+												</div>
+												<div class="review-time mx-1">
+													2025년 02월 09일
+												</div>
+											</div>
+										</div>
+										<div>
+											Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequuntur, facere?
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="section-hotel-details">
+							<div>
+								<h4>위치</h4>
+							</div>
+							<!-- START MAP -->
+							<div class="tour-map">		
+								<iframe height="300" id="gmap_canvas" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50431.01496117057!2d144.9372018671769!3d-37.81441383014957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad646b5d2ba4df7%3A0x4045675218ccd90!2sMelbourne%20VIC%2C%20Australia!5e0!3m2!1sen!2sbd!4v1572172541109!5m2!1sen!2sbd"></iframe>
+							</div>
+							<!-- END MAP -->
+						</div>
+						<div class="section-hotel-details">
+							<div>
+								<h4>숙소 규정</h4>
+							</div>
+						</div>
+						<div class="section-hotel-details">
+							<div>
+								<h4>다른 추천 호텔</h4>
+							</div>
+						</div>
+					</div><!-- End Col-->
+				</div>
+			</div>
+		</section>
+		<!-- hotel info -->
+		
+		<!-- Start Footer -->	
+		<footer class="tr_footer wow fadeIn" style="background-image: url(assets/img/bg/footer.jpg);">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3 col-md-4 col-12">
+						<div class="footer_about">
+							<img src="assets/img/logo-white.svg" alt="img">
+							<p>
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis  imperdiet 
+								titor sodales vulputate
+							</p>
+							<span>Connect with us</span>
+							<ul class="social_link">
+								<li><a href="#"><i class="ph ph-facebook-logo"></i></a></li>
+								<li><a href="#"><i class="ph ph-x-logo"></i></a></li>
+								<li><a href="#"><i class="ph ph-instagram-logo"></i></a></li>
+								<li><a href="#"><i class="ph ph-youtube-logo"></i></a></li>
+							</ul>
+						</div>
+					</div><!-- End Col -->
+
+					<div class="col-xl-9 col-md-8 col-sm-6">
+						<div class="row">
+							<div class="col-xl-2 col-lg-4 col-md-6 col-12">
+								<div class="footer_widget">
+									<h3 class="footer-title">About Trvelo</h3>
+									<ul>
+										<li><a href="#">Faq's </a></li>
+										<li><a href="#">Privacy Policy </a></li>
+										<li><a href="#">Term & Conditions  </a></li>
+										<li><a href="#">Support</a></li>
+										<li><a href="#">Contact</a></li>
+									</ul>
+								</div>	
+							</div><!-- End Col -->	
+
+							<div class="col-xl-2 col-lg-4 col-md-6 col-12">
+								<div class="footer_widget">
+									<h3 class="footer-title">Useful Links</h3>
+									<ul>
+										<li><a href="#">Faq's </a></li>
+										<li><a href="#">Privacy Policy </a></li>
+										<li><a href="#">Term & Conditions  </a></li>
+										<li><a href="#">Support</a></li>
+										<li><a href="#">Contact</a></li>
+									</ul>
+								</div>
+							</div><!-- End Col -->	
+
+							<div class="col-xl-4 col-lg-4 col-md-6 col-12">
+								<div class="footer_widget">
+									<h3 class="footer-title">Quick Contact</h3>
+									<div class="footer_contact">
+										<p>
+											<i class="ph ph-map-pin-area"></i>
+											<span>3600 Las Vegas Blvd S, Las <br>Vegas, NV</span> 
+										</p>	
+
+										<p>
+											<i class="ph ph-phone-call"></i>
+											<span><a href="tel:+9856554544">+9856 55 45 44</a></span> 
+										</p>			
+
+										<p>
+											<i class="ph ph-envelope-simple"></i>
+											<span><a href="mailto:support@example.com">support@example.com</a></span> 
+										</p>
+									</div>
+								</div>
+							</div><!-- End Col -->
+							
+							<div class="col-xl-4 col-lg-12 col-md-6 col-12">
+								<div class="footer_widget subscription_form">
+									<h3 class="footer-title">Subscribe To Newsletter</h3>
+									<form action="#" method="post">
+										<input type="email" placeholder="Please Enter Email">
+										<button type="submit"><i class="ph ph-rocket-launch"></i></button>
+									</form>
+									<span>Don’t Spam, Please enter Real Email</span>
+								</div>
+							</div><!-- End Col -->	
+							
+						</div>
+					</div><!-- End Col -->	
+				</div>
+				
+				<div class="row">
+					<div class="col-12">
+						<div class="tr_copyright text-center">
+							<p>Copyright © 2025 Trvelo All Right Reserved.</p>
+						</div>
+					</div><!-- End Col -->	
+				</div>
+			</div>
+		</footer>	
+		<!-- End Footer -->	
+
+		<!-- Start progress-wrap -->
+		<div class="progress-wrap">
+			<svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+				<path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+			</svg>
+		</div>
+		<!-- End progress-wrap -->
+		
+		<!-- JS Script -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src='assets/js/datepicker.min.js'></script>
+		<script src='assets/js/swiper-bundle.min.js'></script>
+		<script src="assets/js/owl.carousel.min.js"></script>
+		<script src="assets/js/jquery.meanmenu.min.js"></script>
+		<script src="assets/js/jquery.inview.min.js"></script>
+		<script src="assets/js/mixitup.min.js"></script>
+		<script src="assets/js/nicesellect.js"></script>
+		<script src="assets/js/wow.js"></script>
+		<script src="assets/js/YouTubePopUp.jquery.js"></script>
+		<script src="assets/js/yvpopup-active.js"></script>
+		<script src="assets/js/scroll-up.js"></script>
+		<script src="assets/js/scripts.js"></script>
+		<script src="https://unpkg.com/@phosphor-icons/web"></script>
+	</body>
+</html>
