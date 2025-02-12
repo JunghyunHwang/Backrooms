@@ -23,33 +23,7 @@
 		<link rel="stylesheet" href="assets/css/style.css">
 		<link rel="stylesheet" href="assets/css/responsive.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css">
-		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-		<script type="text/javascript">
-			function findID() {
-				var id = "";
-				/* 이름과 번호를 데이터베이스에서 찾아 있으면 id변수에 첨가하여 돌림 */
-				if( id.length !=0){
-				swal("아이디 찾기 결과","당신의 아이디는 "+id+" 입니다.");
-				}else if(id.length ==0){
-					swal("아이디 찾기 결과","일치하는 정보가 없습니다.");
-				}
-			}
-			
-			function findPW(){
-				/* 새창을 조그마하게 열고 닫고 
-					비번 수정후 완료하면 닫기
-					그냥 닫기도 가능*/
-				var pw = "";
-				if( pw.length !=0){
-					location.href='CreatePw.html';
-				}else if( pw.length ==0){
-					swal("비밀번호 찾기 결과","일치하는 정보가 없습니다.");
-				}
-					
-			}
-		</script>
-	</head>
-	
+</head>
 	<body>
 		<!-- Start Header -->
 		<header id="tr_header">
@@ -102,43 +76,23 @@
 		</header>
 		<!-- End Header -->
 		
-	<!-- content -->
+		<!-- content -->
 		<section id="content">
 			<div class="container">
-				<h5>> ID/PW 찾기</h5>
+				<h5>> 새 비밀번호 설정</h5>
 				<hr>
 				<div id="item-box-id">
-					<h4>>ID 찾기</h4>
+					<h5>비밀번호 변경</h5>
 					<hr>
 					<div id="box-in-item">
-						&emsp;&emsp;&emsp;이름&emsp;&emsp;<input type="text" name="username"><br>
+						&emsp;새 비밀번호&emsp;&emsp;<input type="text" name="username"><br>
 						<br>
-						핸드폰 번호&emsp;&emsp;<input type="text" name="phonnumber"><br>
+						새 비밀번호 확인&emsp;&emsp;<input type="text" name="phonnumber"><br>
 					</div>
-					<button onclick="findID()" class="btn_idpw_search" style="float:right;" > ID 찾기</button>
-					
+					<input type="submit" style="float:right;" value="변경">
 					
 						
 				</div> 
-				
-			<div id="item-box-id">
-					<h4>>PW 찾기</h4>
-					<hr>
-					<div id="box-in-item">
-						&emsp;&emsp;아이디&emsp;&emsp;<input type="text" name="userid"><br>
-						<br>
-						&emsp;&emsp;&emsp;이름&emsp;&emsp;<input type="text" name="username"><br>
-						<br>
-						핸드폰 번호&emsp;&emsp;<input type="text" name="phonnumber"><br>
-					</div>
-					<button onclick="findID()" class="btn_idpw_search" class="btn_idpw"style="float:right;" > PW 찾기</button>
-					
-					
-						
-				</div> 
-		</section>
-	<!-- content end -->
-		
 		
 		<!-- Start Features -->
 		<footer class="tr_footer wow fadeIn" style="background-image: url(assets/img/bg/footer.jpg);">
