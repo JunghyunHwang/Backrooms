@@ -51,13 +51,14 @@
 	</head>
 	
 	<body>
+	
 		<!-- Start Header -->
 		<header id="tr_header">
 			<div class="container">
 				<div class="row">
 					<div class="col-xl-2 col-md-3 align-self-center">
 						<div class="site_logo">
-							<a href="index.html"><img src="assets/img/logo.svg" alt="Trvelo"></a>	
+							<a href="index.html"><img src="assets/img/Backrooms.svg" alt="Trvelo"></a>	
 						</div>
 					</div><!-- End Col -->		
 
@@ -66,30 +67,17 @@
 							<nav class="main-menu align-self-center">
 								<ul>
 									<li><a href="index.html">Home</a></li>
-									<li><a href="about.html">About</a></li>
-									<li><a href="tour.html">Tour</a></li>
-									<li><a href="services.html">Services</a></li>
-									<li><a href="#">Pages <i class="fa-solid fa-chevron-down"></i></a>
+									<li><a href="#">게시판 <i class="fa-solid fa-chevron-down"></i></a>
 										<ul class="sub-menu">
-											<li><a href="blog.html">Blog List</a></li>
-											<li><a href="blog-details.html">Blog Details</a></li>
-											<li><a href="tour.html">Tour</a></li>
-											<li><a href="tour-details.html">Tour Details</a></li>
+											<li><a href="blog.html">공지사항</a></li>
+											<li><a href="blog-details.html">이벤트 게시판</a></li>
 										</ul>
 									</li>
-									<li><a href="contact.html">Contact</a></li>
+									<li><a href="inquiryForm.html">문의하기</a></li>
 								</ul>
 							</nav>
 							
-							<div class="call_us d-flex align-self-center">
-								<i class="ph ph-headset align-self-center"></i>
-								<div class="call_content align-self-center">
-									<span>Call Us</span>
-									<a href="tel:+8801546857487">+8801546857487</a>
-								</div>
-							</div>
-							
-							<a href="#" class="green_btn align-self-center">Login / Register <i class="ph ph-arrow-right"></i></a>
+							<a href="login.html" class="green_btn align-self-center">Login / Register <i class="ph ph-arrow-right"></i></a>
 							<div class="header__hamburger d-xl-none my-auto">
 								<div class="sidebar__toggle">
 									<i class="ph ph-list"></i>
@@ -237,5 +225,13 @@
 			</div>
 		</footer>
 		<!-- End Features -->
+				<script>
+			// START Recomanded
+			var mixproduct = mixitup('.tour_items');			
+			// END Recomanded
+
+			jQuery('select').niceSelect();
+					
+		</script>
 	</body>
 </html>
