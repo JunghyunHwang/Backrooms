@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+.profile_btn {
+    position: relative;
+    display: inline-block;
+}
 .profile_btn ul.sub-menu {
 	position: absolute;
 	min-width: 220px;
