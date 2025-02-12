@@ -98,7 +98,7 @@
 									<li><a href="about.html">About</a></li>
 									<li><a href="tour.html">Tour</a></li>
 									<li><a href="services.html">Services</a></li>
-									<li><a href="#">Pages <i class="fa-solid fa-chevron-down"></i></a>
+									<li><a href="#"> Pages <i class="fa-solid fa-chevron-down"></i></a>
 										<ul class="sub-menu">
 											<li><a href="blog.html">Blog List</a></li>
 											<li><a href="blog-details.html">Blog Details</a></li>
@@ -118,7 +118,16 @@
 								</div>
 							</div>
 							
-							<a href="login.html" class="green_btn align-self-center">Login / Register <i class="ph ph-arrow-right"></i></a>
+							<!-- <a href="login.html" class="green_btn align-self-center" id="guest"> 로그인 <i class="ph ph-arrow-right"></i></a> -->
+							<div class="green_btn align-self-center" id="user" style="display: block;"> 회원정보
+								<ul class="sub-menu">
+										<li><a href="blog.html">Blog List</a></li>
+										<li><a href="blog-details.html">Blog Details</a></li>
+										<li><a href="tour.html">Tour</a></li>
+										<li><a href="tour-details.html">Tour Details</a></li>
+									</ul> <i class="ph ph-arrow-down"></i>
+							</div>
+								
 							<div class="header__hamburger d-xl-none my-auto">
 								<div class="sidebar__toggle">
 									<i class="ph ph-list"></i>
@@ -1059,6 +1068,7 @@
 		<script src="assets/js/scroll-up.js"></script>	
 		<script src="assets/js/scripts.js"></script>
 		<script src="assets/js/newslatter.js"></script> 
+		<script src="assets/js/LoginManager.js"></script> 
 		<script src="https://unpkg.com/@phosphor-icons/web"></script>
 		<script>
 			// START Recomanded
