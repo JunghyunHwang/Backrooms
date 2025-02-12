@@ -187,7 +187,7 @@
                 <thead class="table-dark">
                   <tr>
                     <th style="width: 5%">#</th>
-                    <th style="width: 20%">날짜</th>
+                    <th style="width: 20%">작성일</th>
                     <th style="width: 40%">문의 제목</th>
                     <th style="width: 20%">작성자</th>
                     <th style="width: 15%">상태</th>
@@ -217,7 +217,7 @@
                 <thead class="table-dark">
                   <tr>
                     <th style="width: 5%">#</th>
-                    <th style="width: 25%">날짜</th>
+                    <th style="width: 25%">작성일</th>
                     <th style="width: 50%">제목</th>
                     <th style="width: 20%">작성자</th>
                   </tr>
@@ -258,7 +258,7 @@
                 <thead class="table-dark">
                   <tr>
                     <th style="width: 5%">#</th>
-                    <th style="width: 25%">날짜</th>
+                    <th style="width: 25%">작성일</th>
                     <th style="width: 50%">제목</th>
                     <th style="width: 20%">작성자</th>
                   </tr>
@@ -308,14 +308,14 @@
           </div>
           <!-- Read-Only Details (for Inquiry mode only) -->
           <div class="modal-body" id="modalDetails">
-            <p><strong>날짜:</strong> <span id="modalDate"></span></p>
+            <p><strong>작성일:</strong> <span id="modalDate"></span></p>
             <p><strong>제목:</strong> <span id="modalTitle"></span></p>
+            <p><strong>내용:</strong> <span id="modalMessage"></span></p>
             <div id="modalExtraInfo">
               <p><strong>작성자:</strong> <span id="modalAuthor"></span></p>
               <p><strong>상태:</strong> <span id="modalStatus"></span></p>
               <p><strong>답변:</strong> <span id="modalAnswer"></span></p>
             </div>
-            <p><strong>내용:</strong> <span id="modalMessage"></span></p>
           </div>
           <!-- Inquiry Form (for Inquiry mode) -->
           <div class="modal-body" id="inquiryFormContainer">
@@ -356,15 +356,6 @@
           <!-- Edit Form (for Notice and Event mode) -->
           <div class="modal-body d-none" id="editFormContainer">
             <form id="editForm">
-              <div class="mb-3">
-                <label for="editDate" class="form-label">날짜</label>
-                <input
-                  type="date"
-                  class="form-control"
-                  id="editDate"
-                  required
-                />
-              </div>
               <div class="mb-3">
                 <label for="editTitle" class="form-label">제목</label>
                 <input
@@ -892,7 +883,7 @@
               .classList.remove("d-none");
 
             // Pre-fill edit form fields with item data (if any)
-            document.getElementById("editDate").value = item.date || "";
+            // document.getElementById("editDate").value = item.date || "";
             document.getElementById("editTitle").value = item.title || "";
             document.getElementById("editMessage").value = item.message || "";
 
