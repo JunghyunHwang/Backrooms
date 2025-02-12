@@ -132,8 +132,8 @@ a:focus{
 	right: auto;
 	visibility: visible;
 	overflow: visible;
-	/* -webkit-transition: .5s; */
-	/* transition: .5s; */
+	-webkit-transition: .5s;
+	transition: .5s; 
 	z-index: 99;
 	top: 101%;
 	text-align: left;
@@ -165,11 +165,11 @@ a:focus{
 .green_btn:hover i{
 	color: var(--yellow);
 }
-/* .green_btn:hover ul.sub-menu {
+.green_btn:hover ul.sub-menu {
 	visibility: visible;
 	max-height: 360px;
 	padding: 15px 20px;
-} */
+}
 .yellow_btn:hover,
 .yellow_btn:focus{
 	background: var(--green);
