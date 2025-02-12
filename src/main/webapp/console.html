@@ -29,6 +29,7 @@
 
   <body>
     <!-- Start Preloader -->
+
     <div class="preloader_wrap">
       <div class="preloader">
         <span style="--i: 1"></span>
@@ -145,119 +146,274 @@
     <!-- End Header -->
 
     <!-- Start Left Bar -->
-    <section class="section-padding">
-      <!-- here -->
-
-      <div class="container-fluid p-5">
-        <h1 class="fw-bold">관리자 <span class="fst-italic">메뉴</span></h1>
-
-        <div class="row mt-4">
-          <!-- Sidebar -->
-          <aside class="col-md-3">
-            <div class="bg-white p-3 rounded border shadow-sm">
-              <nav class="nav flex-column text-center" id="menu">
-                <a href="#" class="nav-link bg-primary text-white rounded py-2"
-                  >문의</a
-                >
-                <a href="#" class="nav-link text-dark">공지</a>
-                <a href="#" class="nav-link text-dark">이벤트</a>
-              </nav>
-            </div>
-          </aside>
-
-          <!-- Main Content here -->
-          <main class="col-md-9">
-            <div class="bg-white p-4 rounded border shadow-sm">
-              <table class="table table-striped table-hover">
+    <main class="container-fluid p-5">
+      <h1 class="fw-bold">관리자 <span class="fst-italic">메뉴</span></h1>
+      <div class="row mt-4">
+        <!-- Sidebar -->
+        <aside class="col-md-3">
+          <div class="bg-white p-3 rounded border shadow-sm">
+            <nav class="nav flex-column text-center" id="menu">
+              <a
+                href="#"
+                class="nav-link bg-primary text-white rounded py-2 fw-bold"
+                id="inquiryLink"
+                >문의</a
+              >
+              <a href="#" class="nav-link text-dark fw-bold" id="noticeLink"
+                >공지</a
+              >
+              <a href="#" class="nav-link text-dark fw-bold" id="eventLink"
+                >이벤트</a
+              >
+            </nav>
+          </div>
+        </aside>
+        <!-- Main Table Content -->
+        <main class="col-md-9 d-flex flex-column vh-100" id="main-content">
+          <!-- Inquiry Section -->
+          <section
+            id="inquirySection"
+            class="bg-white p-4 rounded border shadow-sm d-flex flex-column h-75"
+          >
+            <h2 class="fw-bold">문의 사항</h2>
+            <div
+              class="table-responsive flex-grow-1"
+              style="overflow-y: scroll"
+            >
+              <table
+                class="table table-striped table-hover w-100"
+                style="table-layout: fixed"
+              >
                 <thead class="table-dark">
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">날짜</th>
-                    <th scope="col">문의 제목</th>
-                    <th scope="col">작성자</th>
-                    <th scope="col">상태</th>
+                    <th style="width: 5%">#</th>
+                    <th style="width: 20%">날짜</th>
+                    <th style="width: 40%">문의 제목</th>
+                    <th style="width: 20%">작성자</th>
+                    <th style="width: 15%">상태</th>
                   </tr>
                 </thead>
-                <tbody id="inquiryTableBody">
-                  <!-- Rows will be generated dynamically -->
-                </tbody>
+                <tbody id="inquiryTableBody"></tbody>
               </table>
             </div>
-          </main>
-        </div>
-      </div>
-
-      <!-- Bootstrap Modal -->
-      <div
-        class="modal fade"
-        id="inquiryModal"
-        tabindex="-1"
-        aria-labelledby="inquiryModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="inquiryModalLabel">문의 상세 정보</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+            <nav class="d-flex justify-content-center mt-4">
+              <ul class="pagination" id="inquiryTableBodyPagination"></ul>
+            </nav>
+          </section>
+          <!-- Notice Section -->
+          <section
+            id="noticeSection"
+            class="bg-white p-4 rounded border shadow-sm d-flex flex-column h-75 d-none"
+          >
+            <h2 class="fw-bold">공지사항</h2>
+            <div
+              class="table-responsive flex-grow-1"
+              style="overflow-y: scroll"
+            >
+              <table
+                class="table table-striped table-hover w-100"
+                style="table-layout: fixed"
+              >
+                <thead class="table-dark">
+                  <tr>
+                    <th style="width: 5%">#</th>
+                    <th style="width: 25%">날짜</th>
+                    <th style="width: 50%">제목</th>
+                    <th style="width: 20%">작성자</th>
+                  </tr>
+                </thead>
+                <tbody id="noticeTableBody"></tbody>
+              </table>
             </div>
-            <div class="modal-body">
-              <p><strong>날짜:</strong> <span id="modalDate"></span></p>
-              <p><strong>제목:</strong> <span id="modalTitle"></span></p>
-              <p><strong>내용:</strong> <span id="modalContent"></span></p>
+            <nav class="position-relative w-100 mt-4">
+              <div class="d-flex justify-content-center">
+                <ul
+                  class="pagination flex-nowrap"
+                  id="noticeTableBodyPagination"
+                ></ul>
+              </div>
+              <button
+                class="btn btn-primary position-absolute"
+                style="right: 10px; top: 50%; transform: translateY(-50%)"
+                id="noticeRegisterButton"
+              >
+                등록
+              </button>
+            </nav>
+          </section>
+          <!-- Event Section -->
+          <section
+            id="eventSection"
+            class="bg-white p-4 rounded border shadow-sm d-flex flex-column h-75 d-none"
+          >
+            <h2 class="fw-bold">이벤트</h2>
+            <div
+              class="table-responsive flex-grow-1"
+              style="overflow-y: scroll"
+            >
+              <table
+                class="table table-striped table-hover w-100"
+                style="table-layout: fixed"
+              >
+                <thead class="table-dark">
+                  <tr>
+                    <th style="width: 5%">#</th>
+                    <th style="width: 25%">날짜</th>
+                    <th style="width: 50%">제목</th>
+                    <th style="width: 20%">작성자</th>
+                  </tr>
+                </thead>
+                <tbody id="eventTableBody"></tbody>
+              </table>
+            </div>
+            <nav class="position-relative w-100 mt-4">
+              <div class="d-flex justify-content-center">
+                <ul
+                  class="pagination flex-nowrap"
+                  id="eventTableBodyPagination"
+                ></ul>
+              </div>
+              <button
+                class="btn btn-primary position-absolute"
+                style="right: 10px; top: 50%; transform: translateY(-50%)"
+                id="eventRegisterButton"
+              >
+                등록
+              </button>
+            </nav>
+          </section>
+        </main>
+      </div>
+    </main>
 
+    <!-- ==================== Modal for Inquiry / Notice / Event ==================== -->
+    <section
+      class="modal fade"
+      id="inquiryModal"
+      tabindex="-1"
+      aria-labelledby="inquiryModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Modal Header (common for all modes) -->
+          <div class="modal-header">
+            <h5 class="modal-title" id="inquiryModalLabel">상세 정보</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <!-- Read-Only Details (for Inquiry mode only) -->
+          <div class="modal-body" id="modalDetails">
+            <p><strong>날짜:</strong> <span id="modalDate"></span></p>
+            <p><strong>제목:</strong> <span id="modalTitle"></span></p>
+            <div id="modalExtraInfo">
               <p><strong>작성자:</strong> <span id="modalAuthor"></span></p>
               <p><strong>상태:</strong> <span id="modalStatus"></span></p>
               <p><strong>답변:</strong> <span id="modalAnswer"></span></p>
             </div>
-            <!-- add inquiry register form -->
-            <div class="modal-body">
-              <form id="inquiryForm">
-                <div class="mb-3">
-                  <label for="inquiryMessage" class="form-label"
-                    >답변 등록하기</label
-                  >
-                  <textarea
-                    class="form-control"
-                    id="inquiryMessage"
-                    rows="4"
-                    placeholder="답변을 작성해주세요"
-                    required
-                  ></textarea>
-                </div>
-                <div class="text-end">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    취소
-                  </button>
-                  <button type="submit" class="btn btn-primary">등록</button>
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                닫기
-              </button>
-            </div>
+            <p><strong>내용:</strong> <span id="modalMessage"></span></p>
+          </div>
+          <!-- Inquiry Form (for Inquiry mode) -->
+          <div class="modal-body" id="inquiryFormContainer">
+            <form id="inquiryForm">
+              <div class="mb-3">
+                <label for="inquiryMessage" class="form-label"
+                  >답변 등록하기</label
+                >
+                <textarea
+                  class="form-control"
+                  id="inquiryMessage"
+                  rows="4"
+                  placeholder="답변을 작성해주세요"
+                  required
+                ></textarea>
+              </div>
+              <div class="text-end">
+                <button
+                  type="button"
+                  class="btn btn-danger me-2"
+                  id="deleteButton"
+                >
+                  삭제
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  닫기
+                </button>
+                <button type="submit" class="btn btn-primary" id="submitButton">
+                  등록
+                </button>
+              </div>
+            </form>
+          </div>
+          <!-- Edit Form (for Notice and Event mode) -->
+          <div class="modal-body d-none" id="editFormContainer">
+            <form id="editForm">
+              <div class="mb-3">
+                <label for="editDate" class="form-label">날짜</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="editDate"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="editTitle" class="form-label">제목</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="editTitle"
+                  placeholder="제목을 입력해주세요"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="editMessage" class="form-label">내용</label>
+                <textarea
+                  class="form-control"
+                  id="editMessage"
+                  rows="4"
+                  placeholder="내용을 입력해주세요"
+                  required
+                ></textarea>
+              </div>
+              <div class="text-end">
+                <button
+                  type="button"
+                  class="btn btn-danger me-2"
+                  id="deleteButtonEdit"
+                >
+                  삭제
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  닫기
+                </button>
+                <!-- The button text will be conditionally set -->
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  id="submitButtonEdit"
+                >
+                  등록
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-      <!--- END CONTAINER -->
     </section>
-    <!-- End Left Bar -->
-
     <!-- Start Footer -->
     <footer
       class="tr_footer wow fadeIn"
@@ -393,97 +549,442 @@
     <!-- End progress-wrap -->
 
     <!-- JS Script -->
+    <!-- JS Script -->
 
     <script>
-      // Inquiry Data (Can be replaced with real data)
+      const inquiries = [
+        {
+          date: "2024-02-10",
+          title: "객실 변경 요청",
+          author: "김민준",
+          status: "❌ 답변대기",
+          message: "예약한 객실을 다른 타입으로 변경하고 싶습니다. 가능할까요?",
+          answer: "",
+          statusClass: "text-danger fw-bold",
+        },
+        {
+          date: "2024-02-08",
+          title: "조식 포함 여부",
+          author: "박지수",
+          status: "✅ 답변완료",
+          message: "예약한 객실에 조식이 포함되어 있나요?",
+          answer:
+            "해당 객실은 조식이 포함되지 않습니다. 조식을 추가하려면 별도 요금이 발생합니다.",
+          statusClass: "text-success fw-bold",
+        },
+        {
+          date: "2024-02-07",
+          title: "체크인 시간 문의",
+          author: "이도윤",
+          status: "✅ 답변완료",
+          message: "체크인은 몇 시부터 가능한가요?",
+          answer: "체크인은 오후 3시부터 가능합니다.",
+          statusClass: "text-success fw-bold",
+        },
+        {
+          date: "2024-02-06",
+          title: "애완동물 동반 가능 여부",
+          author: "최하은",
+          status: "✅ 답변완료",
+          message: "반려견과 함께 숙박이 가능한가요?",
+          answer: "죄송합니다. 해당 호텔은 반려동물 동반이 불가능합니다.",
+          statusClass: "text-success fw-bold",
+        },
+        {
+          date: "2024-02-05",
+          title: "추가 침대 요청",
+          author: "정현우",
+          status: "❌ 답변대기",
+          message: "추가 침대를 요청하고 싶습니다. 비용은 얼마인가요?",
+          answer: "",
+          statusClass: "text-danger fw-bold",
+        },
+        {
+          date: "2024-02-04",
+          title: "무료 주차 가능 여부",
+          author: "김서연",
+          status: "✅ 답변완료",
+          message: "호텔에 무료 주차가 가능한가요?",
+          answer: "네, 투숙객은 무료로 주차할 수 있습니다.",
+          statusClass: "text-success fw-bold",
+        },
+        {
+          date: "2024-02-03",
+          title: "연박 할인 문의",
+          author: "윤지호",
+          status: "✅ 답변완료",
+          message: "2박 이상 예약 시 할인이 적용되나요?",
+          answer:
+            "현재 연박 할인 프로모션이 진행 중입니다. 자세한 사항은 예약 페이지를 확인해주세요.",
+          statusClass: "text-success fw-bold",
+        },
+        {
+          date: "2024-02-02",
+          title: "환불 문의",
+          author: "박유진",
+          status: "✅ 답변완료",
+          message: "예약을 취소하고 환불받고 싶습니다. 절차를 알려주세요.",
+          answer: "환불 신청이 완료되었습니다. 3~5일 내로 처리될 예정입니다.",
+          statusClass: "text-success fw-bold",
+        },
+      ];
+      const notices = [
+        {
+          date: "2024-02-15",
+          title: "객실 할인 프로모션 안내",
+          author: "관리자",
+          message:
+            "특정 객실에 한해 10% 할인 프로모션이 진행됩니다. 자세한 사항은 홈페이지를 참고하세요.",
+        },
+        {
+          date: "2024-02-12",
+          title: "체크아웃 시간 변경 안내",
+          author: "관리자",
+          message:
+            "체크아웃 시간이 기존 오전 11시에서 오전 10시 30분으로 변경되었습니다. 양해 부탁드립니다.",
+        },
+        {
+          date: "2024-02-08",
+          title: "호텔 리노베이션 일정 공지",
+          author: "관리자",
+          message:
+            "호텔 내 일부 시설의 개보수 공사가 3월 1일부터 3월 15일까지 진행될 예정입니다. 이용에 불편을 드려 죄송합니다.",
+        },
+        {
+          date: "2024-02-05",
+          title: "무료 조식 제공 이벤트 🎉",
+          author: "관리자",
+          message:
+            "3월 1일부터 3월 10일까지 조식을 무료로 제공합니다. 투숙객 여러분들의 많은 이용 바랍니다.",
+        },
+        {
+          date: "2024-02-02",
+          title: "호텔 예약 취소 정책 변경 안내",
+          author: "관리자",
+          message:
+            "2024년 3월 1일부터 예약 취소 가능 기간이 기존 24시간에서 48시간으로 변경됩니다.",
+        },
+        {
+          date: "2024-01-30",
+          title: "신규 객실 타입 추가 안내",
+          author: "관리자",
+          message:
+            "프리미엄 스위트 객실이 새롭게 추가되었습니다. 보다 넓고 쾌적한 숙박을 경험해 보세요.",
+        },
+        {
+          date: "2024-01-25",
+          title: "주차장 공사 일정 공지 🚧",
+          author: "관리자",
+          message:
+            "2월 5일부터 2월 10일까지 호텔 주차장 일부 구역이 공사로 인해 이용이 제한됩니다.",
+        },
+        {
+          date: "2024-01-20",
+          title: "고객 서비스 개선을 위한 설문조사 참여 요청",
+          author: "관리자",
+          message:
+            "더 나은 서비스 제공을 위해 고객 설문조사를 진행합니다. 참여하신 분께는 호텔 할인 쿠폰을 제공합니다.",
+        },
+      ];
+
+      const events = [
+        {
+          date: "2024-03-01",
+          title: "봄맞이 객실 할인 이벤트 🌸",
+          author: "관리자",
+          message:
+            "봄 시즌을 맞아 전 객실 15% 할인 이벤트를 진행합니다. 예약은 선착순으로 진행됩니다.",
+        },
+        {
+          date: "2024-02-25",
+          title: "발렌타인데이 스페셜 패키지 💕",
+          author: "관리자",
+          message:
+            "연인과 함께하는 특별한 하루! 발렌타인데이 패키지 예약 시 와인과 초콜릿을 무료로 제공합니다.",
+        },
+        {
+          date: "2024-02-18",
+          title: "럭셔리 스파 30% 할인 프로모션",
+          author: "관리자",
+          message:
+            "호텔 투숙객 대상으로 스파 이용권 30% 할인 혜택을 제공합니다. 힐링을 경험해 보세요!",
+        },
+        {
+          date: "2024-02-10",
+          title: "겨울 시즌 마지막 특가 ❄️",
+          author: "관리자",
+          message:
+            "겨울 시즌이 끝나기 전에 특별한 가격으로 숙박할 기회를 잡으세요! 최대 20% 할인 제공.",
+        },
+        {
+          date: "2024-02-05",
+          title: "가족 여행객 대상 무료 조식 이벤트",
+          author: "관리자",
+          message:
+            "가족 단위로 투숙하시는 고객님께 무료 조식 혜택을 제공합니다.",
+        },
+        {
+          date: "2024-01-28",
+          title: "VIP 고객 대상 무료 룸 업그레이드 🎁",
+          author: "관리자",
+          message:
+            "VIP 회원 대상으로 객실 무료 업그레이드 이벤트를 진행합니다. 예약 시 자동 적용됩니다.",
+        },
+        {
+          date: "2024-01-20",
+          title: "호텔 로비 라이브 재즈 공연 🎷",
+          author: "관리자",
+          message:
+            "특별한 밤을 위해 호텔 로비에서 재즈 공연이 열립니다. 모든 투숙객 무료 관람 가능합니다.",
+        },
+        {
+          date: "2024-01-15",
+          title: "친환경 숙박 캠페인 참여 이벤트 🌱",
+          author: "관리자",
+          message:
+            "친환경 숙박 캠페인에 동참하시는 고객께 특별 할인 혜택을 제공합니다.",
+        },
+      ];
+
+      const itemsPerPage = 5;
+      let currentPage = 1;
+
+      // Update pagination (페이지네이션 업데이트)
+      function updatePagination(
+        totalItems,
+        containerId,
+        tableBodyId,
+        dataArray,
+        type,
+      ) {
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        const paginationContainer = document.getElementById(containerId);
+        paginationContainer.innerHTML = "";
+        for (let i = 1; i <= totalPages; i++) {
+          const li = document.createElement("li");
+          li.classList.add("page-item");
+          if (i === currentPage) li.classList.add("active");
+          const a = document.createElement("a");
+          a.classList.add("page-link");
+          a.href = "#";
+          a.innerText = i;
+          a.onclick = function (e) {
+            e.preventDefault();
+            currentPage = i;
+            displayItems(currentPage, tableBodyId, dataArray, type);
+          };
+          li.appendChild(a);
+          paginationContainer.appendChild(li);
+        }
+      }
+
+      // Display items based on current page and type
+      // 페이지 항목 표시 함수
+      function displayItems(page, tableBodyId, dataArray, type = "inquiry") {
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const paginatedItems = dataArray.slice(start, end);
+        const tableBody = document.getElementById(tableBodyId);
+        tableBody.innerHTML = "";
+        paginatedItems.forEach((item, index) => {
+          const row = document.createElement("tr");
+          row.classList.add("align-middle");
+          row.style.cursor = "pointer";
+          row.setAttribute("data-index", start + index);
+          if (type === "inquiry") {
+            row.setAttribute("data-bs-toggle", "modal");
+            row.setAttribute("data-bs-target", "#inquiryModal");
+            row.onclick = () => openModal(item, "inquiry");
+            row.innerHTML = `
+              <th scope="row">${start + index + 1}</th>
+              <td>${item.date}</td>
+              <td>${item.title}</td>
+              <td>${item.author}</td>
+              <td class="${item.statusClass}">${item.status}</td>
+            `;
+          } else if (type === "notice") {
+            row.onclick = () => openModal(item, "notice");
+            row.innerHTML = `
+              <th scope="row">${start + index + 1}</th>
+              <td>${item.date}</td>
+              <td>${item.title}</td>
+              <td>${item.author}</td>
+            `;
+          } else if (type === "event") {
+            row.onclick = () => openModal(item, "event");
+            row.innerHTML = `
+              <th scope="row">${start + index + 1}</th>
+              <td>${item.date}</td>
+              <td>${item.title}</td>
+              <td>${item.author}</td>
+            `;
+          }
+          tableBody.appendChild(row);
+        });
+        updatePagination(
+          dataArray.length,
+          tableBodyId + "Pagination",
+          tableBodyId,
+          dataArray,
+          type,
+        );
+      }
+      /******************** End Data & Pagination Functions ********************/
+
+      /******************** Main Initialization ********************/
+      // DOMContentLoaded: Initialize modal and attach event listeners
+      document.addEventListener("DOMContentLoaded", function () {
+        const modalElement = document.getElementById("inquiryModal");
+        const modalInstance = new bootstrap.Modal(modalElement);
+
+        // openModal: Opens the modal in inquiry (read-only) or edit mode.
+        // 문의 모드에서는 읽기 전용 세부사항과 답변 등록 폼을, 공지/이벤트 모드에서는 편집 폼을 보여줍니다.
+        window.openModal = function (item, type = "inquiry") {
+          if (type === "inquiry") {
+            // Inquiry Mode
+            document.getElementById("inquiryModalLabel").innerText =
+              "상세 정보";
+            document.getElementById("modalDetails").classList.remove("d-none");
+            document.getElementById("modalDate").innerText = item.date || "-";
+            document.getElementById("modalTitle").innerText = item.title || "-";
+            document.getElementById("modalMessage").innerText =
+              item.message || "내용이 없습니다.";
+            document.getElementById("modalExtraInfo").style.display = "block";
+            document.getElementById("modalAuthor").innerText =
+              item.author || "-";
+            document.getElementById("modalStatus").innerText =
+              item.status || "-";
+            document.getElementById("modalAnswer").innerText =
+              item.answer || "아직 답변이 등록되지 않았습니다.";
+
+            // Show inquiry form and hide edit form
+            document
+              .getElementById("inquiryFormContainer")
+              .classList.remove("d-none");
+            document
+              .getElementById("editFormContainer")
+              .classList.add("d-none");
+
+            // Set inquiry form texts
+            document.querySelector("#inquiryForm .form-label").innerText =
+              item.answer ? "답변 수정하기" : "답변 등록";
+            document.getElementById("inquiryMessage").value = item.answer || "";
+            document.getElementById("submitButton").innerText = item.answer
+              ? "수정"
+              : "등록";
+          } else {
+            // Notice and Event Mode (Edit Mode)
+            // Set modal header based on type
+            if (type === "notice") {
+              document.getElementById("inquiryModalLabel").innerText =
+                "공지 정보";
+            } else if (type === "event") {
+              document.getElementById("inquiryModalLabel").innerText =
+                "이벤트 정보";
+            }
+            // Hide the read-only details block and show the edit form
+            document.getElementById("modalDetails").classList.add("d-none");
+            document
+              .getElementById("inquiryFormContainer")
+              .classList.add("d-none");
+            document
+              .getElementById("editFormContainer")
+              .classList.remove("d-none");
+
+            // Pre-fill edit form fields with item data (if any)
+            document.getElementById("editDate").value = item.date || "";
+            document.getElementById("editTitle").value = item.title || "";
+            document.getElementById("editMessage").value = item.message || "";
+
+            // If the item has data, assume editing and set the button to "수정"
+            // Otherwise, set it to "등록"
+            if (item.date || item.title || item.message) {
+              document.getElementById("submitButtonEdit").innerText = "수정";
+            } else {
+              document.getElementById("submitButtonEdit").innerText = "등록";
+            }
+          }
+          modalInstance.show();
+        };
+
+        // Attach registration button event listeners for Notice and Event (only once)
+        document
+          .getElementById("noticeRegisterButton")
+          .addEventListener("click", function () {
+            // Open modal for new Notice (empty fields)
+            openModal({ date: "", title: "", message: "" }, "notice");
+          });
+        document
+          .getElementById("eventRegisterButton")
+          .addEventListener("click", function () {
+            // Open modal for new Event (empty fields)
+            openModal({ date: "", title: "", message: "" }, "event");
+          });
+
+        // Display initial items for all sections
+        displayItems(currentPage, "inquiryTableBody", inquiries, "inquiry");
+        displayItems(currentPage, "noticeTableBody", notices, "notice");
+        displayItems(currentPage, "eventTableBody", events, "event");
+      });
+      /******************** End Main Initialization ********************/
+
+      /******************** Menu Click Handlers ********************/
+      // These event listeners switch between sections.
+      // 아래 이벤트 리스너들은 좌측 메뉴 클릭 시 각 섹션을 전환합니다.
+      document
+        .getElementById("inquiryLink")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          currentPage = 1;
+          document.getElementById("noticeSection").classList.add("d-none");
+          document.getElementById("eventSection").classList.add("d-none");
+          document.getElementById("inquirySection").classList.remove("d-none");
+          displayItems(currentPage, "inquiryTableBody", inquiries, "inquiry");
+        });
+      document
+        .getElementById("noticeLink")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          currentPage = 1;
+          document.getElementById("inquirySection").classList.add("d-none");
+          document.getElementById("eventSection").classList.add("d-none");
+          document.getElementById("noticeSection").classList.remove("d-none");
+          displayItems(currentPage, "noticeTableBody", notices, "notice");
+        });
+      document
+        .getElementById("eventLink")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          currentPage = 1;
+          document.getElementById("inquirySection").classList.add("d-none");
+          document.getElementById("noticeSection").classList.add("d-none");
+          document.getElementById("eventSection").classList.remove("d-none");
+          displayItems(currentPage, "eventTableBody", events, "event");
+        });
+      /******************** End Menu Click Handlers ********************/
+
+      /******************** Menu Active Effect ********************/
+      // This function adds a visual active effect to the clicked menu item.
+      // 이 함수는 클릭한 메뉴 항목에 활성화 스타일을 적용합니다.
       function changeActiveEffectTo(target) {
         const menu = document.querySelector("#menu");
         for (let element of menu.children) {
-          element?.classList?.remove?.(
+          element.classList.remove(
             "bg-primary",
             "text-white",
             "rounded",
             "py-2",
           );
-          element?.classList?.add?.("text-dark");
+          element.classList.add("text-dark");
         }
         target.classList.add("bg-primary", "text-white", "rounded", "py-2");
       }
-      const handleMenuClick = (e) => {
+      document.querySelector("#menu").addEventListener("click", function (e) {
         changeActiveEffectTo(e.target);
-      };
-      const menuContainer = document.querySelector(".nav");
-      menuContainer.addEventListener("click", handleMenuClick);
-
-      const inquiries = [
-        {
-          date: "25-02-06",
-          message: "문의 드립니다",
-          author: "작성자",
-          status: "❌ 답변대기",
-          content: "",
-          statusClass: "text-danger fw-bold",
-        },
-        {
-          date: "25-02-06",
-          message: "문의 드립니다",
-          author: "작성자",
-          status: "✅ 답변완료",
-          content: "",
-          statusClass: "text-success fw-bold",
-        },
-        {
-          date: "25-02-06",
-          message: "문의 드립니다",
-          author: "작성자",
-          status: "❌ 답변대기",
-          content: "",
-          statusClass: "text-danger fw-bold",
-        },
-      ];
-
-      function loadTable() {
-        const tableBody = document.getElementById("inquiryTableBody");
-        tableBody.innerHTML = ""; // Clear existing content
-
-        inquiries.forEach((inquiry, index) => {
-          const row = document.createElement("tr");
-          row.classList.add("align-middle");
-          row.style.cursor = "pointer";
-          row.setAttribute("data-bs-toggle", "modal");
-          row.setAttribute("data-bs-target", "#inquiryModal");
-          row.onclick = () =>
-            openModal(
-              inquiry.date,
-              inquiry.message,
-              inquiry.author,
-              inquiry.status,
-              inquiry.content,
-            );
-
-          row.innerHTML = `
-                  <th scope="row">${index + 1}</th>
-                  <td class="text-muted">${inquiry.date}</td>
-                  <td>${inquiry.message}</td>
-                  <td class="text-muted">${inquiry.author}</td>
-                  <td class="${inquiry.statusClass}">${inquiry.status}</td>
-              `;
-          tableBody.appendChild(row);
-        });
-      }
-
-      function openModal(date, title, author, status, content, answer = "") {
-        document.getElementById("modalDate").innerText = date;
-        document.getElementById("modalTitle").innerText = title;
-        document.getElementById("modalAuthor").innerText = author;
-        document.getElementById("modalContent").innerText = content;
-        document.getElementById("modalStatus").innerText = status;
-        document.getElementById("modalAnswer").innerText = answer;
-      }
-
-      // Load table on page load
-      window.onload = loadTable;
+      });
+      /******************** End Menu Active Effect ********************/
     </script>
+
     <script src="bootstrap.bundle.min.js"></script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
