@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문의 작성</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .QnA-container {
+            max-width: 500px;
+            margin: auto;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .form-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>문의 작성</h2>
+
+    <div class="QnA-container">
+        <input type="text" id="author" placeholder="작성자 이름">
+        <textarea id="content" placeholder="문의 내용을 입력하세요"></textarea>
+        <button class="form-button" onclick="saveInquiry()">작성 완료</button>
+    </div>
+
+    <script>
+        function saveInquiry() {
+            var author = document.getElementById("author").value.trim();
+            var content = document.getElementById("content").value.trim();
+            if (author === "" || content === "") {
+                alert("작성자와 내용을 입력하세요.");
+                return;
+            }
+
+            var now = new Date();
+            var dateString = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() +
+                             " " + now.getHours() + ":" + now.getMinutes();
+
+            var newRow = `<tr><td>${author}</td><td>${content}</td><td>${dateString}</td></tr>`;
+
+            var storedData = localStorage.getItem("inquiries") || "";
+            storedData = newRow + storedData;
+            localStorage.setItem("inquiries", storedData);
+
+            window.location.href = "MyQnA.html"; // 작성 후 메인 페이지로 이동
+        }
+    </script>
+
+</body>
+</html>
