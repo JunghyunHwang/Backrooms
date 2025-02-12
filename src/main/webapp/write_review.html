@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>리뷰 작성</title>
+  <link rel="stylesheet" href="reviewstyle.css">
+</head>
+<body>
+
+  <div class="form-container">
+    <h3>리뷰 작성</h3>
+    <input type="text" id="author" placeholder="작성자" required>
+    <select id="rating" required>
+      <option value="">별점 선택</option>
+      <option value="⭐">⭐ (1점)</option>
+      <option value="⭐⭐">⭐⭐ (2점)</option>
+      <option value="⭐⭐⭐">⭐⭐⭐ (3점)</option>
+      <option value="⭐⭐⭐⭐">⭐⭐⭐⭐ (4점)</option>
+      <option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐ (5점)</option>
+    </select>
+    <textarea id="reviewContent" placeholder="리뷰 내용을 입력하세요" required></textarea>
+    <input type="file" id="imageUpload" accept="image/*">
+    <img id="imagePreview" style="display:none;">
+
+    <button onclick="submitReview()">등록</button>
+    <button onclick="window.close()">취소</button>
+  </div>
+
+  <script>
+    // 이미지 업로드 시 미리보기 표시
+    document.getElementById("imageUpload").addEventListener("change", function(event) {
+      var file = event.target.files[0];
+      if (file) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          var imgPreview = document.getElementById("imagePreview");
+          imgPreview.src = e.target.result;
+          imgPreview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // 리뷰 작성 후 저장
+    function submitReview() {
+      var author = document.getElementById("author").value.trim();
+      var rating = document.getElementById("rating").value;
+      var content = document.getElementById("reviewContent").value.trim();
+      var imageUpload = document.getElementById("imageUpload");
+
+      if (!author || !rating || !content) {
+        alert("모든 필드를 입력해주세요.");
+        return;
+      }
+
+      // 현재 날짜 가져오기
+      var now = new Date();
+      var dateStr = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate();
+
+      // 이미지 처리
+      var imageUrl = "";
+      if (imageUpload.files.length > 0) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          imageUrl = e.target.result; // base64 URL
+          passReviewData(author, rating, content, dateStr, imageUrl);
+        };
+        reader.readAsDataURL(imageUpload.files[0]);
+      } else {
+        passReviewData(author, rating, content, dateStr, "");
+      }
+    }
+
+    // 부모 창으로 데이터 전달
+    function passReviewData(author, rating, content, date, imageUrl) {
+      var reviewData = {
+        author: author,
+        rating: rating,
+        content: content,
+        date: date,
+        imageUrl: imageUrl
+      };
+
+      // 부모 창의 함수 호출
+      window.opener.addReview(reviewData);
+      window.close(); // 자식 창 닫기
+    }
+  </script>
+
+</body>
+</html>
