@@ -15,6 +15,16 @@ function checkLoginStatus() {
 	}
 	
 function login() {
+		const userId = document.getElementById('userId').value.trim();
+	   const password = document.getElementById('passWard').value.trim();
+
+	   
+	   if (!userId || !password) {
+	       alert('아이디와 비밀번호를 모두 입력해주세요.');
+	       return;
+	   }
+	
+	
 	    localStorage.setItem("loggedIn", "true");
 		location.href='index.html';
 	    checkLoginStatus();
