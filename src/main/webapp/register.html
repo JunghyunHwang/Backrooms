@@ -81,7 +81,7 @@
 		<div class="offcanvas__overlay"></div>
 	
 		<!-- Start Header -->
-		<header id="tr_header">
+    <header id="tr_header">
       <div class="container">
         <div class="row">
           <div class="col-xl-2 col-md-3 align-self-center">
@@ -111,7 +111,7 @@
                 </ul>
               </nav>
 
-              <a href="login.html" class="green_btn align-self-center">Login / Register <i class="ph ph-arrow-right"></i></a>
+              <a href="login.html" class="green_btn align-self-center" id="guest" style="display:block;">Login / Register <i class="ph ph-arrow-right"></i></a>
               
               <div class="profile_btn" id="user" style="display: none;">
 			    <div class="green_btn align-self-center"> 
@@ -136,11 +136,11 @@
         </div>
       </div>
     </header>
-		<!-- End Header -->
+    <!-- End Header -->
 		
 		<!-- register start -->
 		<div class="d-flex justify-content-center align-items-center vh-100">
-  <div class="shadow-lg bg-body-tertiary rounded" style="padding: 40px; width: 800px; height: 100%; overflow-y: auto;">
+  <div class="shadow-lg bg-body-tertiary rounded" style="padding: 40px; width: 800px; height: 100%;">
     <form id="signupForm" method="post" action="login.html">
       <label for="userId" class="form-label">아이디</label>
       <input type="text" class="form-control mb-3" id="userId" placeholder="아이디를 입력해주세요" required>
@@ -230,5 +230,6 @@ document.getElementById("signupForm").addEventListener("submit", function (event
     }
 });
 </script>
+<script src="assets/js/LoginManager.js"></script>	
     </body>
 </html>
