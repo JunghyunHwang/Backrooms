@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Trvelo - Travel Agency HTML Template</title>
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+		<!-- CSS Files -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@100..1000&display=swap" rel="stylesheet">			
+		<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/css/style.css">
+
+        <style>
+            /* 예약 카드 스타일 */
+            .reservation-container {
+                width: 100%;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            .title {
+                font-size: 22px;
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+
+            .reservation-card {
+                background-color: white;
+                border: 2px solid black;
+                border-radius: 10px;
+                padding: 15px;
+                margin-bottom: 20px;
+                width: 100%;
+            }
+
+            .reservation-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+            .hotel-name {
+                font-size: 18px;
+                font-weight: bold;
+            }
+
+            .reservation-number {
+                font-size: 13px;
+            }
+
+            .reservation-content {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .hotel-image {
+                width: 100px;
+                height: 100px;
+                background-color: #ddd;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 1px solid black;
+            }
+
+            .check-info {
+                border: 1px solid black;
+                padding: 10px 20px;
+                font-size: 16px;
+                text-align: center;
+            }
+
+            .payment-info {
+                margin-top: 10px;
+                font-weight: bold;
+            }
+
+            .button-group {
+                display: flex;
+                gap: 10px;
+                margin-top: 10px;
+            }
+
+            .button {
+                background-color: #add8e6;
+                padding: 5px 10px;
+                border: 1px solid black;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: bold;
+            }
+
+            .button:hover {
+                background-color: #87ceeb;
+            }
+        </style>
+	</head>
+
+    <body>
+		<!-- Start Header -->
+		<header id="tr_header">
+			<div class="container">
+				<h1>Trvelo - 여행사</h1>
+			</div>
+		</header>
+		<!-- End Header -->
+		
+		<!-- Start Left Bar -->
+		<section class="tour_details section-padding">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-lg-4 col-12">
+						<div class="tour_widget">
+							<h2 class="tw_title">내 페이지</h2>
+							<ul class="tw_info">
+								<li><a href="#userData">회원 정보</a></li>
+								<li><a href="#reservationData">예약 관리</a></li>
+								<li><a href="#myQnA">내 문의</a></li>
+								<li><a href="#myReview">내 리뷰</a></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="col-lg-8 col-12">
+						<div class="single_tour_details">
+							<div class="tdetails_meta">
+
+							<!-- 나의 예약 섹션 -->
+							<div id="reservationData" class="reservation-container">
+								<div class="title"> </div>
+
+								<!-- 예약 카드 1 -->
+								<div class="reservation-card">
+									<div class="reservation-header">
+										<div class="hotel-name">호텔 A</div>
+										<div class="reservation-number">예약 번호: 0000111122223333</div>
+									</div>
+									<div class="reservation-content">
+										<div class="hotel-image">호텔 이미지</div>
+										<div class="check-info">
+											체크인: 2월 28일<br>
+											체크아웃: 3월 2일
+										</div>
+									</div>
+									<div class="payment-info">결제 금액: 300,000원</div>
+									<div class="button-group">
+										<button class="button">수정</button>
+										<button class="button">취소</button>
+										<button class="button">리뷰 작성하기</button>
+									</div>
+								</div>
+
+								<!-- 예약 카드 2 -->
+								<div class="reservation-card">
+									<div class="reservation-header">
+										<div class="hotel-name">호텔 B</div>
+										<div class="reservation-number">예약 번호: 0000111122224444</div>
+									</div>
+									<div class="reservation-content">
+										<div class="hotel-image">호텔 이미지</div>
+										<div class="check-info">
+											체크인: 3월 5일<br>
+											체크아웃: 3월 8일
+										</div>
+									</div>
+									<div class="payment-info">결제 금액: 450,000원</div>
+									<div class="button-group">
+										<button class="button">수정</button>
+										<button class="button">취소</button>
+										<button class="button">리뷰 작성하기</button>
+									</div>
+								</div>
+
+								<!-- 예약 카드 3 -->
+								<div class="reservation-card">
+									<div class="reservation-header">
+										<div class="hotel-name">호텔 C</div>
+										<div class="reservation-number">예약 번호: 0000111122225555</div>
+									</div>
+									<div class="reservation-content">
+										<div class="hotel-image">호텔 이미지</div>
+										<div class="check-info">
+											체크인: 4월 10일<br>
+											체크아웃: 4월 12일
+										</div>
+									</div>
+									<div class="payment-info">결제 금액: 200,000원</div>
+									<div class="button-group">
+										<button class="button">수정</button>
+										<button class="button">취소</button>
+										<button class="button">리뷰 작성하기</button>
+									</div>
+								</div>
+							</div>
+							<!-- 나의 예약 섹션 끝 -->
+							</div>
+						</div>					
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- End Left Bar -->
+
+		<!-- Start Footer -->	
+		<footer class="tr_footer">
+			<div class="container">
+				<p class="text-center">Copyright © 2025 Trvelo All Right Reserved.</p>
+			</div>
+		</footer>	
+		<!-- End Footer -->
+
+		<!-- JS Script -->
+        <script src="assets/js/jquery.min.js"></script>
+		<script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trvelo - 회원 정보</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <style>
+        .user-container {
+            width: 800px;
+            border: 2px solid black;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .profile-photo {
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        .readonly-info {
+            font-size: 14px;
+        }
+        .readonly-info div {
+            margin-bottom: 5px;
+        }
+        .info-box {
+            border: 1px solid black;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        label {
+            display: block;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        textarea {
+            width: 80%;
+            height: 30px;
+            padding: 3px;
+            margin-top: 2px;
+            resize: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        textarea:disabled {
+            background-color: #f0f0f0;
+            color: #777;
+        }
+        .button {
+            background-color: lightgreen;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background-color: #90ee90;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Start Header -->
+    <header id="tr_header">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-2 col-md-3 align-self-center">
+                    <div class="site_logo">
+                        <a href="index.html"><img src="assets/img/logo.svg" alt="Trvelo"></a>
+                    </div>
+                </div>
+                <div class="col-xl-10 col-md-9">
+                    <div class="header_right d-flex justify-content-end">
+                        <nav class="main-menu align-self-center">
+                            <ul>
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="about.html">About</a></li>
+                                <li><a href="tour.html">Tour</a></li>
+                                <li><a href="services.html">Services</a></li>
+                                <li><a href="#">Pages</a></li>
+                                <li><a href="contact.html">Contact</a></li>
+                            </ul>
+                        </nav>
+                        <a href="#" class="green_btn align-self-center">Login / Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- Start Content Section -->
+    <section class="tour_details section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- Left Sidebar -->
+                <div class="col-lg-4 col-12">
+                    <div class="tour_widget">
+                        <h2 class="tw_title">내 페이지</h2>
+                        <ul class="tw_info">
+                            <li><a href="#">회원 정보</a></li>
+                            <li><a href="#">예약 관리</a></li>
+                            <li><a href="#">내 문의</a></li>
+                            <li><a href="#">내 리뷰</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="col-lg-8 col-12">
+                    <div class="single_tour_details">
+                        <div class="user-container">
+                            <div class="title">회원 정보</div>
+                            <div class="profile-section">
+                                <div class="profile-photo">프로필 사진</div>
+                                <div class="readonly-info">
+                                    <div><strong>실명:</strong> 홍길동</div>
+                                    <div><strong>생년월일:</strong> 1990-01-01</div>
+                                    <div><strong>이메일:</strong> hong@example.com</div>
+                                </div>
+                            </div>
+                            <div class="info-box">
+                                <label>전화번호</label>
+                                <textarea disabled>010-1234-5678</textarea>
+
+                                <label>국가/지역</label>
+                                <textarea disabled>대한민국, 서울</textarea>
+
+                                <label>닉네임</label>
+                                <textarea disabled>hgd11</textarea>
+
+                                <button class="button" onclick="toggleEdit()">수정</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Main Content -->
+            </div>
+        </div>
+    </section>
+    <!-- End Content Section -->
+
+    <!-- Start Footer -->
+    <footer class="tr_footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p>Copyright © 2025 Trvelo All Right Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer -->
+
+    <!-- JS Script -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function toggleEdit() {
+            const textareas = document.querySelectorAll('textarea');
+            const button = document.querySelector('.button');
+            const isDisabled = textareas[0].disabled;
+
+            textareas.forEach(textarea => {
+                textarea.disabled = !isDisabled;
+            });
+
+            button.textContent = isDisabled ? '완료' : '수정';
+        }
+    </script>
+</body>
+</html>
