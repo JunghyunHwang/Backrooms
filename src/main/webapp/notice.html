@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trvelo - Travel Agency HTML Template</title>
+    <title>Trvelo - Notice Management</title>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
     <!-- CSS Files -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,9 +26,9 @@
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/responsive.css" />
   </head>
-
   <body>
     <!-- Start Preloader -->
+
     <div class="preloader_wrap">
       <div class="preloader">
         <span style="--i: 1"></span>
@@ -130,39 +130,51 @@
       </div>
     </header>
     <!-- End Header -->
-
-    <!-- Start Left Bar -->
-
-    <!-- start to notice html -->
-    <div class="container mt-5">
+    <!-- Main Content with fixed height so that 7 rows are visible -->
+    <!-- 메인 콘텐츠: 고정 높이를 지정하여 7개의 데이터 행이 항상 보이도록 합니다. -->
+    <main class="container my-5">
       <h2 class="fw-bold">공지사항</h2>
-
-      <!-- Notice Board -->
-      <div class="bg-white p-4 rounded border shadow-sm">
-        <table class="table table-striped table-hover">
-          <thead class="table-dark">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">날짜</th>
-              <th scope="col">제목</th>
-              <th scope="col">작성자</th>
-            </tr>
-          </thead>
-          <tbody id="noticeTableBody">
-            <!-- Rows will be generated dynamically -->
-          </tbody>
-        </table>
-
-        <!-- Pagination -->
-        <nav>
+      <section class="bg-white p-4 rounded border shadow-sm d-flex flex-column">
+        <!-- Fixed table container with vertical scroll -->
+        <!-- 테이블 컨테이너의 높이를 고정하여 스크롤 가능하도록 설정합니다. -->
+        <div
+          class="table-responsive flex-grow-1"
+          style="height: 450px; overflow-y: auto"
+        >
+          <!-- Use table-layout: fixed for constant column widths -->
+          <table
+            class="table table-striped table-hover"
+            style="table-layout: fixed"
+          >
+            <thead class="table-dark">
+              <tr>
+                <!-- Set explicit column widths using inline styles and Bootstrap text utility classes -->
+                <th scope="col" style="width: 10%" class="text-center">#</th>
+                <th scope="col" style="width: 30%" class="text-center">
+                  작성일
+                </th>
+                <th scope="col" style="width: 40%" class="text-start">제목</th>
+                <th scope="col" style="width: 20%" class="text-center">
+                  작성자
+                </th>
+              </tr>
+            </thead>
+            <tbody id="noticeTableBody">
+              <!-- Table rows will be generated dynamically by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+        <!-- Pagination area: Centered pagination with a fixed margin at the bottom -->
+        <!-- 페이지네이션 영역: 페이지 번호는 중앙에 고정되고, 적당한 마진을 갖습니다. -->
+        <nav aria-label="Notice Pagination" class="mt-3">
           <ul class="pagination justify-content-center" id="pagination">
             <!-- Page buttons will be generated dynamically -->
           </ul>
         </nav>
-      </div>
-    </div>
+      </section>
+    </main>
 
-    <!-- Bootstrap Modal -->
+    <!-- Notice Modal (if needed for detail view) -->
     <div
       class="modal fade"
       id="noticeModal"
@@ -184,7 +196,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <p><strong>날짜:</strong> <span id="modalDate"></span></p>
+            <p><strong>작성일:</strong> <span id="modalDate"></span></p>
             <p><strong>제목:</strong> <span id="modalTitle"></span></p>
             <p><strong>내용:</strong> <span id="modalMessage"></span></p>
             <p><strong>작성자:</strong> <span id="modalAuthor"></span></p>
@@ -201,11 +213,6 @@
         </div>
       </div>
     </div>
-
-    <!--- END CONTAINER -->
-    <!-- End Left Bar -->
-
-    <!-- Start Footer -->
     <footer
       class="tr_footer wow fadeIn"
       style="background-image: url(assets/img/bg/footer.jpg)"
@@ -338,53 +345,79 @@
       </svg>
     </div>
     <!-- End progress-wrap -->
-
-    <!-- JS Script -->
-
-    <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- JavaScript: Data and Pagination Functions -->
     <script>
+      /******************** Data ********************/
+      // Mock notice data (공지사항 데이터 목업)
       const notices = [
         {
-          date: "25-02-06",
+          date: "2025-06-20",
           title: "새로운 기능 추가 안내",
           author: "관리자",
           message:
-            "새로운 기능이 추가되었습니다. 자세한 내용은 공지를 확인해주세요.",
+            "시스템에 새로운 기능이 추가되었습니다. 자세한 내용은 공지사항을 확인해주세요.",
         },
         {
-          date: "25-02-05",
+          date: "2025-06-15",
           title: "정기 점검 일정 안내",
           author: "운영팀",
-          message: "서버 점검이 예정되어 있습니다. 이용에 참고 바랍니다.",
+          message:
+            "서버 정기 점검이 예정되어 있습니다. 서비스 이용에 참고 바랍니다.",
         },
         {
-          date: "25-02-04",
+          date: "2025-06-10",
           title: "이벤트 당첨자 발표",
           author: "이벤트팀",
-          message: "이벤트 당첨자가 발표되었습니다! 공지를 확인하세요.",
+          message:
+            "최근 진행된 이벤트의 당첨자가 발표되었습니다. 자세한 내용은 공지사항에서 확인하세요.",
         },
         {
-          date: "25-02-03",
+          date: "2025-06-05",
           title: "긴급 보안 업데이트",
           author: "보안팀",
           message:
-            "보안 업데이트가 적용되었습니다. 반드시 확인 후 조치 바랍니다.",
+            "시스템 보안을 위해 긴급 업데이트가 적용되었습니다. 모든 사용자는 확인해주시기 바랍니다.",
         },
         {
-          date: "25-02-02",
+          date: "2025-06-01",
           title: "서비스 이용 약관 변경 안내",
           author: "고객지원팀",
           message:
-            "서비스 이용 약관이 변경되었습니다. 변경된 내용을 확인해 주세요.",
+            "새로운 서비스 이용 약관이 적용되었습니다. 변경 사항을 반드시 확인해주시기 바랍니다.",
+        },
+        {
+          date: "2025-05-28",
+          title: "신규 객실 오픈 안내",
+          author: "마케팅팀",
+          message: "새로운 객실이 오픈되었습니다. 많은 관심 부탁드립니다.",
+        },
+        {
+          date: "2025-05-25",
+          title: "주차장 이용 시간 변경 안내",
+          author: "운영팀",
+          message:
+            "주차장 이용 시간이 변경되었습니다. 업데이트된 정보를 확인해주세요.",
+        },
+        {
+          date: "2025-05-20",
+          title: "시스템 점검 완료 안내",
+          author: "기술팀",
+          message:
+            "정기 시스템 점검이 완료되었습니다. 안정적인 서비스 제공을 위해 노력하겠습니다.",
         },
       ];
 
-      const rowsPerPage = 3;
+      /******************** Configuration ********************/
+      // Number of rows per page (예: 7 rows per page)
+      const rowsPerPage = 7;
       let currentPage = 1;
 
+      /******************** Functions ********************/
+      // loadTable: Loads the table rows for the current page.
+      // loadTable: 현재 페이지의 테이블 행을 로드합니다.
       function loadTable(page) {
         const tableBody = document.getElementById("noticeTableBody");
-        tableBody.innerHTML = "";
+        tableBody.innerHTML = ""; // Clear existing rows
 
         const start = (page - 1) * rowsPerPage;
         const end = start + rowsPerPage;
@@ -394,27 +427,33 @@
           const row = document.createElement("tr");
           row.classList.add("align-middle");
           row.style.cursor = "pointer";
+          // Add Bootstrap modal attributes if you want to open a detail view on click
           row.setAttribute("data-bs-toggle", "modal");
           row.setAttribute("data-bs-target", "#noticeModal");
           row.onclick = () =>
-            openModal(notice.date, notice.title, notice.message, notice.author);
+            openNoticeModal(
+              notice.date,
+              notice.title,
+              notice.message,
+              notice.author,
+            );
 
           row.innerHTML = `
-                    <th scope="row">${start + index + 1}</th>
-                    <td class="text-muted">${notice.date}</td>
-                    <td>${notice.title}</td>
-                    <td class="text-muted">${notice.author}</td>
-                `;
+            <th scope="row" class="text-center">${start + index + 1}</th>
+            <td class="text-center text-muted">${notice.date}</td>
+            <td class="text-truncate">${notice.title}</td>
+            <td class="text-center text-muted">${notice.author}</td>
+          `;
           tableBody.appendChild(row);
         });
-
         updatePagination();
       }
 
+      // updatePagination: Updates the pagination buttons.
+      // updatePagination: 페이지네이션 버튼을 업데이트합니다.
       function updatePagination() {
         const pagination = document.getElementById("pagination");
         pagination.innerHTML = "";
-
         const totalPages = Math.ceil(notices.length / rowsPerPage);
 
         for (let i = 1; i <= totalPages; i++) {
@@ -437,16 +476,21 @@
         }
       }
 
-      function openModal(date, title, message, author) {
+      // openNoticeModal: Opens the modal and fills in notice details.
+      // openNoticeModal: 공지사항 모달을 열고 세부 정보를 채웁니다.
+      function openNoticeModal(date, title, message, author) {
         document.getElementById("modalDate").innerText = date;
         document.getElementById("modalTitle").innerText = title;
         document.getElementById("modalMessage").innerText = message;
         document.getElementById("modalAuthor").innerText = author;
       }
 
+      // Initialize the table on window load
+      // 윈도우 로드 시 테이블을 초기화합니다.
       window.onload = () => loadTable(currentPage);
     </script>
 
+    <!-- Include Bootstrap JS and dependencies -->
     <script src="bootstrap.bundle.min.js"></script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
