@@ -6,7 +6,7 @@ Main Style
 /*** Global CSS ***/
 
 :root {
-  --dmsans:"DM Sans", serif;
+  --dmsans: "Malgun Gothic" "Arial" "DM Sans", serif;
   --white: #fff;
   --title: #222;
   --body: #444;
