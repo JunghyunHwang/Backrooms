@@ -4,6 +4,7 @@
 
 function checkLoginStatus() {
 	    const isLoggedIn = localStorage.getItem("loggedIn");
+		console.log(isLoggedIn);
 	    if (isLoggedIn) {
 	        document.getElementById("guest").style.display = "none";
 	        document.getElementById("user").style.display = "block";
@@ -15,6 +16,7 @@ function checkLoginStatus() {
 	
 function login() {
 	    localStorage.setItem("loggedIn", "true");
+		location.href='index.html';
 	    checkLoginStatus();
 	}
 	
