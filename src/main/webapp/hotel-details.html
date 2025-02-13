@@ -26,7 +26,6 @@
 	</head>
 
     <body>
-	
 		<!-- Start Preloader -->
 		<div class="preloader_wrap">
 			 <div class="preloader">
@@ -84,49 +83,41 @@
 		<!-- Start Header -->
 		<header id="tr_header">
 			<div class="container">
-				<div class="row">
+			  	<div class="row">
 					<div class="col-xl-2 col-md-3 align-self-center">
 						<div class="site_logo">
-							<a href="index.html"><img src="assets/img/logo.svg" alt="Trvelo"></a>	
+							<a href="index.html"><img src="assets/img/Backrooms.svg" alt="Trvelo"/></a>
 						</div>
-					</div><!-- End Col -->		
-
+					</div>
+					<!-- End Col -->
+	  
 					<div class="col-xl-10 col-md-9">
 						<div class="header_right d-flex justify-content-end">
 							<nav class="main-menu align-self-center">
 								<ul>
 									<li><a href="index.html">Home</a></li>
-									<li><a href="about.html">About</a></li>
-									<li><a href="tour.html">Tour</a></li>
-									<li><a href="services.html">Services</a></li>
-									<li><a href="#">Pages <i class="fa-solid fa-chevron-down"></i></a>
+									<li>
+										<a href="#">게시판 <i class="fa-solid fa-chevron-down"></i></a>
 										<ul class="sub-menu">
-											<li><a href="blog.html">Blog List</a></li>
-											<li><a href="blog-details.html">Blog Details</a></li>
-											<li><a href="tour.html">Tour</a></li>
-											<li><a href="tour-details.html">Tour Details</a></li>
+											<li><a href="notice.html">공지사항</a></li>
+											<li><a href="event.html">이벤트 게시판</a></li>
 										</ul>
 									</li>
-									<li><a href="contact.html">Contact</a></li>
-								</ul>
+									<li><a href="inquiryForm.html">문의하기</a></li>
+							</ul>
 							</nav>
-							
-							<div class="call_us d-flex align-self-center">
-								<i class="ph ph-headset align-self-center"></i>
-								<div class="call_content align-self-center">
-									<span>Call Us</span>
-									<a href="tel:+8801546857487">+8801546857487</a>
-								</div>
-							</div>
-							
-							<a href="#" class="green_btn align-self-center">Login / Register <i class="ph ph-arrow-right"></i></a>
+			
+							<a href="login.html" class="green_btn align-self-center">
+								Login / Register <i class="ph ph-arrow-right"></i>
+							</a>
 							<div class="header__hamburger d-xl-none my-auto">
 								<div class="sidebar__toggle">
 									<i class="ph ph-list"></i>
 								</div>
 							</div>
 						</div>
-					</div><!-- End Col -->
+					</div>
+					<!-- End Col -->
 				</div>
 			</div>
 		</header>
@@ -145,44 +136,54 @@
 		</section>
 		<!-- End Start Banner -->
 
-        <!-- Start Searh filter -->
+		<!-- Start Searh filter -->
 		<div class="container">
 			<div class="row">
 				<div class="col-xl-10 col-lg-12 col-md-10 col-10 mx-auto text-center">
 					<div class="tr_search_filter">
-						<form action="#" class="d-flex justify-content-center" method="post">
+						<form action="#" class="d-flex justify-content-center"method="post">
 							<div class="tr_search_location">
 								<label for="trs_location">Location*</label>
 								<select id="trs_location">
-									<option>Dubai Oasis</option>
-									<option>Barcelona Beach</option>
-									<option>Caribbean Cove</option>
-									<option>Dubai Oasis</option>
-									<option>London Luxe</option>
-									<option>Maldives Haven</option>
+									<option>서울</option>
+									<option>부산</option>
+									<option>인천</option>
+									<option>강원</option>
+									<option>제주</option>
+									<option>전주</option>
 								</select>
-							</div>		
-
+							</div>
+	
 							<div class="check_in">
 								<label for="checkin_field">Check - In*</label>
 								<div class="trdate_picker date" id="tr_dpicker1">
-									<input type="text" class="form-control" placeholder="Check In Date" id="checkin_field">
+									<input
+									type="text"
+									class="form-control"
+									placeholder="Check In Date"
+									id="checkin_field"
+									/>
 									<span class="input-group-append">
-										<i class="fa-solid fa-calendar-days"></i>
+									<i class="fa-solid fa-calendar-days"></i>
 									</span>
 								</div>
-							</div>		
-
+							</div>
+	
 							<div class="check_out">
 								<label for="checkout_field">Check - Out*</label>
 								<div class="trdate_picker date" id="tr_dpicker2">
-									<input type="text" class="form-control" placeholder="Check Out Date" id="checkout_field">
+									<input
+									type="text"
+									class="form-control"
+									placeholder="Check Out Date"
+									id="checkout_field"
+									/>
 									<span class="input-group-append">
-										<i class="fa-solid fa-calendar-days"></i>
+									<i class="fa-solid fa-calendar-days"></i>
 									</span>
 								</div>
-							</div>		
-
+							</div>
+	
 							<div class="adut_box">
 								<label>Adult*</label>
 								<select>
@@ -198,13 +199,15 @@
 									<option>10</option>
 								</select>
 							</div>
-							
-							<button type="submit">Search <i class="ph ph-magnifying-glass"></i></button>
+	
+							<button type="button" onclick="location.href='searchResult.html'">
+								Search <i class="ph ph-magnifying-glass"></i>
+							</button>
 						</form>
 					</div>
 				</div>
 			</div>
-		</div>		
+		</div>
 		<!-- End Searh filter -->
 
 		<!-- Start hotel info -->
@@ -217,11 +220,14 @@
 								<div class="hotel-info d-flex justify-content-between align-items-center rounded">
 									<div>
 										<div><h4>호텔 이름</h4></div>
-										<a href="#">지도에서 보기</a>
+										<a href="https://www.google.com/maps/place/Melbourne+VIC,+Australia/@-37.972566,145.053135,12z/data=!4m6!3m5!1s0x6ad646b5d2ba4df7:0x4045675218ccd90!8m2!3d-37.8136276!4d144.9630576!16zL20vMGNoZ3pt?hl=en&entry=ttu&g_ep=EgoyMDI1MDIwOS4wIKXMDSoASAFQAw%3D%3D"
+											target="_blank">
+											지도에서 보기
+										</a>
 									</div>
 									<div class="text-primary fw-bold fs-4">
 										250,663원
-										<button type="button" class="btn btn-primary btn-lg">객실 선택</button>
+										<a href="#select-rooms" class="btn btn-primary btn-lg">객실 선택</a>
 									</div>
 								</div>
 							</div>
@@ -262,7 +268,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="section-hotel-details">
+						<div class="section-hotel-details" id="select-rooms">
 							<h4>방 이름</h4>
 							<div class="d-flex flex-row">
 								<div class="d-flex flex-column">
