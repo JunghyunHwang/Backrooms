@@ -1,168 +1,297 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>나의 예약</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            padding: 20px;
-        }
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Backroom - 예약 관리</title>
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+		<!-- CSS Files -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@100..1000&display=swap" rel="stylesheet">			
+		<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+		<link rel='stylesheet' href='assets/css/bootstrap-datepicker.css'>
+		<link rel="stylesheet" href="assets/css/animate.css">
+		<link rel="stylesheet" href="assets/icons/fontawesome/css/all.min.css">
+		<link rel="stylesheet" href="assets/css/meanmenu.css">
+		<link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+		<link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
+		<link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+		<link rel="stylesheet" href="assets/css/niceselect.css">
+		<link rel="stylesheet" href="assets/css/YouTubePopUp.css">
+		<link rel="stylesheet" href="assets/css/scroll-up.css">
+		<link rel="stylesheet" href="assets/css/style.css">
+		<link rel="stylesheet" href="assets/css/responsive.css">
+		<link rel="stylesheet" href="assets/css/profile.css"/> 
+        <style>
+            /* 예약 카드 스타일 */
+            .reservation-container {
+                width: 100%;
+                max-width: 800px;
+                margin: 0 auto;
+            }
 
-        .container {
-            width: 600px;
-            margin: 0 auto;
-        }
+            .title {
+                font-size: 22px;
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
 
-        .title {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
+            .reservation-card {
+                background-color: white;
+                border: 2px solid black;
+                border-radius: 10px;
+                padding: 15px;
+                margin-bottom: 20px; 
+                width: 100%;
+            }
 
-        .reservation-card {
-            background-color: white;
-            border: 2px solid black;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            width: 100%;  /* container 너비 비례 */
-        }
+            .reservation-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 10px;
+            }
 
-        .reservation-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
+            .hotel-name {
+                font-size: 18px;
+                font-weight: bold;
+            }
 
-        .hotel-name {
-            font-size: 18px;
-            font-weight: bold;
-        }
+            .reservation-number {
+                font-size: 13px;
+            }
 
-        .reservation-number {
-            font-size: 13px;
-        }
+            .reservation-content {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
 
-        .reservation-content {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+            .hotel-image {
+                width: 100px;
+                height: 100px;
+                background-color: #ddd;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 1px solid black;
+            }
 
-        .hotel-image {
-            width: 100px;
-            height: 100px;
-            background-color: #ddd;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 1px solid black;
-        }
+            .check-info {
+                border: 1px solid black;
+                padding: 10px 20px;
+                font-size: 16px;
+                text-align: center;
+            }
 
-        .check-info {
-            border: 1px solid black;
-            padding: 10px 20px;
-            font-size: 16px;
-            text-align: center;
-        }
+            .payment-info {
+                margin-top: 10px;
+                font-weight: bold;
+            }
 
-        .payment-info {
-            margin-top: 10px;
-            font-weight: bold;
-        }
+            .button-group {
+                display: flex;
+                gap: 10px;
+                margin-top: 10px;
+            }
 
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
+            .button {
+                background-color: #add8e6;
+                padding: 5px 10px;
+                border: 1px solid black;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: bold;
+            }
 
-        .button {
-            background-color: #add8e6;
-            padding: 5px 10px;
-            border: 1px solid black;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+            .button:hover {
+                background-color: #87ceeb;
+            }
+        </style>
+	</head>
 
-        .button:hover {
-            background-color: #87ceeb;
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <div class="title">나의 예약</div>
-
-    <!-- 예약 카드 1 -->
-    <div class="reservation-card">
-        <div class="reservation-header">
-            <div class="hotel-name">호텔 A</div>
-            <div class="reservation-number">예약 번호: 0000111122223333</div>
-        </div>
-        <div class="reservation-content">
-            <div class="hotel-image">호텔 이미지</div>
-            <div class="check-info">
-                체크인: 2월 28일<br>
-                체크아웃: 3월 2일
+    <body>
+    
+    
+	<!-- Start Header -->
+    <header id="tr_header">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-2 col-md-3 align-self-center">
+            <div class="site_logo">
+              <a href="index.html"
+                ><img src="assets/img/Backrooms.svg" alt="Trvelo"
+              /></a>
             </div>
-        </div>
-        <div class="payment-info">결제 금액: 300,000원</div>
-        <div class="button-group">
-            <button class="button">수정</button>
-            <button class="button">취소</button>
-            <button class="button">리뷰 작성하기</button>
-        </div>
-    </div>
+          </div>
+          <!-- End Col -->
 
-    <!-- 예약 카드 2 -->
-    <div class="reservation-card">
-        <div class="reservation-header">
-            <div class="hotel-name">호텔 B</div>
-            <div class="reservation-number">예약 번호: 0000111122224444</div>
-        </div>
-        <div class="reservation-content">
-            <div class="hotel-image">호텔 이미지</div>
-            <div class="check-info">
-                체크인: 3월 5일<br>
-                체크아웃: 3월 8일
-            </div>
-        </div>
-        <div class="payment-info">결제 금액: 450,000원</div>
-        <div class="button-group">
-            <button class="button">수정</button>
-            <button class="button">취소</button>
-            <button class="button">리뷰 작성하기</button>
-        </div>
-    </div>
+          <div class="col-xl-10 col-md-9">
+            <div class="header_right d-flex justify-content-end">
+              <nav class="main-menu align-self-center">
+                <ul>
+                  <li><a href="index.html">Home</a></li>
+                  <li>
+                    <a href="#"
+                      >게시판 <i class="fa-solid fa-chevron-down"></i
+                    ></a>
+                    <ul class="sub-menu">
+                      <li><a href="notice.html">공지사항</a></li>
+                      <li><a href="event.html">이벤트 게시판</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="inquiryForm.html">문의하기</a></li>
+                </ul>
+              </nav>
 
-    <!-- 예약 카드 3 -->
-    <div class="reservation-card">
-        <div class="reservation-header">
-            <div class="hotel-name">호텔 C</div>
-            <div class="reservation-number">예약 번호: 0000111122225555</div>
-        </div>
-        <div class="reservation-content">
-            <div class="hotel-image">호텔 이미지</div>
-            <div class="check-info">
-                체크인: 4월 10일<br>
-                체크아웃: 4월 12일
-            </div>
-        </div>
-        <div class="payment-info">결제 금액: 200,000원</div>
-        <div class="button-group">
-            <button class="button">수정</button>
-            <button class="button">취소</button>
-            <button class="button">리뷰 작성하기</button>
-        </div>
+              <a href="login.html" class="green_btn align-self-center" id="guest" style="display:block;">Login / Register <i class="ph ph-arrow-right"></i></a>
+              
+              <div class="profile_btn" id="user" style="display: none;">
+    <div class="green_btn align-self-center"> 
+        회원정보 <i class="ph ph-arrow-down align-right"></i> 
     </div>
+    <ul class="sub-menu">
+        <li><a href="UserProfile.html">회원 정보</a></li>
+<li><a href="reservationInfoBox.html">예약 관리</a></li>
+<li><a href="MyQnA.html">내 문의</a></li>
+<li><a href="Myreview.html">내 리뷰</a></li>
+    </ul> 
 </div>
+              
+              <div class="header__hamburger d-xl-none my-auto">
+                <div class="sidebar__toggle">
+                  <i class="ph ph-list"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Col -->
+        </div>
+      </div>
+    </header>
+    <!-- End Header -->
+		
+		<!-- Start Left Bar -->
+		<section class="tour_details section-padding wow fadeIn" style="min-height: calc(100vh - 100px);">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-lg-4 col-12 wow fadeIn">
+						<div class="tour_widget">
+							<h2 class="tw_title">내 페이지</h2>
+							<ul class="tw_info">
+								<li><a href="UserProfile.html">회원 정보</a></li>
+								<li><a href="reservationInfoBox.html">예약 관리</a></li>
+								<li><a href="MyQnA.html">내 문의</a></li>
+								<li><a href="Myreview.html">내 리뷰</a></li>
+							</ul>
+						</div>
+					</div>
 
-</body>
+					<div class="col-lg-8 col-12">
+						<div class="single_tour_details">
+							<div class="tdetails_meta">
+
+							<!-- 나의 예약 섹션 -->
+							<div id="reservationData" class="reservation-container">
+								<div class="title"> </div>
+
+								<!-- 예약 카드 1 -->
+								<div class="reservation-card">
+									<div class="reservation-header">
+										<div class="hotel-name">호텔 A</div>
+										<div class="reservation-number">예약 번호: 0000111122223333</div>
+									</div>
+									<div class="reservation-content">
+										<div class="hotel-image">호텔 이미지</div>
+										<div class="check-info">
+											체크인: 2월 28일<br>
+											체크아웃: 3월 2일
+										</div>
+									</div>
+									<div class="payment-info">결제 금액: 300,000원</div>
+									<div class="button-group">
+										<button class="button">수정</button>
+										<button class="button">취소</button>
+										<button class="button">리뷰 작성하기</button>
+									</div>
+								</div>
+
+								<!-- 예약 카드 2 -->
+								<div class="reservation-card">
+									<div class="reservation-header">
+										<div class="hotel-name">호텔 B</div>
+										<div class="reservation-number">예약 번호: 0000111122224444</div>
+									</div>
+									<div class="reservation-content">
+										<div class="hotel-image">호텔 이미지</div>
+										<div class="check-info">
+											체크인: 3월 5일<br>
+											체크아웃: 3월 8일
+										</div>
+									</div>
+									<div class="payment-info">결제 금액: 450,000원</div>
+									<div class="button-group">
+										<button class="button">수정</button>
+										<button class="button">취소</button>
+										<button class="button">리뷰 작성하기</button>
+									</div>
+								</div>
+
+								<!-- 예약 카드 3 -->
+								<div class="reservation-card">
+									<div class="reservation-header">
+										<div class="hotel-name">호텔 C</div>
+										<div class="reservation-number">예약 번호: 0000111122225555</div>
+									</div>
+									<div class="reservation-content">
+										<div class="hotel-image">호텔 이미지</div>
+										<div class="check-info">
+											체크인: 4월 10일<br>
+											체크아웃: 4월 12일
+										</div>
+									</div>
+									<div class="payment-info">결제 금액: 200,000원</div>
+									<div class="button-group">
+										<button class="button">수정</button>
+										<button class="button">취소</button>
+										<button class="button">리뷰 작성하기</button>
+									</div>
+								</div>
+							</div>
+							<!-- 나의 예약 섹션 끝 -->
+							</div>
+						</div>					
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- End Left Bar -->
+
+		<!-- Start footer -->
+		<div class="my-footer p-3 bg-black text-center text-light">
+			Copyright © 2025 Backrooms All Right Reserved. 
+		</div>
+		<!-- End footer -->
+
+		<!-- JS Script -->
+       <script src="assets/js/jquery.min.js"></script>
+	<script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src='assets/js/datepicker.min.js'></script>
+	<script src='assets/js/swiper-bundle.min.js'></script>
+	<script src="assets/js/owl.carousel.min.js"></script>
+	<script src="assets/js/jquery.meanmenu.min.js"></script>
+	<script src="assets/js/jquery.inview.min.js"></script>
+	<script src="assets/js/mixitup.min.js"></script>
+	<script src="assets/js/nicesellect.js"></script>
+	<script src="assets/js/wow.js"></script>
+	<script src="assets/js/YouTubePopUp.jquery.js"></script>
+	<script src="assets/js/yvpopup-active.js"></script>
+	<script src="assets/js/scroll-up.js"></script>
+	<script src="assets/js/scripts.js"></script>
+	<script src="assets/js/newslatter.js"></script>
+	<script src="https://unpkg.com/@phosphor-icons/web"></script>
+	<script src="assets/js/LoginManager.js"></script>
+	</body>
 </html>

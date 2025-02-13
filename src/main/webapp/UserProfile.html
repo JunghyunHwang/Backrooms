@@ -3,13 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원 정보</title>
+    <title>Backroom - 회원 정보</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+    
+    <!-- CSS Files -->
+	    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+		<link rel='stylesheet' href='assets/css/bootstrap-datepicker.css'>
+		<link rel="stylesheet" href="assets/css/animate.css">
+		<link rel="stylesheet" href="assets/icons/fontawesome/css/all.min.css">
+		<link rel="stylesheet" href="assets/css/meanmenu.css">
+		<link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+		<link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
+		<link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+		<link rel="stylesheet" href="assets/css/niceselect.css">
+		<link rel="stylesheet" href="assets/css/YouTubePopUp.css">
+		<link rel="stylesheet" href="assets/css/scroll-up.css">
+		<link rel="stylesheet" href="assets/css/style.css">
+		<link rel="stylesheet" href="assets/css/responsive.css">
+		<link rel="stylesheet" href="assets/css/profile.css"/> 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            width: 400px;
+        .user-container {
+            width: 800px;
             border: 2px solid black;
             padding: 15px;
             border-radius: 10px;
@@ -51,7 +65,7 @@
         }
         textarea {
             width: 80%;
-            height: 20px;
+            height: 30px;
             padding: 3px;
             margin-top: 2px;
             resize: none;
@@ -60,8 +74,8 @@
             font-size: 13px;
         }
         textarea:disabled {
-            background-color: #f0f0f0;  /* 비활성화 시 회색 배경 */
-            color: #777;               /* 글자 색 연하게 */
+            background-color: #f0f0f0;
+            color: #777;
         }
         .button {
             background-color: lightgreen;
@@ -75,50 +89,160 @@
         .button:hover {
             background-color: #90ee90;
         }
+      
+      
     </style>
 </head>
+
 <body>
+		
+		
 
-<div class="container">
-    <div class="title">회원 정보</div>
-    
-    <div class="profile-section">
-        <div class="profile-photo">프로필 사진</div>
-        
-        <div class="readonly-info">
-            <div><strong>실명:</strong> 홍길동</div>
-            <div><strong>생년월일:</strong> 1990-01-01</div>
-            <div><strong>이메일:</strong> hong@example.com</div>
-        </div>
+	<!-- Start Header -->
+    <header id="tr_header">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-2 col-md-3 align-self-center">
+            <div class="site_logo">
+              <a href="index.html"
+                ><img src="assets/img/Backrooms.svg" alt="Trvelo"
+              /></a>
+            </div>
+          </div>
+          <!-- End Col -->
+
+          <div class="col-xl-10 col-md-9">
+            <div class="header_right d-flex justify-content-end">
+              <nav class="main-menu align-self-center">
+                <ul>
+                  <li><a href="index.html">Home</a></li>
+                  <li>
+                    <a href="#"
+                      >게시판 <i class="fa-solid fa-chevron-down"></i
+                    ></a>
+                    <ul class="sub-menu">
+                      <li><a href="notice.html">공지사항</a></li>
+                      <li><a href="event.html">이벤트 게시판</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="inquiryForm.html">문의하기</a></li>
+                </ul>
+              </nav>
+
+              <a href="login.html" class="green_btn align-self-center" id="guest" style="display:block;">Login / Register <i class="ph ph-arrow-right"></i></a>
+              
+              <div class="profile_btn" id="user" style="display: none;">
+    <div class="green_btn align-self-center"> 
+        회원정보 <i class="ph ph-arrow-down align-right"></i> 
     </div>
-
-    <div class="info-box">
-        <label>전화번호</label>
-        <textarea disabled>010-1234-5678</textarea>  <!-- 기본적으로 비활성화 -->
-
-        <label>국가/지역</label>
-        <textarea disabled>대한민국, 서울</textarea>  <!-- 비활성화 -->
-
-        <label>닉네임</label>
-        <textarea disabled>hgd11</textarea>  <!-- 비활성화 -->
-
-        <button class="button" onclick="toggleEdit()">수정</button>
-    </div>
+		    <ul class="sub-menu">
+		    	<li><a href="UserProfile.html">회원 정보</a></li>
+				<li><a href="reservationInfoBox.html">예약 관리</a></li>
+				<li><a href="MyQnA.html">내 문의</a></li>
+				<li><a href="Myreview.html">내 리뷰</a></li>
+		    </ul> 
 </div>
+              
+              <div class="header__hamburger d-xl-none my-auto">
+                <div class="sidebar__toggle">
+                  <i class="ph ph-list"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Col -->
+        </div>
+      </div>
+    </header>
+    <!-- End Header -->
 
-<script>
-    function toggleEdit() {
-        const textareas = document.querySelectorAll('textarea');
-        const button = document.querySelector('.button');
-        const isDisabled = textareas[0].disabled;  // 현재 상태 확인
+    <!-- Start Content Section -->
+    <section class="tour_details section-padding"  >
+        <div class="container">
+            <div class="row">
+                <!-- Left Sidebar -->
+                <div class="col-lg-4 col-12 wow fadeIn">
+                    <div class="tour_widget">
+                        <h2 class="tw_title">내 페이지</h2>
+                        <ul class="tw_info">
+                            <li><a href="UserProfile.html">회원 정보</a></li>
+							<li><a href="reservationInfoBox.html">예약 관리</a></li>
+							<li><a href="MyQnA.html">내 문의</a></li>
+							<li><a href="Myreview.html">내 리뷰</a></li>
+                        </ul>
+                    </div>
+                </div>
 
-        textareas.forEach(textarea => {
-            textarea.disabled = !isDisabled;       // 활성화/비활성화 전환
-        });
+                <!-- Main Content -->
+                <div class="col-lg-8 col-12 wow fadeIn" style="min-height: calc(100vh - 100px);>
+                    <div class="single_tour_details">
+                        <div class="user-container">
+                            <div class="title">회원 정보</div>
+                            <div class="profile-section">
+                                <div class="profile-photo">프로필 사진</div>
+                                <div class="readonly-info">
+                                    <div><strong>실명:</strong> 홍길동</div>
+                                    <div><strong>생년월일:</strong> 1990-01-01</div>
+                                    <div><strong>이메일:</strong> hong@example.com</div>
+                                </div>
+                            </div>
+                            <div class="info-box">
+                                <label>전화번호</label>
+                                <textarea disabled>010-1234-5678</textarea>
 
-        button.textContent = isDisabled ? '완료' : '수정';  // 버튼 텍스트 전환
-    }
-</script>
+                                <label>국가/지역</label>
+                                <textarea disabled>대한민국, 서울</textarea>
 
+                                <label>닉네임</label>
+                                <textarea disabled>hgd11</textarea>
+
+                                <button class="button" onclick="toggleEdit()">수정</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Main Content -->
+            </div>
+        </div>
+    </section>
+    <!-- End Content Section -->
+
+ 	<!-- Start footer -->
+		<div class="my-footer p-3 bg-black text-center text-light">
+			Copyright © 2025 Backrooms All Right Reserved. 
+		</div>
+	<!-- End footer -->
+
+    <!-- JS Script -->
+      <script src="assets/js/jquery.min.js"></script>
+	<script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src='assets/js/datepicker.min.js'></script>
+	<script src='assets/js/swiper-bundle.min.js'></script>
+	<script src="assets/js/owl.carousel.min.js"></script>
+	<script src="assets/js/jquery.meanmenu.min.js"></script>
+	<script src="assets/js/jquery.inview.min.js"></script>
+	<script src="assets/js/mixitup.min.js"></script>
+	<script src="assets/js/nicesellect.js"></script>
+	<script src="assets/js/wow.js"></script>
+	<script src="assets/js/YouTubePopUp.jquery.js"></script>
+	<script src="assets/js/yvpopup-active.js"></script>
+	<script src="assets/js/scroll-up.js"></script>
+	<script src="assets/js/scripts.js"></script>
+	<script src="assets/js/newslatter.js"></script>
+	<script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="assets/js/LoginManager.js"></script>
+    <script>
+        function toggleEdit() {
+            const textareas = document.querySelectorAll('textarea');
+            const button = document.querySelector('.button');
+            const isDisabled = textareas[0].disabled;
+
+            textareas.forEach(textarea => {
+                textarea.disabled = !isDisabled;
+            });
+
+            button.textContent = isDisabled ? '완료' : '수정';
+        }
+    </script>
 </body>
 </html>
