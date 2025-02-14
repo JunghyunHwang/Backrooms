@@ -1,5 +1,6 @@
 const HEADER = `
-    <!-- Start Header -->
+<!-- Start Header -->
+    <header id="tr_header">
       <div class="container">
         <div class="row">
           <div class="col-xl-2 col-md-3 align-self-center">
@@ -29,9 +30,20 @@ const HEADER = `
                 </ul>
               </nav>
 
-              <a href="login.html" class="green_btn align-self-center"
-                >Login / Register <i class="ph ph-arrow-right"></i
-              ></a>
+              <a href="login.html" class="green_btn align-self-center" id="guest" style="display:block;">Login / Register <i class="ph ph-arrow-right"></i></a>
+              
+              <div class="profile_btn" id="user" style="display: none;">
+			    <div class="green_btn align-self-center"> 
+			        회원정보 <i class="ph ph-arrow-down align-right"></i> 
+			    </div>
+			    <ul class="sub-menu">
+			        <li><a href="UserProfile.html">회원 정보</a></li>
+					<li><a href="reservationInfoBox.html">예약 관리</a></li>
+					<li><a href="MyQnA.html">내 문의</a></li>
+					<li><a href="Myreview.html">내 리뷰</a></li>
+			    </ul> 
+			</div>
+              
               <div class="header__hamburger d-xl-none my-auto">
                 <div class="sidebar__toggle">
                   <i class="ph ph-list"></i>
@@ -42,8 +54,8 @@ const HEADER = `
           <!-- End Col -->
         </div>
       </div>
+    </header>
     <!-- End Header -->
-
 `;
 
 const headerElement = document.querySelector("#tr_header");
