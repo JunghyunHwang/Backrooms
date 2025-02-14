@@ -205,75 +205,9 @@
 
     <!-- JavaScript: Data and Pagination Functions -->
     <script>
-      // -------------------- Data --------------------
-      // Mock event data (이벤트 데이터 목업)
-      const events = [
-        {
-          id: 1,
-          date: "2025-07-01",
-          title: "여름 바캉스 특별 할인",
-          location: "서울 강남 호텔",
-          organizer: "호텔 마케팅팀",
-          content:
-            "7~8월 투숙객 대상 최대 30% 할인! 조식 포함된 스페셜 패키지 제공.",
-        },
-        {
-          id: 2,
-          date: "2025-09-15",
-          title: "가을 단풍 여행 패키지",
-          location: "강원도 속초 리조트",
-          organizer: "호텔 이벤트팀",
-          content:
-            "강원도 단풍 시즌을 즐길 수 있는 2박 3일 패키지. 조식 및 스파 이용권 포함!",
-        },
-        {
-          id: 3,
-          date: "2025-12-24",
-          title: "크리스마스 디너 프로모션",
-          location: "부산 해운대 호텔",
-          organizer: "레스토랑 매니저",
-          content:
-            "크리스마스 특별 디너 코스! 라이브 공연과 함께 즐기는 로맨틱한 저녁.",
-        },
-        {
-          id: 4,
-          date: "2026-01-01",
-          title: "새해맞이 불꽃놀이 패키지",
-          location: "제주 오션뷰 리조트",
-          organizer: "호텔 기획팀",
-          content:
-            "새해맞이 불꽃놀이를 객실에서 감상할 수 있는 프리미엄 패키지.",
-        },
-        {
-          id: 5,
-          date: "2026-02-14",
-          title: "밸런타인데이 로맨틱 패키지",
-          location: "서울 남산 호텔",
-          organizer: "이벤트 기획팀",
-          content:
-            "스위트룸 숙박 + 와인 & 초콜릿 세트 제공. 로맨틱한 데이트를 위한 완벽한 선택!",
-        },
-        {
-          id: 6,
-          date: "2026-05-05",
-          title: "어린이날 패밀리 이벤트",
-          location: "대전 패밀리 호텔",
-          organizer: "가족 서비스팀",
-          content: "아이들을 위한 특별 놀이 프로그램 및 키즈 뷔페 운영.",
-        },
-        {
-          id: 7,
-          date: "2026-08-20",
-          title: "여름 페스티벌 이벤트",
-          location: "부산 해운대",
-          organizer: "이벤트 운영팀",
-          content: "여름철 해운대에서 열리는 뮤직 페스티벌 및 다양한 부대행사.",
-        },
-      ];
-
       // -------------------- Configuration --------------------
       // Set number of rows per page (예: 5행)
-      const rowsPerPage = 5;
+      const rowsPerPage = 12;
       let currentPage = 1;
 
       // -------------------- Functions --------------------
@@ -349,6 +283,7 @@
     </script>
 
     <!-- Include Bootstrap JS and dependencies -->
+    <script src="assets/dummy/data/mockEvents.js"></script>
     <script src="assets/js/header.js"></script>
     <script src="assets/js/footer.js"></script>
     <script src="bootstrap.bundle.min.js"></script>
