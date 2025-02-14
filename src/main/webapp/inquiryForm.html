@@ -81,85 +81,94 @@
         </div>
       </div>
     </div>
-
     <div class="offcanvas__overlay"></div>
 
-    <!-- Start Header -->
-    <header id="tr_header"></header>
-    <!-- End Header -->
+    <div class="d-flex flex-column min-vh-100">
+      <!-- Start Header -->
+      <header id="tr_header"></header>
+      <!-- End Header -->
 
-    <!-- Start Left Bar -->
+      <!-- Start main -->
+      <main
+        class="container-lg my-5 flex-grow-1 d-flex align-items-center justify-content-center fs-5"
+      >
+        <section class="w-100" style="margin-bottom: 5em">
+          <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+              <article class="card shadow-lg border-dark">
+                <header class="card-header bg-white text-center">
+                  <h3 class="text-secondary fw-bold">문의 작성</h3>
+                </header>
+                <div class="card-body">
+                  <form action="#" method="POST">
+                    <!-- Inquiry category -->
+                    <div class="mb-3">
+                      <label for="inquiryCategory" class="form-label"
+                        >문의 종류</label
+                      >
+                      <select
+                        id="inquiryCategory"
+                        name="inquiryCategory"
+                        class="form-select form-select-lg border-dark shadow-sm"
+                      >
+                        <option value="" disabled selected>
+                          문의 종류 선택
+                        </option>
+                        <option value="예약문의">예약 문의</option>
+                        <option value="객실문의">객실 문의</option>
+                        <option value="서비스문의">서비스 문의</option>
+                        <option value="결제문의">결제 문의</option>
+                        <option value="취소환불문의">취소 및 환불 문의</option>
+                        <option value="기타">기타</option>
+                      </select>
+                    </div>
 
-    <!-- Start main -->
+                    <!-- Message Input -->
+                    <div class="mb-3">
+                      <label for="message" class="form-label">내용</label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        class="form-control form-control-lg border-dark shadow-sm"
+                        rows="6"
+                        placeholder="내용을 입력해주세요"
+                        required
+                      ></textarea>
+                    </div>
 
-    <main class="d-flex justify-content-center align-items-center vh-100">
-      <section class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-6">
-            <article class="card shadow-lg border-dark">
-              <header class="card-header bg-white text-center">
-                <h3 class="text-secondary fw-bold">문의 작성</h3>
-              </header>
-
-              <div class="card-body">
-                <h2 class="text-end fw-bold mb-4">문의 내용</h2>
-
-                <form action="#" method="POST">
-                  <!-- Inquiry Title -->
-                  <div class="mb-3">
-                    <label for="title" class="form-label fw-bold">제목</label>
-                    <input
-                      type="text"
-                      id="title"
-                      name="title"
-                      class="form-control border-dark shadow-sm"
-                      placeholder="제목을 입력해주세요"
-                      required
-                    />
-                  </div>
-
-                  <!-- Message Input -->
-                  <div class="mb-3">
-                    <label for="message" class="form-label fw-bold">내용</label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      class="form-control border-dark shadow-sm"
-                      rows="4"
-                      placeholder="내용을 입력해주세요"
-                      required
-                    ></textarea>
-                  </div>
-
-                  <!-- Register Button -->
-                  <div class="d-grid">
-                    <button type="submit" class="btn btn-dark fw-bold shadow">
-                      등록하기
-                    </button>
-                  </div>
-                </form>
-              </div>
-
-              <footer class="card-footer text-center text-muted small">
-                문의를 작성하시면 관리자에게 전달됩니다.
-              </footer>
-            </article>
+                    <!-- Register Button -->
+                    <div class="d-grid">
+                      <button
+                        type="submit"
+                        class="btn btn-dark btn-lg fw-bold shadow"
+                      >
+                        등록하기
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <footer class="card-footer text-center text-muted small">
+                  <p>
+                    문의를 작성하시면 관리자에게 전달됩니다.<br />
+                    문의하신 내용에 대한 답변은 <u>마이페이지 > 내문의</u>에서
+                    확인하실 수 있습니다.
+                  </p>
+                </footer>
+              </article>
+            </div>
           </div>
+        </section>
+      </main>
+      <!-- End main -->
+
+      <!-- Start footer -->
+      <footer id="footer-##">
+        <div class="my-footer p-3 bg-black text-center text-light mt-auto">
+          Copyright © 2025 Backrooms All Right Reserved.
         </div>
-      </section>
-    </main>
-
-    <!--- END CONTAINER -->
-    <!-- End Left Bar -->
-
-    <!-- Start footer -->
-    <!-- Start footer -->
-    <footer
-      id="footer"
-      class="my-footer p-3 bg-black text-center text-light"
-    ></footer>
-    <!-- End footer -->
-    <!-- End footer -->
+      </footer>
+      <!-- End footer -->
+    </div>
 
     <!-- Start progress-wrap -->
     <div class="progress-wrap">
@@ -174,8 +183,7 @@
     </div>
     <!-- End progress-wrap -->
 
-    <!-- JS Script -->
-
+    <!-- JS Scripts -->
     <script src="assets/js/header.js"></script>
     <script src="assets/js/footer.js"></script>
     <script src="bootstrap.bundle.min.js"></script>
