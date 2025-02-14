@@ -22,6 +22,7 @@
 		<link rel="stylesheet" href="assets/css/scroll-up.css">
 		<link rel="stylesheet" href="assets/css/style.css">
 		<link rel="stylesheet" href="assets/css/responsive.css">
+		<link rel="stylesheet" href="assets/css/profile.css"/> 
 	</head>
 
     <body>
@@ -81,65 +82,11 @@
 		<div class="offcanvas__overlay"></div>
 	
 		<!-- Start Header -->
-    <header id="tr_header">
-      <div class="container">
-        <div class="row">
-          <div class="col-xl-2 col-md-3 align-self-center">
-            <div class="site_logo">
-              <a href="index.html"
-                ><img src="assets/img/Backrooms.svg" alt="Trvelo"
-              /></a>
-            </div>
-          </div>
-          <!-- End Col -->
-
-          <div class="col-xl-10 col-md-9">
-            <div class="header_right d-flex justify-content-end">
-              <nav class="main-menu align-self-center">
-                <ul>
-                  <li><a href="index.html">Home</a></li>
-                  <li>
-                    <a href="#"
-                      >게시판 <i class="fa-solid fa-chevron-down"></i
-                    ></a>
-                    <ul class="sub-menu">
-                      <li><a href="notice.html">공지사항</a></li>
-                      <li><a href="event.html">이벤트 게시판</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="inquiryForm.html">문의하기</a></li>
-                </ul>
-              </nav>
-
-              <a href="login.html" class="green_btn align-self-center" id="guest" style="display:block;">Login / Register <i class="ph ph-arrow-right"></i></a>
-              
-              <div class="profile_btn" id="user" style="display: none;">
-			    <div class="green_btn align-self-center"> 
-			        회원정보 <i class="ph ph-arrow-down align-right"></i> 
-			    </div>
-			    <ul class="sub-menu">
-			        <li><a href="UserProfile.html">회원 정보</a></li>
-					<li><a href="reservationInfoBox.html">예약 관리</a></li>
-					<li><a href="MyQnA.html">내 문의</a></li>
-					<li><a href="Myreview.html">내 리뷰</a></li>
-			    </ul> 
-			</div>
-              
-              <div class="header__hamburger d-xl-none my-auto">
-                <div class="sidebar__toggle">
-                  <i class="ph ph-list"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Col -->
-        </div>
-      </div>
-    </header>
+    <header id="tr_header"></header>
     <!-- End Header -->
 		
 		<!-- register start -->
-		<div class="d-flex justify-content-center align-items-center vh-100">
+		<div class="d-flex justify-content-center align-items-center vh-100 mb-5 mt-5">
   <div class="shadow-lg bg-body-tertiary rounded" style="padding: 40px; width: 800px; height: 100%;">
     <form id="signupForm" method="post" action="login.html">
       <label for="userId" class="form-label">아이디</label>
@@ -180,11 +127,13 @@
 
 		<!-- register end -->
 		
-		<!-- Start footer -->
-		<div class="my-footer p-3 bg-black text-center text-light">
-			Copyright © 2025 Backrooms All Right Reserved.
-		</div>
+		 <!-- Start footer -->
+		<footer
+      id="footer"
+      class="my-footer p-3 bg-black text-center text-light"
+    ></footer>
 		<!-- End footer -->
+
 
 		<!-- Start progress-wrap -->
 		<div class="progress-wrap">
@@ -209,7 +158,10 @@
 		<script src="assets/js/yvpopup-active.js"></script>	
 		<script src="assets/js/scroll-up.js"></script>	
 		<script src="assets/js/scripts.js"></script>
-		<script src="assets/js/newslatter.js"></script> 
+		<script src="assets/js/newslatter.js"></script>
+		  <script src="assets/js/header.js"></script>
+    <script src="assets/js/footer.js"></script>
+    <script src="assets/js/LoginManager.js"></script> 
 		<script src="https://unpkg.com/@phosphor-icons/web"></script>
 		<script>
 			// START Recomanded
@@ -225,11 +177,11 @@ document.getElementById("signupForm").addEventListener("submit", function (event
     var confirmPassword = document.getElementById("confirmPassword").value;
 
     if (password !== confirmPassword) {
-        event.preventDefault(); // 기본 제출 방지
+        event.preventDefault();
         alert("비밀번호가 일치하지 않습니다.");
     }
 });
 </script>
-<script src="assets/js/LoginManager.js"></script>	
+
     </body>
 </html>
