@@ -1,0 +1,88 @@
+/* 검색 결과 페이지 레이아웃 */
+.row_search {
+  display: flex;
+  justify-content: space-between; /* 양쪽 정렬 */
+  align-items: flex-start;
+  position: relative;
+  right: -745px;
+}
+
+.price-display {
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+/* 왼쪽 필터 영역 */
+.col-lg-3 {
+  flex: 1;
+  max-width: 22%; /* 최대 25% 너비 */
+}
+
+/* 오른쪽 검색 결과 영역 */
+.col-lg-9 {
+  flex: 2;
+  max-width: 70%; /* 최대 70% 너비 */
+}
+
+
+#tour_widget_serach {
+	border: 1px solid #d9d9d9;
+	box-shadow: 0 1px 1px 0 rgba(10, 33, 36, .08);
+	padding: 10px 20px 20px;
+	border-radius: 8px;
+}
+
+.search {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 30px;
+}
+
+#search-text {
+	width: 100%;
+	border: 1px solid #BBBBBB;
+	padding: 10px;
+	border-radius: 8px;
+	font-size: 14px;
+	margin-right: 10px;
+}
+
+#search-button {
+	border-radius: 8px;
+	background-color: var(--yellow);
+	border-color: var(--yellow);
+	color: white;
+}
+
+.hotal-star-button {
+	margin-top: 10px;
+}
+.visitor-grade-button {
+	margin-top: 10px;
+}
+
+#content-pirce-text {
+	display: blok;
+	text-align: right;
+}
+
+.single-search-hotal {
+	overflow: hidden;
+	border: 1px solid #d9d9d9;
+	padding: 25px;
+	border-radius: 8px;
+/*  	margin-left: 5px;  */
+	margin-bottom: 20px;
+	top: -220px; 
+ 	position: relative; 
+    width: 722px;
+}
+
+.btn_idpw_search {
+	background-color: #0d6efd;
+	border-color: #0d6efd;
+	color: white;
+}
+.com-content {
+	padding-left: 220px;
+}
