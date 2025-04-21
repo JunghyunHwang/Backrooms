@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="NoticeMapper">
+	<select id="selectList" resultType="NoticeDTO">
+	SELECT
+		n.noticeNum,
+		to_char(n.noticeDate, 'YYYY-MM-DD') noticeDate,
+		n.noticeTitle,
+		n.noticeText,
+		n.noticeState,
+		m.memberName
+	from notice n 
+	join member m
+	on n.memberNum = m.memberNum
+	WHERE n.noticeState in (0, 9)
+    Order by 
+    n.noticeState Desc,
+    n.noticedate Desc,
+    n.noticeNum Desc   
+
+<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+    
+	</select>
+	
+	 <select id="Toplist" resultType="NoticeDTO">
+	SELECT
+		n.noticeNum,
+		to_char(n.noticeDate, 'YYYY-MM-DD') noticeDate,
+		n.noticeTitle,
+		n.noticeText,
+		n.noticeState,
+		m.memberName
+	from notice n 
+	join member m
+	on n.memberNum = m.memberNum
+	WHERE n.noticeState = 9
+    Order by 
+    n.noticeState Desc,
+    n.noticedate Desc,
+    n.noticeNum Desc   
+
+<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+    
+	</select>
+
+	<select id="totalCount" resultType="int">
+		SELECT count(*)
+		from notice
+	    where noticeState in (0, 9)
+	</select>
+	
+		<select id="totalTopCount" resultType="int">
+		SELECT count(*)
+		from notice
+	    where noticeState = 9
+	</select>
+
+	<select id="detail" resultType="NoticeDTO">
+   SELECT
+		n.noticeNum,
+		to_char(n.noticeDate, 'YYYY-MM-DD')
+		noticeDate,
+		n.noticeTitle,
+		n.noticeText,
+		n.noticeState,
+		m.memberName
+	from notice n 
+	join member m
+	on n.memberNum = m.memberNum
+	where noticeNum =#{noticeNum}
+	</select>
+	
+	<insert id="insert" parameterType="NoticeDTO" >
+	
+	insert into notice 
+	(noticeNum, memberNum, noticeText, noticeTitle, noticeState)
+	
+	values 
+	(notice_seq.nextval,#{memberNum}, #{noticeText}, #{noticeTitle}, #{noticeState})
+	
+	</insert>
+
+	<update id="delete" parameterType="list">
+        UPDATE notice
+        SET noticeState = 1  <!-- 삭제 상태로 설정 -->
+        WHERE noticeNum IN 
+        <foreach collection="list" item="noticeNum" open="(" separator="," close=")">
+            #{noticeNum}
+        </foreach>
+    </update>
+    
+    <update id="update" parameterType="NoticeDTO">
+        UPDATE notice
+        SET noticeTitle = #{noticeTitle},
+         	noticeText = #{noticeText}  
+       where noticeNum = #{noticeNum}
+    </update>
+</mapper>
