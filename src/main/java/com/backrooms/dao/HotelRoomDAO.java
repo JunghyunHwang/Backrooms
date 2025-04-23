@@ -10,8 +10,12 @@ import java.util.List;
 
 @Repository
 public class HotelRoomDAO {
+    private final SqlSessionTemplate template;
+
     @Autowired
-    private SqlSessionTemplate template;
+    public HotelRoomDAO(SqlSessionTemplate template) {
+        this.template = template;
+    }
 
     public List<HotelRoomDTO> getAvailableRooms(HotelDetailRequestDTO filter) {
         return template.selectList("HotelRoomMapper.getAvailableRooms", filter);
