@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="HotelSearchMapper">
+
+   <select id="selectAvailableRooms" parameterType="SearchCheckDTO" resultType="SeachResultDTO">
+    SELECT 
+        h.hotelName,
+        h.hotelNum,
+        h.hotelRating,
+        h.HotelGrade,
+        r.roomNum,
+        r.roomPrice,
+        r.availableRooms,
+        NVL(checkFilter.reservedCount, 0) AS reservedCount,
+        r.availableRooms - NVL(checkFilter.reservedCount, 0) AS remainingRooms
+    FROM hotel h
+    JOIN room r ON h.hotelNum = r.hotelNum
+    LEFT JOIN (
+        SELECT 
+            res.roomNum,
+            COUNT(*) AS reservedCount
+        FROM reservation res
+        WHERE 
+            TO_DATE(#{checkIn}, 'YYYY-MM-DD') &lt; res.checkOut
+            AND TO_DATE(#{checkOut}, 'YYYY-MM-DD')  &gt; res.checkIn
+        GROUP BY res.roomNum
+    ) checkFilter ON r.roomNum = checkFilter.roomNum
+    WHERE h.hotelCity LIKE '%' || #{hotelCity}
+      AND r.capacity >= #{guestCount}
+      AND r.availableRooms > NVL(checkFilter.reservedCount, 0)
+    ORDER BY h.hotelName, r.roomPrice
+  </select> 
+</mapper>
