@@ -2,10 +2,7 @@ package com.backrooms.service;
 
 import com.backrooms.dao.HotelRoomDAO;
 import com.backrooms.dao.ImageDAO;
-import com.backrooms.dto.HotelDetailRequestDTO;
-import com.backrooms.dto.HotelRoomDTO;
-import com.backrooms.dto.ImageKind;
-import com.backrooms.dto.ImageRequestDTO;
+import com.backrooms.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,32 +10,50 @@ import java.util.List;
 
 @Service
 public class HotelRoomService {
-    @Autowired
-    private HotelRoomDAO hotelRoomDao;
+    private final HotelRoomDAO hotelRoomDao;
+    private final ImageDAO imgDao;
 
     @Autowired
-    private ImageDAO imgDao;
+    public HotelRoomService(HotelRoomDAO hotelRoomDao, ImageDAO imgDao) {
+        this.hotelRoomDao = hotelRoomDao;
+        this.imgDao = imgDao;
+    }
 
-    public List<HotelRoomDTO> getAvailableRooms(HotelDetailRequestDTO filter) {
+    public Hotel getHotelWithRooms(HotelDetailRequestDTO filter) {
         List<HotelRoomDTO> availableRooms = hotelRoomDao.getAvailableRooms(filter);
+        ImageRequestDTO hotelImgFilter = new ImageRequestDTO(ImageKind.HOTEL.getValue());
+        hotelImgFilter.addUse(filter.getHotelNum());
+        int hotelImagesCount = imgDao.getImageCount(hotelImgFilter).get(0);
 
-        ImageRequestDTO imgFilter = new ImageRequestDTO(ImageKind.HOTEL.getValue());
-        imgFilter.addUse(filter.getHotelNum());
-        int hotelImagesCount = imgDao.getImageCount(imgFilter).get(0);
-
-        imgFilter.clear();
-        imgFilter.setKind(ImageKind.ROOM);
+        ImageRequestDTO roomImgFilter = new ImageRequestDTO(ImageKind.ROOM.getValue());
         for (HotelRoomDTO r : availableRooms) {
-            imgFilter.addUse(r.getRoomNum());
+            roomImgFilter.addUse(r.getRoomNum());
         }
+        List<Integer> roomImageCounts = imgDao.getImageCount(roomImgFilter);
 
-        List<Integer> roomImageCounts = imgDao.getImageCount(imgFilter);
+        Hotel hotel = new Hotel(filter.getHotelNum(),
+                availableRooms.get(0).getHotelName(),
+                availableRooms.get(0).getHotelAddress(),
+                availableRooms.get(0).getHotelRating(),
+                availableRooms.get(0).getHotelGrade(),
+                availableRooms.get(0).getLatitude(),
+                availableRooms.get(0).getLongitude(),
+                hotelImagesCount,
+                availableRooms.get(0).getBreakfastPrice());
+
+        assert(availableRooms.size() == roomImageCounts.size());
         for (int i = 0; i < availableRooms.size(); ++i) {
-            availableRooms.get(i).setHotelImageCount(hotelImagesCount);
-            availableRooms.get(i).setRoomImageCount(roomImageCounts.get(i));
+            hotel.addRoom(new Room(
+                    availableRooms.get(i).getHotelNum(),
+                    availableRooms.get(i).getRoomName(),
+                    availableRooms.get(i).getRoomPrice(),
+                    availableRooms.get(i).getCapacity(),
+                    availableRooms.get(i).getRoomInfo().split("/"),
+                    roomImageCounts.get(i)
+                    ));
         }
 
-        return availableRooms;
+        return hotel;
     }
 
     public HotelRoomDTO selectRoom(int roomNum) {
