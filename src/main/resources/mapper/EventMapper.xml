@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="EventMapper">
+
+	<select id="list" resultType="EventDTO">
+    SELECT e.eventNum,
+    to_char(e.eventDate, 'YYYY-MM-DD') eventDate,
+    e.eventTitle, e.eventText, e.eventState, m.memberName
+    FROM event e
+    JOIN member m ON e.memberNum = m.memberNum
+	WHERE e.eventState in (0, 9)
+    Order by 
+    e.eventState Desc,
+    e.eventDate Desc,
+    e.eventNum Desc 
+    
+
+<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+</select>
+
+<select id="Toplist" resultType="EventDTO">
+    SELECT e.eventNum,
+    to_char(e.eventDate, 'YYYY-MM-DD') eventDate,
+    e.eventTitle, e.eventText, e.eventState, m.memberName
+    FROM event e
+    JOIN member m ON e.memberNum = m.memberNum
+	WHERE e.eventState = 9
+    Order by 
+    e.eventState Desc,
+    e.eventDate Desc,
+    e.eventNum Desc 
+    
+
+<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+</select>
+
+<select id="totalCount" resultType="int">
+		SELECT count(*)
+		from event
+		where eventState in (0, 9)
+	</select>
+	
+	
+	<select id="totalTopCount" resultType="int">
+		SELECT count(*)
+		from event
+	    where eventState = 9
+	</select>
+	
+	<select id="detail" resultType="EventDTO">
+   SELECT
+		e.eventNum,
+    	to_char(e.eventDate, 'YYYY-MM-DD') eventDate,
+    	e.eventTitle,
+    	e.eventText,
+      	e.eventState,
+       	m.memberName
+    FROM event e
+    JOIN member m ON e.memberNum = m.memberNum
+	where eventNum =#{eventNum}
+	</select>
+	
+	<update id="delete" parameterType="list">
+        UPDATE event
+        SET eventState = 1  <!-- 삭제 상태로 설정 -->
+        WHERE eventNum IN 
+        <foreach collection="list" item="eventNum" open="(" separator="," close=")">
+            #{eventNum}
+        </foreach>
+    </update>
+    
+    <update id="update" parameterType="EventDTO">
+        UPDATE event
+        SET eventTitle = #{eventTitle},
+         	eventText = #{eventText}  <!-- 삭제 상태로 설정 -->
+       where eventNum = #{eventNum}
+    </update>
+	
+	
+	<insert id="insert" parameterType="EventDTO" >
+	insert into event 
+	(eventNum, memberNum, eventText, eventTitle, eventState)
+	
+	values 
+	(event_seq.nextval,#{memberNum}, #{eventText}, #{eventTitle}, #{eventState})
+	
+	</insert>
+</mapper>
