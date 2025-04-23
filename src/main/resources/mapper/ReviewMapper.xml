@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReviewMapper">
+	<insert id="reviewAdd" parameterType="ReviewDTO">
+		INSERT INTO review (reviewNum, memberNum, roomNum, hotelNum, reviewDate, reviewTitle,
+		reviewText, starRating, reviewState)
+		VALUES (review_seq.nextval, #{memberNum}, #{roomNum}, #{hotelNum}, sysdate, #{reviewTitle}, #{reviewText}, #{starRating}, 0)
+	</insert><!-- memberNum/roomNum 연결 작업 -->
+	<select id="reviewSelect" parameterType="int"
+		resultType="ReviewDTO">
+		select reviewNum, memberNum, roomNum, reviewDate, reviewTitle,
+		reviewText, starRating, reviewState
+		from review
+		where memberNum = #{memberNum} and reviewState = 0
+	</select>
+	<select id="reviewSelectRoom" parameterType="list"
+		resultType="ReviewDTO">
+		select m.membername,reviewNum, roomNum, reviewDate, reviewTitle,
+		reviewText, starRating, reviewState
+		from member m
+		join (
+			select *
+			from review
+			where roomnum in
+			<foreach collection="list" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach> 
+		) re on re.memberNum = m.memberNum
+	</select>
+	<select id="getHotelNumByRoomNum" parameterType="int" resultType="int">
+    SELECT hotelNum
+    FROM room
+    WHERE roomNum = #{roomNum}
+	</select>
+	<update id="reviewDelete" parameterType="string">
+		update review set reviewState = 1 where reviewNum =  #{reviewNum}
+	</update>
+	
+</mapper>

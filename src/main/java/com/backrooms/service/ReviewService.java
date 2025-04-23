@@ -2,8 +2,8 @@ package com.backrooms.service;
 
 import java.util.List;
 
-import com.example.dto.HotelRoomDTO;
-import com.example.dto.ReviewDTO;
+import com.backrooms.dto.HotelRoomDTO;
+import com.backrooms.dto.ReviewDTO;
 
 
 public interface ReviewService {
