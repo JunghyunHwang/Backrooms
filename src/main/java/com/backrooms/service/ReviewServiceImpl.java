@@ -2,13 +2,14 @@ package com.backrooms.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.backrooms.dto.Hotel;
+import com.backrooms.dto.Room;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.backrooms.dao.ReviewDAO;
-import com.backrooms.dto.HotelRoomDTO;
 import com.backrooms.dto.ReviewDTO;
 
 
@@ -31,14 +32,13 @@ public class ReviewServiceImpl implements ReviewService{
 		return list;
 	}
 	
-	public List<ReviewDTO> reviewSelectRoom(List<HotelRoomDTO> availableRooms) {
-		List<Integer> roomNums= new ArrayList<Integer>(availableRooms.size());
-		for (HotelRoomDTO r : availableRooms) {
+	public List<ReviewDTO> reviewSelectRoom(Hotel hotel) {
+		List<Integer> roomNums= new ArrayList<>();
+		for (Room r : hotel.getRooms()) {
 			roomNums.add(r.getRoomNum());
 		}
-		
-		List<ReviewDTO> list = dao.reviewSelectRoom(session,roomNums);
-		return list;
+
+		return dao.reviewSelectRoom(session, roomNums);
 	}
 	@Transactional
 	public int DelReview(String reviewNum) {
