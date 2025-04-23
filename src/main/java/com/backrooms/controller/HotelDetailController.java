@@ -1,5 +1,6 @@
 package com.backrooms.controller;
 
+import com.backrooms.dto.Hotel;
 import com.backrooms.dto.HotelDetailRequestDTO;
 import com.backrooms.dto.HotelRoomDTO;
 import com.backrooms.service.HotelRoomService;
@@ -13,22 +14,24 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-public class HotelDetail {
-    @Autowired
-    private HotelRoomService hotelRoomService;
+public class HotelDetailController {
+    private final HotelRoomService hotelRoomService;
+//    private final ReviewService reviewService;
 
     @Autowired
-    private ReviewService reviewService;
+    public HotelDetailController(HotelRoomService hotelRoomService) {
+        this.hotelRoomService = hotelRoomService;
+    }
 
     @RequestMapping(value = "/HotelDetail", method = RequestMethod.POST)
     public ModelAndView getHotelDetail(@ModelAttribute HotelDetailRequestDTO filter) {
         ModelAndView mav = new ModelAndView("hotelDetail");
 
-        List<HotelRoomDTO> avaliableRoomsList = hotelRoomService.getAvailableRooms(filter);
-        List<ReviewDTO> roomReviews = reviewService.reviewSelectRoom(avaliableRoomsList);
+        Hotel hotel = hotelRoomService.getHotelWithRooms(filter);
+//        List<ReviewDTO> roomReviews = reviewService.reviewSelectRoom(availableRoomsList);
 
-        mav.addObject("avaliableRoomsList", avaliableRoomsList);
-        mav.addObject("roomReviews", roomReviews);
+        mav.addObject("hotel", hotel);
+//        mav.addObject("roomReviews", roomReviews);
         mav.addObject("checkIn", filter.getCheckIn());
         mav.addObject("checkOut", filter.getCheckOut());
 
