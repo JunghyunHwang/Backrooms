@@ -2,7 +2,14 @@ package com.backrooms.service;
 
 import com.backrooms.dao.HotelRoomDAO;
 import com.backrooms.dao.ImageDAO;
-import com.backrooms.dto.*;
+
+import com.backrooms.dto.Hotel;
+import com.backrooms.dto.HotelDetailRequestDTO;
+import com.backrooms.dto.HotelRoomDTO;
+import com.backrooms.dto.ImageRequestDTO;
+import com.backrooms.dto.ImageKind;
+import com.backrooms.dto.Room;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,8 +56,7 @@ public class HotelRoomService {
                     availableRooms.get(i).getRoomPrice(),
                     availableRooms.get(i).getCapacity(),
                     availableRooms.get(i).getRoomInfo().split("/"),
-                    roomImageCounts.get(i)
-                    ));
+                    roomImageCounts.get(i)));
         }
 
         return hotel;

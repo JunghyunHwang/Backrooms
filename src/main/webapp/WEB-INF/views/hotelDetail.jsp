@@ -1,26 +1,9 @@
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
-<%
-
-    final int EXTERIOR_IMAGE_COUNT = availableRoomsList.get(0).getHotelImageCount();
-
-    List<ReviewDTO> roomReviews = (List<ReviewDTO>)request.getAttribute("roomReviews");
-    final int MAIN_REVIEW_COUNT = roomReviews.size() > 3 ? 3 : roomReviews.size();
-
-    /* TODO
-     * 임시로 모든 방 조식 포함. 변경 필요
-     */
-
-%>
-
-<c:set var="roomNum" value="${ avaliableRoomsList[0].roomNum }" />
-<c:set var="roomPrice" value="${ avaliableRoomsList[0].formattedPrice }" />
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -90,7 +73,7 @@
 <!-- End Header -->
 
 <!-- Start Banner -->
-<section class="main_banner" style="background-image: url(assets/img/sample/hotel-main.jpg);">
+<section class="main_banner" style="background-image: url(../resources/static/assets/img/sample/hotel-main.jpg);">
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
@@ -114,41 +97,26 @@
                     <div class="hotel-details-meta">
                         <div class="hotel-info d-flex justify-content-between align-items-center rounded">
                             <div>
-                                <div><h4>${ hotelName }</h4></div>
-                                <a href="https://www.google.com/maps/search/?api=1&query=${ hotelName }"
+                                <div><h4>${ hotel.hotelName }</h4></div>
+                                <a href="https://www.google.com/maps/search/?api=1&query=${ hotel.hotelName }"
                                    target="_blank">
                                     지도에서 보기
                                 </a>
                             </div>
                             <div class="text-primary fw-bold fs-4">
-                                ${ roomPrice }원
+                                ${ hotel.rooms[0].roomPrice }원
                                 <a href="#select-rooms" class="btn btn-primary btn-lg">객실 선택</a>
                             </div>
                         </div>
                     </div>
-                    <c:set var="exteriorImageCount" value="${avaliableRoomsList[0].hotelImageCount}" />
-                    <c:set var="hotelName" value="${ avaliableRoomsList[0].hotelName }"/>
+                    <c:set var="exteriorImageCount" value="${ hotel.hotelImageCount}" />
+                    <c:set var="hotelName" value="${ hotel.hotelName }"/>
 
                     <div class="gallery-grid">
-                        <img src="assets/img/hotel-rooms/<%= hotelName %>_외관1.jpg" id="main-image" class="img-fluid photo-thumbnail" data-bs-toggle="modal" data-bs-target="#photoModal">
-
-                        <c:forEach var="i" begin="2" end="${exteriorImageCount}">
-                            <img src="assets/img/hotel-rooms/${ hotelName }_외관${ i }.jpg" class="img-fluid photo-thumbnail" data-bs-toggle="modal" data-bs-target="#photoModal">
+                        <img alt="main-exterior" src="assets/img/hotel-rooms/${ hotel.hotelName }_외관1.jpg" id="main-image" class="img-fluid photo-thumbnail" data-bs-toggle="modal" data-bs-target="#photoModal">
+                        <c:forEach var="mainImg" items="${ hotel.mainImageNames }">
+                            <img alt="main-images" src="assets/img/hotel-rooms/${ mainImg }" class="img-fluid photo-thumbnail" data-bs-toggle="modal" data-bs-target="#photoModal">
                         </c:forEach>
-
-                        <!-- 객실 이미지가 3개 이상이여야 함-->
-                        <%
-                            int loopCount = availableRoomsList.size() <= 2 ? availableRoomsList.size() : 2 ;
-                            final int MAX_ROOM_IMG_COUNT = 2;
-                            for (int i = 0; i < loopCount; ++i) {
-                                for (int j = 0; j < MAX_ROOM_IMG_COUNT; ++j) { %>
-                        <img
-                                src="assets/img/hotel-rooms/<%= availableRoomsList.get(i).getHotelName() %>_<%= availableRoomsList.get(i).getRoomName() %><%= j + 1 %>.jpg"
-                                class="img-fluid photo-thumbnail"
-                                data-bs-toggle="modal"
-                                data-bs-target="#photoModal">
-                        <% } %>
-                        <% } %>
 
                         <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
@@ -159,17 +127,17 @@
                                     </div>
                                     <div class="modal-body">
                                         <h6>호텔 외관</h6>
-                                        <c:forEach var="i" begin="0" end="${ exteriorImageCount - 1 }">
+                                        <c:forEach var="i" begin="0" end="${ hotel.hotelImageCount - 1 }">
                                             <img src="assets/img/hotel-rooms/${ hotelName }_외관${ i + 1 }.jpg" class="img-fluid mb-3" alt="호텔 외관">
                                         </c:forEach>
 
                                         <h6>객실</h6>
                                         <div class="row">
-                                            <c:forEach var="room" items="${ avaliableRoomsList }">
+                                            <c:forEach var="room" items="${ hotel.rooms }">
                                                 <c:forEach var="i" begin="0" end="${ room.roomImageCount - 1 }">
                                                     <img
-                                                            src="assets/img/hotel-rooms/${ room.hotelName }_${ room.roomName}${ i + 1 }.jpg"
-                                                            class="img-fluid" alt="객실1">
+                                                            src="assets/img/hotel-rooms/${ hotel.hotelName }_${ room.roomName }${ i + 1 }.jpg"
+                                                            class="img-fluid" alt="객실${ i + 1 }">
                                                 </c:forEach>
                                             </c:forEach>
                                         </div>
@@ -180,88 +148,92 @@
                     </div>
                 </div>
 
-                <% for (HotelRoomDTO r : availableRoomsList) { %>
-                <div class="section-hotel-details" id="select-rooms">
-                    <h4><%= r.getRoomName() %></h4>
-                    <div class="d-flex flex-row">
-                        <div class="d-flex flex-column">
-                            <div class="room-meta-item">
-                                <img src="assets/img/hotel-rooms/<%= r.getHotelName() %>_<%= r.getRoomName() %>1.jpg" class="room-img" alt="">
+                <c:forEach var="room" items="${ hotel.rooms }">
+                    <div class="section-hotel-details" id="select-rooms">
+                        <h4>${ room.roomName }</h4>
+                        <div class="d-flex flex-row">
+                            <div class="d-flex flex-column">
+                                <div class="room-meta-item">
+                                    <img src="assets/img/hotel-rooms/${ hotel.hotelName }_${ room.roomName }1.jpg" class="room-img" alt="room-img">
+                                </div>
+                                <c:forEach var="amenity" items="${ room.roomAmenity }">
+                                    <div> ${ amenity } </div>
+                                </c:forEach>
                             </div>
-                            <%
-                                String[] list = r.getRoomInfoListOrNull();
-                                if (list != null) {
-                                    for (String amenity : list) { %>
-                            <div><%= amenity %></div>
-                            <% }
-                            }
-                            %>
-                        </div>
-                        <div class="mx-4 flex-grow-1">
-                            <div class="row bg-light fw-bold text-center py-2 border">
-                                <div class="col-6">객실 옵션 상세</div>
-                                <div class="col-2">정원</div>
-                                <div class="col-4">오늘의 요금</div>
-                            </div>
-
-                            <div class="row align-items-center p-3 m-50">
-                                <!-- 객실 옵션 -->
-                                <div class="col-6">
-                                    <p>🍽 높은 퀄리티의 조식 (선택)</p>
-                                    <p>🔄 부분 환불 가능</p>
-                                    <p>⚡ 대기 없이 바로확정!</p>
-                                    <p>💳 온라인 사전 결제</p>
+                            <div class="mx-4 flex-grow-1">
+                                <div class="row bg-light fw-bold text-center py-2 border">
+                                    <div class="col-6">객실 옵션 상세</div>
+                                    <div class="col-2">정원</div>
+                                    <div class="col-4">오늘의 요금</div>
                                 </div>
 
-                                <!-- 정원 -->
-                                <div class="col-2 text-center">
-                                    <% for (int i = 0; i < r.getCapacity(); ++i) { %>
-                                    👤
-                                    <% } %>
-                                </div>
+                                <div class="row align-items-center p-3 m-50">
+                                    <!-- 객실 옵션 -->
+                                    <div class="col-6">
+                                        <p>🍽 높은 퀄리티의 조식 (선택)</p>
+                                        <p>🔄 부분 환불 가능</p>
+                                        <p>⚡ 대기 없이 바로확정!</p>
+                                        <p>💳 온라인 사전 결제</p>
+                                    </div>
 
-                                <!-- 가격 및 예약 -->
-                                <div class="col-4 text-end">
-                                    <form action="Reservation" method="post">
-                                        <p class="fw-bold">총금액: <%= r.getFormattedPrice() %>원</p>
-                                        <input type="hidden" name="hotelNum" value="<%= hotelNum %>">
-                                        <input type="hidden" name="roomNum" value="<%= r.getRoomNum() %>">
-                                        <input type="hidden" name="checkIn" value="<%= request.getAttribute("checkIn") %>">
-                                        <input type="hidden" name="checkOut" value="<%= request.getAttribute("checkOut") %>">
-                                        <button type="submit" class="btn btn-primary">예약</button>
-                                    </form>
+                                    <!-- 정원 -->
+                                    <div class="col-2 text-center">
+                                        <c:forEach var="i" begin="1" end="${ room.capacity }">
+                                            👤
+                                        </c:forEach>
+                                    </div>
+
+                                    <!-- 가격 및 예약 -->
+                                    <div class="col-4 text-end">
+                                        <form action="Reservation" method="post">
+                                            <p class="fw-bold">총금액: ${ room.formattedPrice }원</p>
+                                            <input type="hidden" name="hotelNum" value="${ hotel.hotelName }">
+                                            <input type="hidden" name="roomNum" value="${ room.roomNum }">
+                                            <input type="hidden" name="checkIn" value="${ checkIn }">
+                                            <input type="hidden" name="checkOut" value="${ checkOut }">
+                                            <button type="submit" class="btn btn-primary">예약</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <% } %>
+                </c:forEach>
 
                 <div class="section-hotel-details">
                     <div>
                         <h4>투숙객 리뷰</h4>
                     </div>
                     <div class="d-flex flex-row">
-                        <% for (int i = 0; i < MAIN_REVIEW_COUNT; ++i) { %>
-                        <div class="section-hotel-review p-3 mx-2 mt-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                            <div class="d-flex flex-row">
-                                <div class="profile-img">
-                                    <img src="assets/img/sample/default-profile-picture.jpg" alt="프로필 이미지" width="32" height="32">
-                                </div>
-                                <div data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                                    <div class="uesr-name mx-1">
-                                        <%= roomReviews.get(i).getMemberName() %>
+                        <c:forEach var="review" items="${reviews}" varStatus="status">
+                            <c:if test="${status.index < 3}">
+                                <!-- 리뷰 출력 -->
+                                <p>${review.content}</p>
+                            </c:if>
+                        </c:forEach>
+
+                        <c:forEach var="review" items="${ roomReviews }" varStatus="status">
+                            <c:if test="${ status.index < 3 }">
+                                <div class="section-hotel-review p-3 mx-2 mt-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                                    <div class="d-flex flex-row">
+                                        <div class="profile-img">
+                                            <img src="assets/img/sample/default-profile-picture.jpg" alt="프로필 이미지" width="32" height="32">
+                                        </div>
+                                        <div data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                                            <div class="uesr-name mx-1">
+                                                ${ review.memberName }
+                                            </div>
+                                            <div class="review-time mx-1">
+                                                ${ review.reviewDate }
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="review-time mx-1">
-                                        <%= roomReviews.get(i).getReviewDate() %>
+                                    <div>
+                                        ${ review.reviewText }
                                     </div>
                                 </div>
-                            </div>
-                            <div>
-                                <%= roomReviews.get(i).getReviewText() %>
-                            </div>
-                        </div>
-                        <% } %>
+                            </c:if>
+                        </c:forEach>
                     </div>
                     <div class="text-center">
                         <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">더 보기</button>
@@ -272,26 +244,26 @@
                             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                         <div class="offcanvas-body">
-                            <% for (ReviewDTO review : roomReviews) { %>
-                            <div class="section-hotel-review p-3 mx-2">
-                                <div class="d-flex flex-row">
-                                    <div class="profile-img">
-                                        <img src="assets/img/sample/default-profile-picture.jpg" alt="프로필 이미지" width="32" height="32">
+                            <c:forEach var="review" items="${ roomReviews }">
+                                <div class="section-hotel-review p-3 mx-2">
+                                    <div class="d-flex flex-row">
+                                        <div class="profile-img">
+                                            <img src="assets/img/sample/default-profile-picture.jpg" alt="프로필 이미지" width="32" height="32">
+                                        </div>
+                                        <div>
+                                            <div class="uesr-name mx-1">
+                                                ${ review.memberNum }
+                                            </div>
+                                            <div class="review-time mx-1">
+                                                ${ review.reviewDate }
+                                            </div>
+                                        </div>
                                     </div>
                                     <div>
-                                        <div class="uesr-name mx-1">
-                                            <%= review.getMemberName() %>
-                                        </div>
-                                        <div class="review-time mx-1">
-                                            <%= review.getReviewDate() %>
-                                        </div>
+                                        ${ review.reviewText }
                                     </div>
                                 </div>
-                                <div>
-                                    <%= review.getReviewText() %>
-                                </div>
-                            </div>
-                            <% }%>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
@@ -304,7 +276,7 @@
                         <iframe
                                 height="300"
                                 id="gmap_canvas"
-                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAyDrOA6zWe0cPZAGm1akycDRD8wHEhgvk&q=<%= hotelName %>">
+                                src="https://www.google.com/maps/embed/v1/place?key==${ hotel.hotelName }">
                         </iframe>
                     </div>
                     <!-- END MAP -->
