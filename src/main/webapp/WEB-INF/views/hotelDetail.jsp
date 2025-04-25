@@ -252,7 +252,7 @@
                                         </div>
                                         <div>
                                             <div class="uesr-name mx-1">
-                                                ${ review.memberNum }
+                                                ${ review.memberName }
                                             </div>
                                             <div class="review-time mx-1">
                                                 ${ review.reviewDate }
