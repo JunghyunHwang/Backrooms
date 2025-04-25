@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY r.roomNum ASC
 	</select>
 	
-	<select id="selectRoom" parameterType="com.dto.HotelRoomDTO" resultType="HotelRoomDTO">
+	<select id="selectRoom" parameterType="HotelRoomDTO" resultType="HotelRoomDTO">
 		SELECT
 			roomNum,
 			roomPrice,
