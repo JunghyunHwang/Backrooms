@@ -2,7 +2,7 @@ package com.backrooms.controller;
 
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.backrooms.dto.MemberDTO;
@@ -19,13 +18,15 @@ import com.backrooms.dto.QnaPageDTO;
 import com.backrooms.service.QnaService;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/qna")
 public class QnaController {
 
-	@Autowired
-	QnaService service;
+	
+	private final QnaService service;
 	
 	@GetMapping()
 	public String qnaUI() {
