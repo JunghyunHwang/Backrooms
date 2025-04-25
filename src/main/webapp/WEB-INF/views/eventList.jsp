@@ -1,6 +1,6 @@
 <%@page import="java.util.List"%>
-<%@page import="com.dto.EventDTO"%>
-<%@page import="com.dto.EventPageDTO"%>
+<%@page import="com.backrooms.dto.EventDTO"%>
+<%@page import="com.backrooms.dto.EventPageDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!doctype html>
