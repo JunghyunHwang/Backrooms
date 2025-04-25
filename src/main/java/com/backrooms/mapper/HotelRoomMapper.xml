@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="HotelRoomMapper">
+	<select id="getAvailableRooms" parameterType="HotelDetailRequestDTO" resultType="HotelRoomDTO">
+		SELECT
+			h.hotelNum
+		    , h.hotelName
+		    , h.hotelAddress
+		    , h.hotelRating
+		    , h.hotelGrade
+		    , h.latitude
+		    , h.longitude
+		    , h.breakfastPrice
+		    , r.roomNum
+		    , r.roomPrice
+		    , r.roomName
+		    , r.capacity
+		    , r.roomInfo
+		FROM room r
+		JOIN hotel h ON r.hotelNum = h.hotelNum
+		WHERE r.hotelNum = #{ hotelNum }
+			AND r.capacity >= #{ guestCount }
+			AND r.roomNum NOT IN(
+			    SELECT
+			        r2.roomNum
+			    FROM reservation res
+			    JOIN room r2 ON res.roomNum = r2.roomNum
+			    WHERE r2.hotelNum = #{ hotelNum }
+			    	AND TO_DATE(#{checkIn}, 'YYYY-MM-DD') &lt; res.checkOut
+			    	AND TO_DATE(#{checkOut}, 'YYYY-MM-DD') &gt; res.checkIn
+			)
+		ORDER BY r.roomNum ASC
+	</select>
+	
+	<select id="selectRoom" parameterType="HotelRoomDTO" resultType="HotelRoomDTO">
+		SELECT
+			roomNum,
+			roomPrice,
+			roomName,
+			capacity,
+			roomInfo
+		FROM room
+		WHERE roomNum = #{roomNum}
+	</select>
+	
+</mapper>
