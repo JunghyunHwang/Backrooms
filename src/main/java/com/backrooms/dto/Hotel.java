@@ -1,12 +1,17 @@
 package com.backrooms.dto;
 
 import lombok.Getter;
+import org.eclipse.jdt.internal.compiler.batch.Main;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 public class Hotel {
+    private static final int MAIN_IMAGES_COUNT = 6;
+    private static final int HOTEL_IMAGE_COUNT_IN_MAIN_IMAGES = 3;
+    private static final int ROOM_IMAGE_COUNT_IN_MAIN_IMAGES = 2;
+
     private final int hotelNum;
     private final String hotelName;
     private final String hotelAddress;
@@ -18,6 +23,8 @@ public class Hotel {
     private final int hotelImageCount;
     private final List<Room> rooms;
     private final List<String> mainImageNames;
+
+    private boolean isSetMainImage;
 
     public Hotel(int hotelNum, String hotelName, String hotelAddress, double hotelRating, int hotelGrade, String latitude, String longitude, int hotelImageCount, int breakfastPrice) {
         this.hotelNum = hotelNum;
@@ -31,28 +38,42 @@ public class Hotel {
         this.breakfastPrice = breakfastPrice;
         this.rooms = new ArrayList<>();
         this.mainImageNames = new ArrayList<>();
-        setHotelDetailsMainImages();
+
+        this.isSetMainImage = false;
+        addHotelImageInMainImages();
     }
 
-    private void setHotelDetailsMainImages() {
+    private void addHotelImageInMainImages() {
         assert(mainImageNames.isEmpty()) : "This method should be called only in the constructor.";
+        final int HOTEL_IMG_COUNT = Math.min(hotelImageCount, HOTEL_IMAGE_COUNT_IN_MAIN_IMAGES);
 
-        for (int i = 1; i < hotelImageCount; ++i) {
+        for (int i = 1; i < HOTEL_IMG_COUNT; ++i) {
             mainImageNames.add(String.format("%s_외관%d.jpg", hotelName, i + 1));
         }
+    }
 
-        final int ROOM_COUNT = Math.min(rooms.size(), 2);
-        final int IMG_COUNT = 2;
+    private void addRoomImageInMainImages(Room room) {
+        assert(MAIN_IMAGES_COUNT - mainImageNames.size() > 0) : "isSetMainImage has wrong value";
+        final int ROOM_IMG_COUNT = Math.min(room.getRoomImageCount(), ROOM_IMAGE_COUNT_IN_MAIN_IMAGES);
+        final int LOOP_COUNT = Math.min(ROOM_IMG_COUNT, MAIN_IMAGES_COUNT - mainImageNames.size());
 
-        for (int i = 0; i < ROOM_COUNT; ++i) {
-            for (int j = 0; j < IMG_COUNT; ++j) {
-                mainImageNames.add(String.format("%s_%s%d.jpg", hotelName, rooms.get(j).getRoomName(), i + 1));
-            }
+        for (int i = 0; i < LOOP_COUNT; ++i) {
+            mainImageNames.add(String.format("%s_%s%d.jpg", hotelName, room.getRoomName(), i + 1));
+        }
+
+        assert(mainImageNames.size() <= MAIN_IMAGES_COUNT);
+
+        if (mainImageNames.size() == MAIN_IMAGES_COUNT) {
+            isSetMainImage = true;
         }
     }
 
     public void addRoom(Room room) {
         rooms.add(room);
+
+        if (!isSetMainImage) {
+            addRoomImageInMainImages(room);
+        }
     }
 
     public List<String> getHotelDetailsMainImages() {
