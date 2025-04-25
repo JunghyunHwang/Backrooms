@@ -1,6 +1,6 @@
 package com.backrooms.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +13,17 @@ import com.backrooms.dto.EventPageDTO;
 import com.backrooms.service.EventService;
 
 
+import lombok.RequiredArgsConstructor;
+
+
+
 @Controller
 @RequestMapping("/event")
+@RequiredArgsConstructor
 public class EventController {
 	
-	 @Autowired
-	EventService service;
+	
+	private final EventService service;
 	
 	 @GetMapping("/list")
 		public String eventListUI() {
