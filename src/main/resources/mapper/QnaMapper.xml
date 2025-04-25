@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="QnaMapper">
+
+	<insert id="insert" parameterType="QnaDTO">
+		insert into qna (QnaNum, memberNum, QnADate, QnATitle, QnAText, QnAState, QnAreply)
+    VALUES (qna_seq.NEXTVAL, #{memberNum}, SYSDATE, #{qnaTitle}, #{qnaText}, 0, NULL)
+	</insert>
+	
+	
+	<select id="list" resultType="QnaDTO">
+	SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+	from qna q
+	join member m
+	on q.memberNum = m.memberNum
+	WHERE q.qnAState = 0
+	Order by 
+    q.qnaDate Desc,
+    q.qnaNum Desc 
+	<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+    
+	</select>
+	
+	<select id="selectPendingList" resultType="QnaDTO">
+	SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+	from qna q
+	join member m
+	on q.memberNum = m.memberNum
+	WHERE q.qnAState = 0
+	and q.qnAreply is null
+	Order by 
+    q.qnaDate Desc,
+    q.qnaNum Desc 
+	<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+    
+	</select>
+	
+	<select id="selectCompletion" resultType="QnaDTO">
+	SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+	from qna q
+	join member m
+	on q.memberNum = m.memberNum
+	WHERE q.qnAState = 0
+	and q.qnAreply is not null
+	Order by 
+    q.qnaDate Desc,
+    q.qnaNum Desc 
+	<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+    
+	</select>
+
+	<select id="totalCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnaState in (0, 9)
+	</select>
+	
+	
+	<select id="totalPendingCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnAState = 0
+	    and qnAreply is null
+	</select>
+	
+		<select id="totalCompletionCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnAState = 0
+	    and qnAreply is not null
+	</select>
+	
+	<select id="detail" resultType="QnaDTO">
+	
+	SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+	from qna q
+	join member m
+	on q.memberNum = m.memberNum
+    where qnaNum = #{qnaNum}
+	</select>
+	
+	<select id="Mylist" resultType="QnaDTO">
+	SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+	from qna q
+	join member m
+	on q.memberNum = m.memberNum
+	where q.memberNum = #{memberNum} AND q.qnastate = 0
+	Order by 
+    q.qnaDate Desc,
+    q.qnaNum Desc 
+	</select>
+	
+	<update id="delete" parameterType="list">
+        UPDATE qna
+        SET qnaState = 1  <!-- 삭제 상태로 설정 -->
+        WHERE qnaNum IN 
+        <foreach collection="list" item="qnaNum" open="(" separator="," close=")">
+            #{qnaNum}
+        </foreach>
+    </update>
+    
+    <update id="update" parameterType="QnaDTO">
+        UPDATE qna
+        SET qnaReply = #{qnaReply}  <!-- 답변 수정 -->
+       where qnaNum = #{qnaNum}
+    </update>
+    
+    
+  
+	
+</mapper>
