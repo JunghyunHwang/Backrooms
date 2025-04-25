@@ -33,12 +33,6 @@ public class SearchResult {
 	@Autowired
 	private HotelSearchService service;
 	
-	@RequestMapping("/")
-	public String main() {
-		System.out.println("들어옴 =============================");
-		return "main";
-	}
-	
 	@RequestMapping("/SearchResult")
 	public ModelAndView search(@ModelAttribute SearchCheckDTO chDTO,ModelAndView mav) {
 		chDTO.setCheckIn(service.replace_date(chDTO.getCheckIn().split("/")));
