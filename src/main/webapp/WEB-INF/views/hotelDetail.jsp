@@ -187,7 +187,7 @@
                                     <div class="col-4 text-end">
                                         <form action="Reservation" method="post">
                                             <p class="fw-bold">총금액: ${ room.formattedPrice }원</p>
-                                            <input type="hidden" name="hotelNum" value="${ hotel.hotelName }">
+                                            <input type="hidden" name="hotelNum" value="${ hotel.hotelNum }">
                                             <input type="hidden" name="roomNum" value="${ room.roomNum }">
                                             <input type="hidden" name="checkIn" value="${ checkIn }">
                                             <input type="hidden" name="checkOut" value="${ checkOut }">
