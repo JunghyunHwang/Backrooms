@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberMapper">
+<insert id="signUp" parameterType="MemberDTO">
+	INSERT INTO member (memberNum, memberId, passwd, memberName, email, birth, phone, role)
+	VALUES (member_seq.nextval, #{memberId}, #{passwd}, #{memberName}, #{email}, TO_DATE(#{birth}, 'YYYY-MM-DD'), #{phone}, #{role})
+</insert>
+<select id="signIn" parameterType="String" resultType="MemberDTO">
+	SELECT *
+	FROM member
+	WHERE memberId = #{memberId}
+</select>
+<select id="findId" parameterType="hashMap" resultType="string">
+	SELECT memberId
+	FROM member
+	WHERE memberName = #{memberName} and phone = #{phone}
+</select>
+<select id="findPw" parameterType="hashMap" resultType="int">
+	SELECT count(*)
+	FROM member
+	WHERE memberName = #{memberName} and phone = #{phone} and memberId=#{memberId}
+</select>
+<update id="updatePw" parameterType="hashMap" >
+	UPDATE member
+	set passwd=#{passwd}
+	WHERE memberId = #{memberId}
+</update>
+<update id="modifyProfile" parameterType="hashMap" >
+	UPDATE member
+	set 
+		phone=#{phone}, address1=#{address1}, address2=#{address2}
+	WHERE memberId = #{memberId}
+</update>
+</mapper>
