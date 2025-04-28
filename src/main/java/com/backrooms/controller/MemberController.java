@@ -5,7 +5,10 @@ import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import com.backrooms.dto.MemberDTO;
 import com.backrooms.service.MemberService;
 import com.util.Utility;
@@ -37,24 +40,24 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value= "/SignUp" ,method =RequestMethod.GET)
+	@GetMapping("/SignUp")
 	public String signUpGet()
 	{
 		return "signUp";
 	}
-	@RequestMapping(value= "/SignUp" ,method =RequestMethod.POST)
+	@PostMapping("/SignUp")
 	public String signUpPost(@RequestParam MemberDTO dto)
 	{
 		service.signUp(dto);
 		return "redirect:SignIn";
 	}
 	
-	@RequestMapping(value= "/FindAccount" ,method =RequestMethod.GET)
+	@GetMapping("/FindAccount")
 	public String findAccountGet()
 	{
 		return "findAccount";
 	}
-	@RequestMapping(value= "/FindAccount" ,method =RequestMethod.POST)
+	@PostMapping("/FindAccount")
 	public @ResponseBody String findAccountPost (
 			@RequestParam HashMap<String, String> map) throws IOException
 	{
@@ -69,7 +72,7 @@ public class MemberController {
 		//ajax 처리.
 		return data;
 	}
-	@RequestMapping(value= "/UpdatePasswd" ,method =RequestMethod.POST)
+	@PostMapping("/UpdatePasswd")
 	public String updatePasswdPost(
 			String memberId,
 			String passwd)
@@ -82,7 +85,7 @@ public class MemberController {
 
 		return "childWindow/successToFind";
 	}
-	@RequestMapping(value= "/ModifyProfile" ,method =RequestMethod.POST)
+	@PostMapping("/ModifyProfile")
 	public String modifyProfilePost(
 			HashMap<String, String> map,
 			HttpSession session)
@@ -98,7 +101,7 @@ public class MemberController {
 	    
 		return "redirect:MyPage";
 	}
-	@RequestMapping(value= "/SignOut" ,method =RequestMethod.GET)
+	@GetMapping("/SignOut")
 	public String signOutGet(HttpSession session)
 	{
 		session.invalidate();
