@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Date"%>
-<%@page import="com.dto.MemberDTO"%>
-<%@page import="com.dto.ReviewDTO"%>
+<%@page import="com.backrooms.dto.MemberDTO"%>
+<%@page import="com.backrooms.dto.ReviewDTO"%>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
 	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
 	crossorigin="anonymous"></script>
