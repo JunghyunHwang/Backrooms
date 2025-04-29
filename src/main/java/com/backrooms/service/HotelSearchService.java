@@ -1,5 +1,6 @@
 package com.backrooms.service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -91,7 +92,12 @@ public class HotelSearchService {
       				}
       			}
       		}
-      		String price=p[0]+"~"+p[p.length-1];
+      		// DecimalFormat을 활용한 포멧 형식 선언
+      		DecimalFormat df = new DecimalFormat("#,###원");
+      		int one = Integer.parseInt(p[0]);
+      		int two = Integer.parseInt(p[p.length-1]);
+      		String price=df.format(one)+"~"+df.format(two);
+      		
       		SearchArrDTO dto = new SearchArrDTO(name,price,hnum,grade,rating);
       		result.add(i, dto);
       		
