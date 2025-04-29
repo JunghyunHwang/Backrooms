@@ -6,26 +6,30 @@
   <title>리뷰 작성</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script type="text/javascript">
-$(document).ready(function(){ // 페이지 로드 완료 후 실행되도록 보장
+/*  $(document).ready(function(){ // 페이지 로드 완료 후 실행되도록 보장
     $("#submit").click(function(){
         // 부모 창 새로고침
-        if (window.opener) { // 부모 창이 존재하는지 확인 (보안 및 안정성)
+        $("form").submit();
+          if (window.opener) { // 부모 창이 존재하는지 확인 (보안 및 안정성)
              window.opener.location.reload();
-             // 또는 특정 URL로 이동: window.opener.location.href = '원하는_부모창_URL';
         }
-
         // 자식 창 닫기
-        window.close();
+        window.close();  
+        
     });
-});
+});  */
 </script>
 </head>
 <body>
-<form action="/backrooms/WriteReview" method="post">
+<form action="/backrooms/UploadReview" method="post">
   <div class="form-container">
     <h3>리뷰 작성</h3>
     <input type="text" id="reviewTitle" name="reviewTitle" placeholder="제목" required>
+    <input type="hidden" id="memberNum" name="memberNum" value="1">
+    <input type="hidden" id="roomNum" name="roomNum" value="1">
+    <input type="hidden" id="hotelNum" name="hotelNum" value="1">
     <select id="rating" name="rating" required>
+    
       <option value="">별점 선택</option>
       <option value="1">⭐ (1점)</option>
       <option value="2">⭐⭐ (2점)</option>

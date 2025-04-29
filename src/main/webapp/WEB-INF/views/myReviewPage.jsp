@@ -4,7 +4,7 @@
 <%@page import="com.backrooms.dto.ReviewDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -120,45 +120,29 @@
 										</tr>
 									</thead>
 									<tbody id="reviewList">
-<%
-	List<ReviewDTO> rlist = (List<ReviewDTO>) request.getAttribute("myReview");
-	/* MemberDTO mdto = (MemberDTO)session.getAttribute("member");
-	String author = mdto.getMemberName(); */
-	//System.out.print(rlist);
-	if(rlist==null){
-%>
+<c:set var="rlist" value="${requestScope.myReview}" /> <%-- EL로 request attribute 접근 --%>
+<c:if test="${empty rlist}"> <%-- 목록이 비어있거나 null인 경우 --%>
 						<tr>
 							<td colspan="6">목록이 없습니다.</td>
 						</tr>
-<%		
-	}else{
-		for(int i = 0; i < rlist.size(); i++){
-	/* HttpSession session1 = request.getSession(); */
-	/* MemberDTO mdto = (MemberDTO)session1.getAttribute("member"); */
-	/* String author = mdto.getMemberId(); */
-	ReviewDTO rdto = rlist.get(i);
-	int reviewNum = rdto.getReviewNum();
-	String reviewTitle = rdto.getReviewTitle();
-	int rating = rdto.getStarRating();
-	String content = rdto.getReviewText();
-	String date = rdto.getReviewDate();
-	String image = "image";
-	request.setAttribute("reviewNum", reviewNum);
-%>
-
+						</c:if>
+<c:if test="${not empty rlist}"> <%-- 목록이 비어있지 않은 경우 --%>
+<c:forEach var="review" items="${rlist}"> <%-- 목록을 반복하며 review 변수에 담음 --%>
 									<tr>
-											<th><%=reviewTitle %></th>
-											<th><%=rating %></th>
-											<th><%=content %></th>
-											<th><%=date %></th>
-											<th><%=image %></th>
+											<th>${review.reviewTitle}</th>
+											<th>${review.starRating}</th>
+											<th>${review.reviewText}</th>
+											<th>${review.reviewDate}</th>
+											<th>image</th>
 											<form class="delForm" action="/backrooms/deleteReview" method="post">
-											 <input type="hidden" id="reviewNumInput" name="reviewNum" value="<%=reviewNum%>">
+											 <input type="hidden" id="reviewNumInput" name="reviewNum" value="${review.reviewTitle}">
 											<th><button class="delBtn">삭제</button></th>
 											</form>
+										</td>
 											
 										</tr>
-										<%}} %>
+										</c:forEach>
+											</c:if>
 									</tbody>
 								</table>
 
@@ -178,6 +162,7 @@
 								</div>
 
 							</div>
+						
 							<script>
 
 						
