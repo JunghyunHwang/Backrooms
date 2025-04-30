@@ -44,8 +44,14 @@ public class MemberController {
 		return "signUp";
 	}
 	@PostMapping("/SignUp")
-	public String signUpPost(@RequestParam MemberDTO dto)
+	public String signUpPost(@RequestParam HashMap<String, String> map)
 	{
+		String passwd = map.get("passwd");
+		passwd = Utility.encrypt(passwd);
+		 var dto = new MemberDTO(map.get("memberId"), 
+				 passwd, map.get("email"), 
+				 map.get("memberName"), map.get("birth"), map.get("phone"));
+		
 		service.signUp(dto);
 		return "redirect:SignIn";
 	}
