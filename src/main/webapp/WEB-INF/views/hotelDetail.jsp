@@ -104,7 +104,7 @@
                                 </a>
                             </div>
                             <div class="text-primary fw-bold fs-4">
-                                ${ hotel.rooms[0].roomPrice }원
+                                ${ hotel.rooms[0].formattedPrice }원
                                 <a href="#select-rooms" class="btn btn-primary btn-lg">객실 선택</a>
                             </div>
                         </div>
