@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,8 +45,11 @@ public class MemberController {
 		return "signUp";
 	}
 	@PostMapping("/SignUp")
-	public String signUpPost(@RequestParam MemberDTO dto)
+	public String signUpPost(@ModelAttribute MemberDTO dto)
 	{
+		var passwd = dto.getPasswd();
+		dto.setPasswd(Utility.encrypt(passwd));
+		
 		service.signUp(dto);
 		return "redirect:SignIn";
 	}
