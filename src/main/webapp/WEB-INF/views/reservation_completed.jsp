@@ -41,7 +41,7 @@
     <br><hr><br>
 
     <div style="text-align:center;">
-        <a href="/MyPage?myPage=reservation">[마이페이지로 이동]</a>
+        <a href="/backrooms/MyPage?myPage=reservation">[마이페이지로 이동]</a>
     </div>
 </div>
 </body>
