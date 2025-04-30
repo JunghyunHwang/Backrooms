@@ -17,7 +17,16 @@ public class ReservationDAO {
     }
     
     public int insertReservationAndGetId(ReservationDTO dto) {
-        session.insert("ReservationMapper.insertReservation", dto);
-        return dto.getReservationNum();
+        session.insert("ReservationMapper.insertReservationAndGetId", dto);
+        return dto.getReservationNum(); 
     }
+
+    public ReservationDTO selectReservationById(int reservationNum) {
+        return session.selectOne("ReservationMapper.selectReservationById", reservationNum);
+    }
+
+
+
+    
+    	
 }

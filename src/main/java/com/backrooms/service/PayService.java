@@ -18,5 +18,6 @@ public class PayService {
 
     public void updateReservationState(int reservationNum) {
         dao.updateReservationState(reservationNum);
+        
     }
 }

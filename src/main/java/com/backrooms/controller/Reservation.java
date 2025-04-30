@@ -36,7 +36,7 @@ public class Reservation {
     @Autowired
     PayService pservice;
 
-    @PostMapping("/Reservation")
+    @PostMapping("/ReservationPage")
     public ModelAndView reservation(@RequestParam Map<String, String> params, HttpSession session) {
         int hotelNum = Integer.parseInt(params.get("hotelNum"));
         int roomNum = Integer.parseInt(params.get("roomNum"));
@@ -64,7 +64,7 @@ public class Reservation {
         return mav;
     }
 
-
+ /*
     @PostMapping("/goToPayment")
     public ModelAndView goToPayment(@RequestParam Map<String, String> params, HttpSession session) {
         MemberDTO member = (MemberDTO) session.getAttribute("member");
@@ -107,7 +107,7 @@ public class Reservation {
         mav.addObject("reservationBreakfast", breakfast);
         mav.addObject("payment", payment);
         return mav;
-    }
-    
+    } 흐름 변경 전 여기서 결제 처리하려 했었음, 지금은 새 페이지로 넘기므로 보류
+    */
    
 }

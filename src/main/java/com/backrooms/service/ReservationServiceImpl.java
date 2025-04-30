@@ -10,11 +10,17 @@ import com.backrooms.dto.ReservationDTO;
 public class ReservationServiceImpl implements ReservationService {
 
     @Autowired
-    private ReservationDAO dao;
+    ReservationDAO dao;
 
     @Override
     public int insertReservationAndGetId(ReservationDTO dto) {
-    	  dao.insertReservation(dto);
-          return dto.getReservationNum(); // selectKey로 세팅된 예약 번호 반환
+        return dao.insertReservationAndGetId(dto);
     }
+
+    @Override
+    public ReservationDTO getReservationById(int reservationNum) {
+        return dao.selectReservationById(reservationNum);
+    }
+    
+ 
 }

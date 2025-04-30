@@ -7,16 +7,22 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.backrooms.dto.HotelDTO;
+import com.backrooms.dto.HotelRoomDTO;
 import com.backrooms.dto.MemberDTO;
 import com.backrooms.dto.PayDTO;
 import com.backrooms.dto.ReservationDTO;
+import com.backrooms.service.HotelQueryService;
 import com.backrooms.service.HotelRoomService;
+import com.backrooms.service.HotelService;
 import com.backrooms.service.PayService;
 import com.backrooms.service.ReservationService;
+import com.backrooms.service.ReservationServiceImpl;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -24,14 +30,53 @@ import jakarta.servlet.http.HttpSession;
 public class PayController {
 
     @Autowired
-    private ReservationService rservice;
+    private ReservationServiceImpl rservice;
 
     @Autowired
     private HotelRoomService hrservice;
 
     @Autowired
     private PayService pservice;
+    
+    @Autowired
+    private HotelQueryService hqservice;
+    
+    @Autowired
+    private HotelService hservice;
+    
+    @GetMapping("/payment")
+    public ModelAndView showPaymentPage(@RequestParam("reservationNum") int reservationNum, HttpSession session) {
+        MemberDTO member = (MemberDTO) session.getAttribute("member");
+        if (member == null) {
+            return new ModelAndView("redirect:/login");
+        }
 
+        // 예약 정보 조회
+        ReservationDTO rdto = rservice.getReservationById(reservationNum);
+        HotelRoomDTO hrdto = hrservice.selectRoom(rdto.getRoomNum());
+        HotelDTO hdto = hqservice.selectHotelByRoomNum(rdto.getRoomNum());
+
+        // 숙박일수 및 가격 계산
+        long nights = hservice.calculateStayDays(rdto.getCheckIn(), rdto.getCheckOut());
+        int roomPrice = hrdto.getRoomPrice();
+        int payment = (int)(roomPrice * nights);
+        String formattedTotalPrice = hservice.formatTotalPrice(roomPrice, nights);
+
+        ModelAndView mav = new ModelAndView("payment");
+        mav.addObject("member", member);
+        mav.addObject("reservationNum", reservationNum);
+        mav.addObject("hdto", hdto);
+        mav.addObject("hrdto", hrdto);
+        mav.addObject("nights", nights);
+        mav.addObject("roomPrice", roomPrice);
+        mav.addObject("payment", payment);
+        mav.addObject("totalPrice", formattedTotalPrice);
+        return mav;
+    }
+    
+    
+    
+    
     @PostMapping("/PaymentPage")
     public ModelAndView toPayment(@RequestParam Map<String, String> params, HttpSession session) {
         MemberDTO member = (MemberDTO) session.getAttribute("member");
@@ -50,7 +95,11 @@ public class PayController {
         int reservationNum = rdto.getReservationNum();
 
         int roomPrice = Integer.parseInt(params.get("roomPrice"));
-        long nights = Long.parseLong(params.get("nights"));
+        
+        String checkInStr = rdto.getCheckIn().replace("-", "");
+        String checkOutStr = rdto.getCheckOut().replace("-", "");
+       
+        long nights = hservice.calculateStayDays(checkInStr, checkOutStr);
         int payment = (int)(roomPrice * nights);
 
         ModelAndView mav = new ModelAndView("payment");
@@ -66,43 +115,45 @@ public class PayController {
         return mav;
     }
 
-    @PostMapping("/payment/complete")
+    @PostMapping("/paymentComplete")
     public ModelAndView completePayment(@RequestParam Map<String, String> params, HttpSession session) {
         MemberDTO member = (MemberDTO) session.getAttribute("member");
-
         int reservationNum = Integer.parseInt(params.get("reservationNum"));
         String payMethod = params.get("payMethod");
         int payment = Integer.parseInt(params.get("payment"));
-        String payment2 = payment+"";
-        System.out.println(">>> 결제 요청 정보 <<<");
-        System.out.println("회원번호: " + member.getMemberNum());
-        System.out.println("예약번호: " + reservationNum);
-        System.out.println("결제수단: " + payMethod);
-        System.out.println("결제금액: " + payment);
 
         PayDTO pay = new PayDTO();
         pay.setReservationNum(reservationNum);
         pay.setMemberNum(member.getMemberNum());
-        pay.setPayment(payment2);
+        pay.setPayment(String.valueOf(payment));
         pay.setPayMethod(payMethod);
         pay.setPayDate(new Date());
-        pay.setPayState(1); // 결제 완료
+        pay.setPayState(1);
 
         pservice.insertPay(pay);
         pservice.updateReservationState(reservationNum);
 
-        System.out.println(">>> 결제 DB 등록 완료 및 예약 상태 변경 완료");
+        // 예약 정보 조회
+        ReservationDTO rdto = rservice.getReservationById(reservationNum);
+        HotelRoomDTO hrdto = hrservice.selectRoom(rdto.getRoomNum());
+        HotelDTO hdto = hqservice.selectHotelByRoomNum(rdto.getRoomNum());
+        String checkInStr = rdto.getCheckIn().substring(0, 10).replace("-", "");
+        String checkOutStr = rdto.getCheckOut().substring(0, 10).replace("-", "");
+        long nights = hservice.calculateStayDays(checkInStr, checkOutStr);
+        String totalPrice = hservice.formatTotalPrice(hrdto.getRoomPrice(), nights);
 
-        // 결제 완료 메시지를 포함한 완료 페이지로 이동
+        
+        
+        
+        
         ModelAndView mav = new ModelAndView("reservation_completed");
-        mav.addObject("message", "결제가 완료되었습니다.");
-        mav.addObject("reservationNum", reservationNum);
-        
-        
-        System.out.println(">>> 예약 완료 페이지로 이동 예정: reservation_completed.jsp");
-        File f = new File("src/main/webapp/WEB-INF/views/reservation_completed.jsp");
-        System.out.println("JSP 존재 여부: " + f.exists());
-        
+        mav.addObject("member", member);
+        mav.addObject("reservation", rdto);
+        mav.addObject("hdto", hdto);
+        mav.addObject("hrdto", hrdto);
+        mav.addObject("nights", nights);
+        mav.addObject("totalPrice", totalPrice);
+
         return mav;
     }
     

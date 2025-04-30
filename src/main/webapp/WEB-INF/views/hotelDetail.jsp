@@ -185,7 +185,7 @@
 
                                     <!-- 가격 및 예약 -->
                                     <div class="col-4 text-end">
-                                        <form action="Reservation" method="post">
+                                        <form action="ReservationPage" method="post">
                                             <p class="fw-bold">총금액: ${ room.formattedPrice }원</p>
                                             <input type="hidden" name="hotelNum" value="${ hotel.hotelNum }">
                                             <input type="hidden" name="roomNum" value="${ room.roomNum }">

@@ -9,4 +9,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from hotel where hotelnum = #{_parameter}
 	</select>
 	
+	
+	<select id="selectHotelByRoomNum" resultType="com.backrooms.dto.HotelDTO" parameterType="int">
+	    SELECT H.*
+	    FROM HOTEL H
+	    JOIN ROOM R ON H.hotelNum = R.hotelNum
+	    WHERE R.roomNum = #{roomNum}
+	</select>
+	
 </mapper>

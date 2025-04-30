@@ -33,10 +33,10 @@
     <p><strong>예약자:</strong> ${member.memberName}</p>
     <p><strong>호텔명:</strong> ${hdto.hotelName}</p>
     <p><strong>객실명:</strong> ${hrdto.roomName}</p>
-    <p><strong>숙박일수:</strong> ${parameterMap.nights}박</p>
+    <p><strong>숙박일수:</strong> ${nights}박</p>
     <p><strong>결제 금액:</strong> ${totalPrice} 원</p>
 
-    <form id="paymentForm" action="/payment/complete" method="post">
+    <form id="paymentForm" action="${pageContext.request.contextPath}/paymentComplete" method="post">
         <input type="hidden" name="reservationNum" value="${reservationNum}" />
         <input type="hidden" name="memberNum" value="${member.memberNum}" />
         <input type="hidden" name="payment" value="${payment}" />

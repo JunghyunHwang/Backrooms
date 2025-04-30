@@ -28,5 +28,20 @@
       #{reservationBreakfast}
     )
   </insert>
+  
+ <insert id="insertReservationAndGetId" parameterType="ReservationDTO" useGeneratedKeys="false">
+    <selectKey keyProperty="reservationNum" resultType="int" order="AFTER">
+        SELECT reservation_seq.CURRVAL FROM dual
+    </selectKey>
+
+    INSERT INTO reservation (
+        reservationNum, memberNum, roomNum, checkIn, checkOut, reservationState, reservationBreakfast
+    ) VALUES (
+        reservation_seq.NEXTVAL, #{memberNum}, #{roomNum}, #{checkIn}, #{checkOut}, #{reservationState}, #{reservationBreakfast}
+    )
+</insert>
+	<select id="selectReservationById" parameterType="int" resultType="com.backrooms.dto.ReservationDTO">
+    SELECT * FROM reservation WHERE reservationNum = #{reservationNum}
+	</select>
 
 </mapper>
