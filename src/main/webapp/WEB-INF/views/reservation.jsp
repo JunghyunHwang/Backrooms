@@ -71,7 +71,7 @@
 		                return; // 중단
 		            }
 		
-		            window.location.href = "payment.html";
+		            window.location.href = "payment.jsp";
 		        });
 		        
 		        document.getElementById("payButton").addEventListener("click", function(){
@@ -174,7 +174,7 @@
 							                </div>
 							                <br>
 							                <h3>서비스 여부</h3>
-							                <form id="reservationform" action="ReservationSession" method="POST" >
+							                <form id="reservationform" action="goToPayment" method="POST" >
 							                	<input type="hidden" name="hotelNum" value="${parameterMap.hotelNum}" />
 											    <input type="hidden" name="roomNum" value="${parameterMap.roomNum}" />
 											    <input type="hidden" name="checkIn" value="${parameterMap.checkIn}" />

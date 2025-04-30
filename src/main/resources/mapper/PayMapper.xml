@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="PayMapper">
+    <insert id="insertPay" parameterType="PayDTO">
+        INSERT INTO pay (payNum, memberNum, reservationNum, payMethod, payDate, payment, payState)
+        VALUES (pay_seq.NEXTVAL, #{memberNum}, #{reservationNum}, #{payMethod}, SYSDATE, #{payment}, #{payState})
+    </insert>
+
+    <update id="updateReservationState" parameterType="int">
+        UPDATE reservation SET reservationState = 1 WHERE reservationNum = #{reservationNum}
+    </update>
+
+</mapper>
