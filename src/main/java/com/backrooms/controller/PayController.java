@@ -132,6 +132,11 @@ public class PayController {
 
         pservice.insertPay(pay);
         pservice.updateReservationState(reservationNum);
+        
+        // 예약 완료 메세지 보내기 위해 Service로 필요 데이터 보내는 코드
+        // 필요 데이터 PayDTO, 회원 이메일, 예약 날짜, 
+        
+        pservice.sendSimpleMailMessage(pay);
 
         // 예약 정보 조회
         ReservationDTO rdto = rservice.getReservationById(reservationNum);

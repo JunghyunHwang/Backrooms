@@ -12,4 +12,15 @@
         UPDATE reservation SET reservationState = 1 WHERE reservationNum = #{reservationNum}
     </update>
 
+	<select id="SendMail" parameterType="Hashmap" resultType="Hashmap">
+		select m.memberName,m.email,TO_CHAR( r.checkin, 'YYYY-MM-DD') as CHECKIN,TO_CHAR(r.checkout , 'YYYY-MM-DD') as CHECKOUT
+		from member m join reservation r on m.membernum = r.membernum
+		WHERE m.membernum = #{memberNum} and r.reservationnum = #{reservationNum}
+	</select>
+	
+	<select id="HotelInfo" parameterType="int" resultType="Hashmap">
+		select h.hotelname, h.hoteladdress, r.roomname
+		from room r join hotel h on r.hotelnum = h.hotelnum
+		where r.roomnum =(select roomnum from reservation where reservationNum=#{reservationNum})
+	</select>
 </mapper>
