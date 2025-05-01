@@ -55,7 +55,9 @@ public class PayService {
    		    		+ "✅ 유의사항\r\n"
    		    		+ "체크인은 3시 이후부터 가능합니다.\r\n"
    		    		+ "다시 한번 저희 호텔을 선택해주셔서 감사드리며, 편안하고 즐거운 여행 되시길 바랍니다.\r\n"
-   		    		+ "("+mdto.getHotelName()+" 드림");
+   		    		+ mdto.getHotelName()+" 드림\r\n"
+   		    		+ "==========================================================\r\n");
+   		    		
    		    
    		    javaMailSender.send(simpleMailMessage); 
    		    
