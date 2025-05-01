@@ -37,35 +37,41 @@ public class ImageService {
   @Value("${file.dir}")
   private String fileDir;
 
-  public String getStoreFileName(int imageUse, ImageKind kind) {
-    return dao.selectStoreFileName(new ImageFileQueryDTO(imageUse, kind.getValue()));
+  public String createStoreFileName(int imageUse, ImageKind kind) {
+    return dao.getStoreFileName(new ImageFileQueryDTO(imageUse, kind.getValue()));
+  }
+
+  public String getUploadName(String storeFileName) {
+    return dao.getUploadFileName(storeFileName);
   }
 
   public List<ImageFileNamesDTO> getImageFileNames(int imageUse, ImageKind kind) {
-    return dao.selectImageFileNames(new ImageFileQueryDTO(imageUse, kind.getValue()));
+    return dao.getUploadAndStoreFileNames(new ImageFileQueryDTO(imageUse, kind.getValue()));
   }
 
   // 초기 이미지 테이블 설계시에는 이미지만 넣는 용도로 설계했으나 이미지뿐 아니라 다른 파일 정보도 저장할수있게 사용하게 됐습니다(board에서 여러종류의 파일을 업로드/다운로드 지원합니다)
   public void storeFiles(List<MultipartFile> files, ImageKind kind, int imageUse) throws Exception {
     files.forEach(file -> {
-      if (!file.isEmpty()) {
-        String uploadFileName = file.getOriginalFilename();
-        assert uploadFileName != null;
-        String storeFileName = getStoreFileName(uploadFileName);
-        //파일 정보를 디비(이미지 테이블)에 저장
-        dao.insertFile(new ImageInsertDTO(kind.getValue(), imageUse, uploadFileName, storeFileName));
-        //실제 파일을 로컬에 저장
-        saveFileToDisk(file, kind, storeFileName);
+      if (file == null || file.isEmpty() || file.getOriginalFilename() == null) {
+        return;
       }
+
+      String uploadFileName = file.getOriginalFilename();
+      String storeFileName = createStoreFileName(uploadFileName);
+      //파일 정보를 디비(이미지 테이블)에 저장
+      int insertResult = dao.insertFile(
+        new ImageInsertDTO(kind.getValue(), imageUse, uploadFileName, storeFileName)
+      );
+      if (insertResult != 1) {
+        throw new FileStorageException("파일을 이미지 테이블에 저장하는 도중에 에러가 발생했습니다");
+      }
+      //실제 파일을 로컬에 저장
+      saveFileToDisk(file, kind, storeFileName);
     });
   }
 
   public void saveFileToDisk(MultipartFile file, ImageKind kind, String storeFileName) {
-    if (file.isEmpty()) {
-      return;
-    }
-
-    if (file.getOriginalFilename() == null) {
+    if (file == null || file.isEmpty() || storeFileName.isEmpty()) {
       return;
     }
 
@@ -125,7 +131,7 @@ public class ImageService {
     return fileDir + category + "/" + storeFileName;
   }
 
-  private static String getStoreFileName(String originalFilename) {
+  private static String createStoreFileName(String originalFilename) {
     int lastDot = originalFilename.lastIndexOf(".");
     String ext = originalFilename.substring(lastDot + 1);
     return UUID.randomUUID().toString() + "." + ext;

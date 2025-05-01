@@ -1,6 +1,5 @@
 package com.backrooms.dao;
 
-import com.backrooms.dto.ImageDTO;
 import com.backrooms.dto.ImageFileNamesDTO;
 import com.backrooms.dto.ImageFileQueryDTO;
 import com.backrooms.dto.ImageInsertDTO;
@@ -25,14 +24,18 @@ public class ImageDAO {
   }
 
   public int insertFile(ImageInsertDTO image) {
-    return template.insert("ImageMapper.insertImage", image);
+    return template.insert("ImageMapper.insertFile", image);
   }
 
-  public String selectStoreFileName(ImageFileQueryDTO imageFileQueryDTO) {
-    return template.selectOne("ImageMapper.selectStoreFileName", imageFileQueryDTO);
+  public String getStoreFileName(ImageFileQueryDTO imageFileQueryDTO) {
+    return template.selectOne("ImageMapper.selectStoreFileNameByUseAndKind", imageFileQueryDTO);
   }
 
-  public List<ImageFileNamesDTO> selectImageFileNames(ImageFileQueryDTO imageFileQueryDTO) {
-    return template.selectList("ImageMapper.selectImageFileNames", imageFileQueryDTO);
+  public List<ImageFileNamesDTO> getUploadAndStoreFileNames(ImageFileQueryDTO imageFileQueryDTO) {
+    return template.selectList("ImageMapper.selectUploadAndStoreFileNamesByUseAndKind", imageFileQueryDTO);
+  }
+
+  public String getUploadFileName(String storeFileName) {
+    return template.selectOne("ImageMapper.selectUploadNameByStoreName", storeFileName);
   }
 }

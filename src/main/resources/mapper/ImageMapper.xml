@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY imageUse ASC
 	</select>
 
-	<select id="insertImage" parameterType="ImageInsertDTO" resultType="ImageDTO">
+	<select id="insertFile" parameterType="ImageInsertDTO" resultType="ImageDTO">
 
 	insert into image
 	(imageNum, imageKind, imageUse, imageUploadFileName, imageStoreFileName, imageCount)
@@ -25,16 +25,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 
-	<select id="selectStoreFileName" parameterType="ImageFileQueryDTO" resultType="string">
+	<select id="selectStoreFileNameByUseAndKind" parameterType="ImageFileQueryDTO" resultType="string">
 		select  imagestorefilename
 		from image
-		where imageUse = #{imageUse} AND imageKind = ${imageKind}
+		where imageUse = #{imageUse} AND imageKind = #{imageKind}
 	</select>
 	
-	<select id="selectImageFileNames" parameterType="ImageFileQueryDTO" resultType="ImageFileNamesDTO">
+	<select id="selectUploadAndStoreFileNamesByUseAndKind" parameterType="ImageFileQueryDTO" resultType="ImageFileNamesDTO">
 		select imageuploadfilename, imagestorefilename
 		from image
-		where imageUse = #{imageUse} AND imageKind = ${imageKind}
+		where imageUse = #{imageUse} AND imageKind = #{imageKind}
+	</select>
+	
+	<select id="selectUploadNameByStoreName" parameterType="string" resultType="string">
+		select imageuploadfilename
+		from image
+		where imagestorefilename = #{storeFileName}
 	</select>
 	
 </mapper>
