@@ -99,6 +99,11 @@
 		</dependency>
   
 		<!--jstl api 디펜던시 끝-->
+		<!--spring boot에서 메일을 보내기 위하여 추가하는 Java Mail Sender-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
