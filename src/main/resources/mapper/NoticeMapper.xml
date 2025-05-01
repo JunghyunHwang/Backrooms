@@ -3,6 +3,14 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="NoticeMapper">
+
+	<select id="latestNoticeNum" resultType="int">
+		SELECT noticeNum
+		FROM notice
+		ORDER BY noticeNum DESC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+
 	<select id="list" resultType="NoticeDTO">
 	SELECT
 		n.noticeNum,

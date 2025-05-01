@@ -143,47 +143,56 @@
 			})
 			
  			}
- 			
+ 			//###
  			function bindPostFormSubmit() {
- 				$("#postForm").on("submit", function(event) {
- 				event.preventDefault();
+               const formEle = $("#postForm");
+              formEle.on("submit", function(event) {
+ 				// event.preventDefault();
  				
- 				const postTitle = $("#postTitle").val();
- 				const postText = $("#postText").val();
+ 				// const postTitle = $("#postTitle").val();
+ 				// const postText = $("#postText").val();
  				const topPostCheckbox = $("#topPostCheckbox")[0].checked;
+                const postState = topPostCheckbox === true ? 9 : 0;
  	 			const params = new URLSearchParams(window.location.search);
- 	 			const category = params.get("category") ?? "notice"; 
- 				$.ajax({
-					type : "post",
-					url : "${pageContext.request.contextPath}/console/board/" + category,
-					dataType : "text ", //text, json, html, xml
-					data: {
-						postTitle: postTitle,
-						postText: postText,
-						postState: topPostCheckbox === true ? 9 : 0
-					},
-					
-					success : function(data, status, xhr) {
-				        //window.history.pushState("","", "Console?category="+category+"&curPage="+ curPage +"&postNum="+postNum);
-				        //$(window).scrollTop(0);
-				        //등록이 완료되면 등록한 글을 볼수있게 해당 카테고리의 첫페이지로 이동합니다
-				        	const firstPageUrl = (window.location).toString().split("&curPage=")[0];
-				        	window.location.href = firstPageUrl;
-				        	alert("등록 완료!");
-					},
-					error : function(xhr, status, error) {
-						if (xhr.status == 403) {
-							window.location.href = "SignIn";
-							alert("해당 작업에대한 권한이 없습니다.")
-						} else {
-							console.log("error: ", error);
-							alert("등록 실패!");
-						}
-					}
- 				})
- 				})
+ 	 			const category = params.get("category") ?? "notice";
+                const url = "${pageContext.request.contextPath}/console/board/" + category;
+                $("#postState").val(postState);
+                formEle.attr("action", url);
+                // formEle.submit();
+              });
+            }
 
- 			}
+ 				// $.ajax({
+					// type : "post",
+					// url : url,
+					// dataType : "text ", //text, json, html, xml
+					// data: {
+					// 	postTitle: postTitle,
+					// 	postText: postText,
+					// 	postState: postState
+					// },
+					//
+					// success : function(data, status, xhr) {
+				 //        //window.history.pushState("","", "Console?category="+category+"&curPage="+ curPage +"&postNum="+postNum);
+				 //        //$(window).scrollTop(0);
+				 //        //등록이 완료되면 등록한 글을 볼수있게 해당 카테고리의 첫페이지로 이동합니다
+				 //        	const firstPageUrl = (window.location).toString().split("&curPage=")[0];
+				 //        	window.location.href = firstPageUrl;
+				 //        	alert("등록 완료!");
+					// },
+					// error : function(xhr, status, error) {
+					// 	if (xhr.status == 403) {
+					// 		window.location.href = "SignIn";
+					// 		alert("해당 작업에대한 권한이 없습니다.")
+					// 	} else {
+					// 		console.log("error: ", error);
+					// 		alert("등록 실패!");
+					// 	}
+					// }
+ 				// })
+ 				// })
+
+ 			// }
  			
  			function bindDeleteButton() {
 			$("#postDeleteButton").on("click", function () {
@@ -258,7 +267,12 @@
 			} 
 			
 			function displayDetailData(data, category) {
-				let title = "";
+              const storeFileName = data?.imageFileNamesList?.[0]?.imageStoreFileName;
+              const contextPath = '${pageContext.request.contextPath}';
+              const imageSrc = contextPath + '/images/board/' + storeFileName;
+              const imgElement = '<img src="' + imageSrc + '" alt="Image" class="img-thumbnail" width="300px" height="300px" >';
+              document.getElementById("imageContainer").innerHTML = imgElement;
+              let title = "";
 				let memberName = "";
 				let date = "";
 				let text = "";
@@ -325,7 +339,6 @@
 				 		  const postNum = parseInt(params.get("postNum"));
 				    	  $.ajax({
 								type : "PUT",
-								//###
 								url: "${pageContext.request.contextPath}/console/board/" + category,
 								//보내는 데이터 타입 
 								contentType: 'application/json',
@@ -1026,11 +1039,13 @@
 					`
 						break;
 				//공지, 이벤트 상세보기 템플릿
+                    //###
 				  case Templates.DETAIL:
 						template = `
 					<section id="detailSection" class=" bg-white p-4 rounded border shadow-sm d-flex flex-column">
 							<div class="table-responsive flex-grow-1" style="min-height: 300px; overflow-y: auto">
 								<!-- Read-Only Display -->
+                                <div id="imageContainer"></div>
 								<div id="displayMode">
 									<div class="mb-2">
 									<h2 id="title" class="mb-3 fs-2"></h2>
@@ -1114,27 +1129,34 @@
 						    <!-- 상단글 Checkbox Inline: label before checkbox -->
 						    <div class="d-flex align-items-center mb-3">
 						      <span class="fs-6 me-2 ">상단글</span>
-						      <input type="checkbox" id="topPostCheckbox" class="form-check-input" style="width: 25px; height: 25px;">
+						      <input type="checkbox"  id="topPostCheckbox" class="form-check-input" style="width: 25px; height: 25px;">
 						    </div>
 						    
 						    <!-- Form for creating a post -->
-						    
-						    <form id="postForm">
-						      <div class="mb-3">
-						        <label for="postTitle" class="form-label">제목</label>
-						        <input type="text" class="form-control" id="postTitle" placeholder="제목을 입력해주세요." required>
-						      </div>
-						      <div class="mb-3">
-						        <label for="postText" class="form-label">내용</label>
-						        <textarea class="form-control" id="postText" style="height: 207px;" rows="30" placeholder="내용을 입력해주세요." required></textarea>
-						      </div>
-						      <div class="d-flex justify-content-center mt-3">
-						        <button id="backBtn" class="btn btn-secondary me-3">취소</button>
-						        <button id="submitBtn" type="submit" class="btn btn-primary">등록</button>
-						      </div>
-						    </form>
-						  </div>
-						</section>
+
+                            <form id="postForm" enctype="multipart/form-data" method="post">
+                              <input id="postState" type="hidden" name="postState" value="" />
+                              <div class="mb-3">
+                                <label for="postTitle" class="form-label">제목</label>
+                                <input type="text" name="postTitle" " class="form-control" id="postTitle" placeholder="제목을 입력해주세요." required>
+                              </div>
+
+                              <div class="mb-3">
+                                <label for="postText" class="form-label">내용</label>
+                                <textarea class="form-control" name="postText"   id="postText" style="height: 207px;" rows="30" placeholder="내용을 입력해주세요." required></textarea>
+                              </div>
+
+                              <!--  File Upload Input -->
+                              <div class="mb-3">
+                                <label for="postFiles" class="form-label">파일 업로드</label>
+                                <input class="form-control" type="file" id="postFiles" name="files" multiple>
+                              </div>
+
+                              <div class="d-flex justify-content-center mt-3">
+                                <button id="backBtn" class="btn btn-secondary me-3">취소</button>
+                                <button id="submitBtn" type="submit" class="btn btn-primary">등록</button>
+                              </div>
+                            </form>
 						`
 					  break;
 					default:
@@ -1144,7 +1166,7 @@
 			
 			templateContainer.innerHTML = template;
 		}
-		}) 
+		});
 	</script>
   </head>
 

@@ -1,5 +1,6 @@
 package com.backrooms.dto;
 
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,4 +17,5 @@ public class NoticeDTO {
   private String noticeDate;
   private String noticeTitle;
   private String noticeText;
+  private List<ImageFileNamesDTO> imageFileNamesList;
 }

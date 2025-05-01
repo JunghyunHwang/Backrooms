@@ -14,5 +14,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</foreach>
 		ORDER BY imageUse ASC
 	</select>
+
+	<select id="insertImage" parameterType="ImageInsertDTO" resultType="ImageDTO">
+
+	insert into image
+	(imageNum, imageKind, imageUse, imageUploadFileName, imageStoreFileName, imageCount)
+	values
+	    (image_seq.nextval, #{imageKind}, #{imageUse}, #{imageUploadFileName}, #{imageStoreFileName}, 1)
+
+	</select>
+
+
+	<select id="selectStoreFileName" parameterType="ImageFileQueryDTO" resultType="string">
+		select  imagestorefilename
+		from image
+		where imageUse = #{imageUse} AND imageKind = ${imageKind}
+	</select>
+	
+	<select id="selectImageFileNames" parameterType="ImageFileQueryDTO" resultType="ImageFileNamesDTO">
+		select imageuploadfilename, imagestorefilename
+		from image
+		where imageUse = #{imageUse} AND imageKind = ${imageKind}
+	</select>
 	
 </mapper>

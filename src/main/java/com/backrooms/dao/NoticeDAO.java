@@ -30,6 +30,10 @@ public class NoticeDAO {
     return noticeList;
   }
 
+  public int selectLatestNoticeNum() {
+    return template.selectOne("NoticeMapper.latestNoticeNum");
+  }
+
   public NoticeDTO selectOne(int noticeNum) {
     NoticeDTO notice = template.selectOne("NoticeMapper.detail", noticeNum);
     return notice;
