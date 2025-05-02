@@ -2,13 +2,18 @@ package com.backrooms.controller;
 
 import com.backrooms.service.ImageService;
 import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.UriUtils;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -34,5 +39,16 @@ public class ImageController {
     throws MalformedURLException {
     return new UrlResource("file:" + imageService.getFullPathByCategory(category, storeFieName));
   }
-  //TODO: 다운로드 기능 추가
+
+  @GetMapping("/attach/{category}/{storeFieName}")
+  public ResponseEntity<Resource> attach(@PathVariable String storeFieName, @PathVariable String category)
+    throws MalformedURLException {
+    String uploadName = imageService.getUploadFileName(storeFieName);
+    UrlResource resource = new UrlResource(
+      "file:" + imageService.getFullPathByCategory(category, storeFieName)
+    );
+    String encoudedUploadFileName = UriUtils.encode(uploadName, StandardCharsets.UTF_8);
+    String contentDisposition = "attachment; filename=\"" + encoudedUploadFileName + "\"";
+    return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition).body(resource);
+  }
 }

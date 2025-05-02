@@ -147,10 +147,6 @@
  			function bindPostFormSubmit() {
                const formEle = $("#postForm");
               formEle.on("submit", function(event) {
- 				// event.preventDefault();
- 				
- 				// const postTitle = $("#postTitle").val();
- 				// const postText = $("#postText").val();
  				const topPostCheckbox = $("#topPostCheckbox")[0].checked;
                 const postState = topPostCheckbox === true ? 9 : 0;
  	 			const params = new URLSearchParams(window.location.search);
@@ -158,10 +154,8 @@
                 const url = "${pageContext.request.contextPath}/console/board/" + category;
                 $("#postState").val(postState);
                 formEle.attr("action", url);
-                // formEle.submit();
               });
             }
-
  				// $.ajax({
 					// type : "post",
 					// url : url,
@@ -265,13 +259,81 @@
 					}
 				}) 
 			} 
-			
+			//###
+            function extractExtension(fileName) {
+               if (fileName === undefined || fileName?.length == 0)  {
+                 return;
+               }
+              const dotIndex = fileName?.lastIndexOf('.');
+              return dotIndex !== -1 ? fileName.substring(dotIndex + 1) : '';
+          }
+
+          function isImageIncluded(imageFileNameList) {
+            const imageExtensionMapper = {
+              "jpeg": "jpeg",
+              "jpg": "jpg",
+              "png": "png",
+              "gif": "gif",
+              "raw": "raw",
+            }
+            return imageFileNameList
+            .map(fileNames => extractExtension(fileNames.imageUploadFileName))
+            .map(ext => ext.toLowerCase(ext))
+            .some(ext => imageExtensionMapper[ext]);
+          }
+          function displayFileAndAttach(data) {
+            console.log(data?.imageFileNamesList);
+            const list = data?.imageFileNamesList;
+            const contextPath = '${pageContext.request.contextPath}';
+            const imageContainer = document.getElementById("imageContainer");
+            const attachList = document.getElementById("attachList");
+            const attachCountElement = document.getElementById("attachCount");
+            const attachContainer = document.getElementById("attachContainer");
+            const attachCount = list.length;
+
+            if (attachCount === 0) {
+              attachContainer.classList.add("d-none");
+              return;
+            }
+
+            attachCountElement.textContent =  list?.length;
+            if (!isImageIncluded(list)) {
+              imageContainer.classList.add("d-none");
+            }
+
+            list.forEach( item => {
+              console.log(item);
+              const storeFileName = item.imageStoreFileName;
+              const uploadFileName = item.imageUploadFileName;
+
+              const wrapper = document.createElement('div');
+              wrapper.className = 'text-center';
+              wrapper.style.maxWidth = '300px';
+
+              const img = document.createElement('img');
+              img.src = contextPath + '/images/board/' + storeFileName;
+              img.alt = uploadFileName;
+              img.className = 'img-thumbnail mb-2';
+
+              const fileName = document.createElement('div');
+              fileName.textContent = uploadFileName;
+              fileName.className = 'small text-muted';
+
+              wrapper.appendChild(img);
+              wrapper.appendChild(fileName);
+
+              imageContainer.appendChild(wrapper);
+
+              const href = contextPath + '/attach/board/' + storeFileName;
+              const anchorElement = document.createElement("a");
+              anchorElement.href = href;
+              anchorElement.textContent = uploadFileName
+              anchorElement.className = "text-decoration-none text-dark me-3 ml-2";
+              attachList.appendChild(anchorElement);
+            })
+          }
 			function displayDetailData(data, category) {
-              const storeFileName = data?.imageFileNamesList?.[0]?.imageStoreFileName;
-              const contextPath = '${pageContext.request.contextPath}';
-              const imageSrc = contextPath + '/images/board/' + storeFileName;
-              const imgElement = '<img src="' + imageSrc + '" alt="Image" class="img-thumbnail" width="300px" height="300px" >';
-              document.getElementById("imageContainer").innerHTML = imgElement;
+               displayFileAndAttach(data);
               let title = "";
 				let memberName = "";
 				let date = "";
@@ -376,12 +438,19 @@
 			 //공지, 이벤- 상세페이지에 있는 버튼에 클릭 이벤트를 등록합니다
 			    $("#editBtn").click(function() {
 				      if ($(this).text().trim() === "수정하기") {
+
+
 				        // Switch to edit mode: hide display div, show input fields, change button text
 				        $(this).text("등록하기");
-				        $("#displayMode").addClass("d-none");
-				        $("#editMode").removeClass("d-none");
+                        $('#title').toggleClass('d-none');
+                        $('#inputTitle').toggleClass('d-none');
+                        $('#text').toggleClass('d-none');
+                        $('#textarea').toggleClass('d-none');
+                        //TODO: 첨부파일도 추가/삭제 할수있는 기능도 추가하기: 이미지테이블에 status 컬럼 추가 필요) 0: 기본 1: 삭제
 				        $("#textarea")[0].focus();
+
 				      } else {
+                        //등록하기 버튼 클릭시
 				        // Complete editing: update display with new values, revert button text, switch back to read-only
 				    	  const params = new URLSearchParams(window.location.search);
 				 			const category = params.get("category");  			
@@ -1042,31 +1111,109 @@
                     //###
 				  case Templates.DETAIL:
 						template = `
-					<section id="detailSection" class=" bg-white p-4 rounded border shadow-sm d-flex flex-column">
-							<div class="table-responsive flex-grow-1" style="min-height: 300px; overflow-y: auto">
-								<!-- Read-Only Display -->
-                                <div id="imageContainer"></div>
-								<div id="displayMode">
-									<div class="mb-2">
-									<h2 id="title" class="mb-3 fs-2"></h2>
-										<span id="memberName" class="fs-6 fw-bold"></span>
-										<span id="date" class="text-muted fs-6"></span>
-									</div>
-									<hr>
-									<p id="text" class="fs-5"></p>
-								</div>
-								<!-- Edit Mode (hidden by default) -->
-						<div id="editMode" class="d-none">
-							<input type="text" id="inputTitle" class="form-control mb-2 fs-2" >
-							<textarea id="textarea" class="form-control fs-5" style="height: 207px;" rows="30"></textarea>
-						</div>
-							</div>
-							<!-- Button Row: 뒤로가기 and Edit/Complete -->
-							<div class="d-flex justify-content-center mt-3">
-								<button id="backBtn" class="btn btn-secondary me-3">뒤로가기</button>
-								<button id="editBtn" class="btn btn-primary">수정하기</button>
-							</div>
-						</section>
+<section id="detailSection" class="bg-white p-4 rounded border shadow-sm d-flex flex-column">
+  <div class="table-responsive flex-grow-1" style="overflow-y: auto">
+    <div class="mb-3">
+      <h2 id="title" class="fs-2 mb-0"></h2>
+      <input type="text" id="inputTitle" class="form-control fs-2 d-none" placeholder="제목을 입력해주세요.">
+    </div>
+    <div class="mb-3">
+      <span id="memberName" class="fs-6 fw-bold me-2"></span>
+      <span id="date" class="text-muted fs-6"></span>
+    </div>
+
+    <hr class="mb-4"/>
+    <!--imageContainer-->
+    <div id="imageContainer" class="mb-4 d-flex flex-wrap gap-3"></div>
+    <div class="mb-4">
+      <p id="text" class="fs-5 lh-lg px-2 py-1" style="min-height: 207px;"></p>
+      <textarea id="textarea" class="form-control fs-5 d-none" style="height: 207px;" rows="30" placeholder="내용을 입력해주세요."></textarea>
+    </div>
+    <!-- Attachments -->
+    <div id="attachContainer" class="border p-2 rounded  mb-3">
+      <div class="mb-1">
+        <span class="fw-bold small">원본 첨부파일</span>
+        <span id="attachCount" class="text-danger fw-bold small"></span>
+      </div>
+      <div id="attachList" class="d-flex flex-wrap gap-2 small text-muted m-lg-1"></div>
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="d-flex justify-content-center mt-3">
+    <button id="backBtn" class="btn btn-secondary me-3">뒤로가기</button>
+    <button id="editBtn" class="btn btn-primary">수정하기</button>
+  </div>
+</section>
+
+<!--<section id="detailSection" class="bg-white p-4 rounded border shadow-sm d-flex flex-column">-->
+<!--  <div class="table-responsive flex-grow-1" style="min-height: 300px; overflow-y: auto">-->
+<!--    &lt;!&ndash; Display Mode (Read-Only) &ndash;&gt;-->
+<!--    <div id="displayMode">-->
+<!--      &lt;!&ndash; Title &ndash;&gt;-->
+<!--      <h2 id="title" class="mb-3 fs-2"></h2>-->
+
+<!--      &lt;!&ndash; Meta: Writer and Date &ndash;&gt;-->
+<!--      <div class="mb-2">-->
+<!--        <span id="memberName" class="fs-6 fw-bold me-2"></span>-->
+<!--        <span id="date" class="text-muted fs-6"></span>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; Images &ndash;&gt;-->
+<!--      <div id="imageContainer" class="mb-3 d-flex flex-wrap gap-3"></div>-->
+
+<!--      &lt;!&ndash; Divider &ndash;&gt;-->
+<!--      <hr>-->
+
+<!--      &lt;!&ndash; Content &ndash;&gt;-->
+<!--      <p id="text" class="fs-5"></p>-->
+
+<!--      <div id="attachContainer"></div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Edit Mode (Hidden by default) &ndash;&gt;-->
+<!--    <div id="editMode" class="d-none">-->
+<!--      &lt;!&ndash; Editable Title &ndash;&gt;-->
+<!--      <input type="text" id="inputTitle" class="form-control mb-3 fs-2" placeholder="제목을 입력해주세요.">-->
+
+<!--      &lt;!&ndash; Editable Content &ndash;&gt;-->
+<!--      <textarea id="textarea" class="form-control fs-5" style="height: 207px;" rows="30" placeholder="내용을 입력해주세요."></textarea>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; Button Row &ndash;&gt;-->
+<!--  <div class="d-flex justify-content-center mt-3">-->
+<!--    <button id="backBtn" class="btn btn-secondary me-3">뒤로가기</button>-->
+<!--    <button id="editBtn" class="btn btn-primary">수정하기</button>-->
+<!--  </div>-->
+<!--</section>-->
+<!--					<section id="detailSection" class=" bg-white p-4 rounded border shadow-sm d-flex flex-column">-->
+<!--							<div class="table-responsive flex-grow-1" style="min-height: 300px; overflow-y: auto">-->
+<!--								&lt;!&ndash; Read-Only Display &ndash;&gt;-->
+
+
+<!--								<div id="displayMode">-->
+<!--									<div class="mb-2">-->
+<!--									<h2 id="title" class="mb-3 fs-2"></h2>-->
+<!--										<span id="memberName" class="fs-6 fw-bold"></span>-->
+<!--										<span id="date" class="text-muted fs-6"></span>-->
+<!--									</div>-->
+<!--<div id="imageContainer" class="mb-3 d-flex flex-wrap gap-3"></div>-->
+<!--									<hr>-->
+<!--									<p id="text" class="fs-5"></p>-->
+<!--								</div>-->
+<!--								&lt;!&ndash; Edit Mode (hidden by default) &ndash;&gt;-->
+<!--						<div id="editMode" class="d-none">-->
+<!--							<input type="text" id="inputTitle" class="form-control mb-2 fs-2" >-->
+<!--							<textarea id="textarea" class="form-control fs-5" style="height: 207px;" rows="30"></textarea>-->
+<!--						</div>-->
+<!--							</div>-->
+<!--							&lt;!&ndash; Button Row: 뒤로가기 and Edit/Complete &ndash;&gt;-->
+<!--							<div class="d-flex justify-content-center mt-3">-->
+<!--								<button id="backBtn" class="btn btn-secondary me-3">뒤로가기</button>-->
+<!--								<button id="editBtn" class="btn btn-primary">수정하기</button>-->
+<!--							</div>-->
+<!--						</section>-->
 						`
 						break;
 				 

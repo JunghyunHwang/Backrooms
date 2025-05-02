@@ -41,11 +41,11 @@ public class ImageService {
     return dao.getStoreFileName(new ImageFileQueryDTO(imageUse, kind.getValue()));
   }
 
-  public String getUploadName(String storeFileName) {
+  public String getUploadFileName(String storeFileName) {
     return dao.getUploadFileName(storeFileName);
   }
 
-  public List<ImageFileNamesDTO> getImageFileNames(int imageUse, ImageKind kind) {
+  public List<ImageFileNamesDTO> getUploadAndStoreFileNames(int imageUse, ImageKind kind) {
     return dao.getUploadAndStoreFileNames(new ImageFileQueryDTO(imageUse, kind.getValue()));
   }
 
