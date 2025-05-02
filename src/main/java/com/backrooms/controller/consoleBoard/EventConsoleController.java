@@ -76,15 +76,20 @@ public class EventConsoleController {
       throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 
-    String earlierFirstPageURL = getFirstPageURL(request);
+    String currentCategoryFirstPageUrl = getCurrentCategoryFirstPageUrl(request);
 
-    return "redirect:/" + earlierFirstPageURL;
+    return "redirect:/" + currentCategoryFirstPageUrl;
   }
 
-  private static String getFirstPageURL(HttpServletRequest request) {
+  private static String getCurrentCategoryFirstPageUrl(HttpServletRequest request) {
     String referrer = request.getHeader("referer");
-    String earlierURL = referrer.split("http://localhost:8092/backrooms/")[1];
-    return earlierURL.split("&curPage")[0] + "&curPage=1&filter=all";
+
+    if (referrer == null) {
+      return "";
+    }
+    String basePath = referrer.split(request.getContextPath() + "/")[1];
+    String pathWithoutPage = basePath.split("&curPage")[0];
+    return pathWithoutPage + "&curPage=1&filter=all";
   }
 
   @ResponseBody
