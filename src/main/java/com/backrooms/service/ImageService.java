@@ -34,7 +34,7 @@ public class ImageService {
    */
 
   //application-properties에서 설정한 file.dir=경로 에서 file.dir값에 해당되는 경로를 읽어옵니다
-  @Value("${file.dir}")
+  @Value("${file.dir:}")
   private String fileDir;
 
   public String createStoreFileName(int imageUse, ImageKind kind) {
