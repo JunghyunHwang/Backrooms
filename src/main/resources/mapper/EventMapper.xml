@@ -6,9 +6,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
   <select id="SelectLatestEventNum" resultType="int">
     SELECT eventNum
-    FROM event
-    ORDER BY eventNum DESC
-      FETCH FIRST 1 ROWS ONLY
+    FROM (
+           SELECT eventNum
+           FROM event
+           ORDER BY eventNum DESC
+         )
+    WHERE ROWNUM = 1
   </select>
 
 	<select id="list" resultType="EventDTO">

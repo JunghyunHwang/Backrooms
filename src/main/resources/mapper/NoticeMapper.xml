@@ -6,9 +6,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="latestNoticeNum" resultType="int">
 		SELECT noticeNum
-		FROM notice
-		ORDER BY noticeNum DESC
-		FETCH FIRST 1 ROWS ONLY
+		FROM (
+					 SELECT noticeNum
+					 FROM notice
+					 ORDER BY noticeNum DESC
+				 )
+		WHERE ROWNUM = 1
 	</select>
 
 	<select id="list" resultType="NoticeDTO">
