@@ -289,7 +289,7 @@
             const attachList = document.getElementById("attachList");
             const attachCountElement = document.getElementById("attachCount");
             const attachContainer = document.getElementById("attachContainer");
-            const attachCount = list.length;
+            const attachCount = list?.length;
 
             if (attachCount === 0) {
               attachContainer.classList.add("d-none");

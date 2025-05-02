@@ -1,8 +1,5 @@
 package com.backrooms.controller.consoleBoard;
 
-import com.backrooms.dto.ImageFileNamesDTO;
-import com.backrooms.dto.ImageInsertDTO;
-import com.backrooms.dto.ImageKind;
 import com.backrooms.dto.MemberDTO;
 import com.backrooms.dto.NoticeDTO;
 import com.backrooms.dto.NoticePageDTO;
@@ -11,18 +8,12 @@ import com.backrooms.dto.PostDeleteRequestDTO;
 import com.backrooms.dto.PostUpdateRequestDTO;
 import com.backrooms.exception.FileStorageException;
 import com.backrooms.exception.PostCreationException;
-import com.backrooms.service.ImageService;
 import com.backrooms.service.NoticeService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,10 +26,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-//@RestController
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/console/board/notice")

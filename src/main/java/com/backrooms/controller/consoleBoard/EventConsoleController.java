@@ -6,11 +6,16 @@ import com.backrooms.dto.MemberDTO;
 import com.backrooms.dto.PostCreateRequestDTO;
 import com.backrooms.dto.PostDeleteRequestDTO;
 import com.backrooms.dto.PostUpdateRequestDTO;
+import com.backrooms.exception.FileStorageException;
+import com.backrooms.exception.PostCreationException;
 import com.backrooms.service.EventService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,12 +25,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/console/board/event")
+@Slf4j
 public class EventConsoleController {
 
   /**
@@ -37,12 +44,14 @@ public class EventConsoleController {
    */
   private final EventService service;
 
+  @ResponseBody
   @GetMapping("/list/{curPage}")
   public EventPageDTO eventList(@RequestParam String filter, @PathVariable int curPage) {
     EventPageDTO eventPaination = service.getEventPagination(curPage, filter);
     return eventPaination;
   }
 
+  @ResponseBody
   @RequestMapping("/detail/{postNum}")
   public EventDTO eventDetail(@PathVariable int postNum) {
     EventDTO eventDetail = service.getEventDetail(postNum);
@@ -50,24 +59,35 @@ public class EventConsoleController {
   }
 
   @PostMapping
-  public String newEvent(@ModelAttribute PostCreateRequestDTO newPostDTO, HttpSession session) {
+  public String newEvent(
+    @ModelAttribute PostCreateRequestDTO newPostDTO,
+    HttpSession session,
+    HttpServletRequest request
+  ) {
     MemberDTO member = (MemberDTO) session.getAttribute("member");
 
     if (member == null) {
       throw new ResponseStatusException(HttpStatus.FORBIDDEN, "접근 권한이 없습니다");
     }
 
-    int insertResult = service.createEvent(newPostDTO, member.getMemberNum());
-    if (insertResult != 1) {
-      throw new ResponseStatusException(
-        HttpStatus.INTERNAL_SERVER_ERROR,
-        "게시글 등록에 실패했습니다. 다시 시도해주세요."
-      );
+    try {
+      service.createEventAndStoreImages(newPostDTO, member.getMemberNum());
+    } catch (FileStorageException | PostCreationException e) {
+      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
-    //      throw new ResponseStatusException(HttpStatus.CREATED, "게시글 등록이 완료되었습니다");
-    return "ok";
+
+    String earlierFirstPageURL = getFirstPageURL(request);
+
+    return "redirect:/" + earlierFirstPageURL;
   }
 
+  private static String getFirstPageURL(HttpServletRequest request) {
+    String referrer = request.getHeader("referer");
+    String earlierURL = referrer.split("http://localhost:8092/backrooms/")[1];
+    return earlierURL.split("&curPage")[0] + "&curPage=1&filter=all";
+  }
+
+  @ResponseBody
   @PutMapping
   public String eventUpdate(@RequestBody PostUpdateRequestDTO updatePostDTO, HttpSession session) {
     MemberDTO member = (MemberDTO) session.getAttribute("member");
@@ -87,6 +107,7 @@ public class EventConsoleController {
     return "ok";
   }
 
+  @ResponseBody
   @DeleteMapping
   public String eventDeletion(@RequestBody PostDeleteRequestDTO deletePostDTO, HttpSession session) {
     MemberDTO member = (MemberDTO) session.getAttribute("member");
