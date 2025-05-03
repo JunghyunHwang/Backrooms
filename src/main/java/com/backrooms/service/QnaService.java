@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +29,8 @@ public class QnaService {
 
   private final QnaDAO dao;
   
-  
+  @Value("${file.dir}")
+  private String fileDir;  
   @Transactional
   public int qnaAdd(QnaDTO dto, MemberDTO member) {
     // TODO Auto-generated method stub
@@ -147,18 +149,18 @@ public void saveImage(String text) throws FileNotFoundException, IOException {
        Matcher base64Matcher = base64Pattern.matcher(text);
        String base64Image = base64Matcher.find() ? base64Matcher.group(1) : "";
 
-       System.out.println(base64Image);
+       
        // 파일명 추출
        Pattern filenamePattern = Pattern.compile("data-filename=\"([^\"]+)\"");
        Matcher filenameMatcher = filenamePattern.matcher(text);
        String fileName = filenameMatcher.find() ? filenameMatcher.group(1) : "";
 
-       System.out.println(fileName);
+       
        // 확장자 추출
        String extension = fileName.substring(fileName.lastIndexOf("."));
        
-       System.out.println(extension);
-       String imagePath = "C:/Users/PC/git/Backrooms/src/main/resources/static/assets/img/qna/";
+      
+       String imagePath = fileDir + "qna/";
        
        if (!base64Image.isEmpty()) {
            // Base64 디코딩

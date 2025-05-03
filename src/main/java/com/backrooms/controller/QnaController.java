@@ -59,7 +59,7 @@ public class QnaController {
 		  if (check != 1) { model.addAttribute("errorMessage", "등록에 실패했습니다.");
 		  return "qna"; }
 		 
-		return "qna";
+		return "main";
 	    }
 	
 	  @GetMapping("my/{curPage}")
