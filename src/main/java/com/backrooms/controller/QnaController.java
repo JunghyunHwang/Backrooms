@@ -3,6 +3,11 @@ package com.backrooms.controller;
 
 
 
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,18 +40,27 @@ public class QnaController {
 	
 	
 	@PostMapping()
-	public String qnaAdd(HttpSession session, @ModelAttribute QnaDTO dto, Model model) {
+	public String qnaAdd(HttpSession session,
+			@ModelAttribute QnaDTO dto,
+			Model model) throws SQLException, FileNotFoundException, IOException {
 		MemberDTO member = (MemberDTO) session.getAttribute("member");
-		int check = service.qnaAdd(dto,member);
-		System.out.println(check);
-		String page = "main";
-		if (check != 1) {
-			model.addAttribute("errorMessage", "등록에 실패했습니다. 다시 시도해주세요.");
-	        page = "qna";
+		
+		int imgcount = service.countImgTags(dto.getQnaText());
+		if(imgcount > 1) {
+			model.addAttribute("errorMessage", "이미지는 한개만 등록 가능합니다.");
+			return "qna";
+		}
+		
+		if(imgcount == 1) {
+			service.saveImage(dto.getQnaText()); //이미지 저장
+		}
+		
+		 int check = service.qnaAdd(dto, member);
+		  if (check != 1) { model.addAttribute("errorMessage", "등록에 실패했습니다.");
+		  return "qna"; }
+		 
+		return "qna";
 	    }
-		return page;
-	    }
-	
 	
 	  @GetMapping("my/{curPage}")
 	  @ResponseBody

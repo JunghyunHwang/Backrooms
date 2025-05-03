@@ -1,5 +1,6 @@
 package com.backrooms.dao;
 
+import com.backrooms.dto.ImageInsertDTO;
 import com.backrooms.dto.QnaDTO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -70,4 +71,9 @@ public class QnaDAO {
   public int delete(List<Integer> idsToDelete) {
     return template.update("QnaMapper.delete", idsToDelete);
   }
+
+public void saveImage(ImageInsertDTO imageInsertDTO) {
+	// TODO Auto-generated method stub
+	template.insert("QnaMapper.imageAdd", imageInsertDTO);
+}
 }

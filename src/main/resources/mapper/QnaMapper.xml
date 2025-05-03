@@ -9,7 +9,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     VALUES (qna_seq.NEXTVAL, #{memberNum}, SYSDATE, #{qnaTitle}, #{qnaText}, 0, NULL)
 	</insert>
 	
-	
+	<insert id="imageAdd" parameterType="ImageInsertDTO">
+    INSERT INTO image (
+        imageNum,
+        imageKind,
+        imageUse,
+        ImageUploadFileName,
+        ImageStoreFileName,
+        imageCount,
+        createdAt
+    ) 
+    VALUES (
+        image_seq.nextval,  <!-- imageNum은 시퀀스를 통해 자동으로 증가 -->
+        #{imageKind},
+        #{imageUse},
+        #{imageUploadFileName},
+        #{imageStoreFileName},
+        1,  <!-- 이미지 개수 (기본값 1) -->
+        SYSDATE  <!-- 생성일자는 현재 날짜 -->
+    )
+</insert>
 	<select id="list" resultType="QnaDTO">
 	SELECT
 		q.qnaNum,

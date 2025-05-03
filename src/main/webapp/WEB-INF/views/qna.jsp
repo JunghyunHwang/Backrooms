@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Backroom - qnaForm</title>
     <jsp:include page="commonCss.jsp"></jsp:include>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.css" rel="stylesheet">
   </head>
 
   <body>
@@ -179,5 +180,23 @@
 
     <!-- JS Scripts -->
    <jsp:include page="commonJs.jsp"></jsp:include>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
+   
+   <script>
+  
+   $(document).ready(function () {
+	   
+	   $('#qnaText').summernote({
+	     height: 300,
+	     placeholder: '문의 내용을 입력해주세요',
+	     lang: 'ko-KR',
+	     toolbar: [
+	       ['insert', ['picture']]
+	     ]
+	   });
+	 });
+</script>
   </body>
 </html>

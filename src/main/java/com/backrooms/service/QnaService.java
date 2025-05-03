@@ -1,21 +1,34 @@
 package com.backrooms.service;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Base64;
+import java.util.List;
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.jsoup.Jsoup;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.backrooms.dao.QnaDAO;
+import com.backrooms.dto.ImageInsertDTO;
 import com.backrooms.dto.MemberDTO;
 import com.backrooms.dto.QnaDTO;
 import com.backrooms.dto.QnaPageDTO;
 import com.backrooms.dto.QnaUpdateRequestDTO;
-import java.util.List;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
 public class QnaService {
 
   private final QnaDAO dao;
-
+  
+  
   @Transactional
   public int qnaAdd(QnaDTO dto, MemberDTO member) {
     // TODO Auto-generated method stub
@@ -25,9 +38,35 @@ public class QnaService {
     //int memberNum = 1;
     dto.setMemberName(memberName);
     dto.setMemberNum(memberNum);
-
+    
+   
+    
+    String text = dto.getQnaText();
+    
+    int imgcount = countImgTags(text);
+    String qnaText = "";
+    if(imgcount == 1) {
+    //이미지 앞뒤 텍스트 추출
+    Pattern textPattern = Pattern.compile("<p>(.*?)<img[^>]*>(.*?)<");
+    Matcher textMatcher = textPattern.matcher(text);
+    String textBefore = "", textAfter = "";
+    if (textMatcher.find()) {
+        textBefore = textMatcher.group(1).trim();
+        textAfter = textMatcher.group(2).trim();
+    }
+    qnaText = textBefore+" "+textAfter;
+   
+    }
+    else {
+    	qnaText = Jsoup.parse(text).text();
+    	
+    	
+    }
+    dto.setQnaText(qnaText);
+    
     int check = dao.insert(dto);
     return check;
+    
   }
 
   public QnaPageDTO getQnaPagination(int curPage, String filter) {
@@ -99,4 +138,67 @@ public class QnaService {
   public int deleteQnas(List<Integer> idsToDelete) {
     return dao.delete(idsToDelete);
   }
+
+public void saveImage(String text) throws FileNotFoundException, IOException {
+	
+	
+	   // Base64 이미지 추출
+       Pattern base64Pattern = Pattern.compile("src=\"data:image/\\w+;base64,([^\"]+)\"");
+       Matcher base64Matcher = base64Pattern.matcher(text);
+       String base64Image = base64Matcher.find() ? base64Matcher.group(1) : "";
+
+       System.out.println(base64Image);
+       // 파일명 추출
+       Pattern filenamePattern = Pattern.compile("data-filename=\"([^\"]+)\"");
+       Matcher filenameMatcher = filenamePattern.matcher(text);
+       String fileName = filenameMatcher.find() ? filenameMatcher.group(1) : "";
+
+       System.out.println(fileName);
+       // 확장자 추출
+       String extension = fileName.substring(fileName.lastIndexOf("."));
+       
+       System.out.println(extension);
+       String imagePath = "C:/Users/PC/git/Backrooms/src/main/resources/static/assets/img/qna/";
+       
+       if (!base64Image.isEmpty()) {
+           // Base64 디코딩
+           byte[] decodedBytes = Base64.getDecoder().decode(base64Image);
+           
+           // 고유한 파일명 생성
+           String imageStoreFileName = UUID.randomUUID().toString()+extension;
+           
+           
+           // 이미지 파일 저장
+           try (FileOutputStream fos = new FileOutputStream(imagePath + fileName)) {
+               fos.write(decodedBytes);
+           }
+           
+           // image 테이블에 저장할 데이터 생성
+           ImageInsertDTO imageInsertDTO = new ImageInsertDTO(5, 1, fileName, imageStoreFileName);
+         
+           
+         
+           dao.saveImage(imageInsertDTO);
+           
+       }
+		}
+	
+     
+	
+
+
+public int countImgTags(String text) {
+    // <img> 태그의 개수를 세기 위한 정규 표현식
+    String imgTagRegex = "<img[^>]*>";
+    Pattern pattern = Pattern.compile(imgTagRegex);
+    Matcher matcher = pattern.matcher(text);
+    
+    int count = 0;
+    while (matcher.find()) {
+        count++;
+    }
+    return count;
+}
+
+
 }
