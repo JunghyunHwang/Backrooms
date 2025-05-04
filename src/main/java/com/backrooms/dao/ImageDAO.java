@@ -1,10 +1,8 @@
 package com.backrooms.dao;
 
-import com.backrooms.dto.ImageFileNamesDTO;
-import com.backrooms.dto.ImageFileQueryDTO;
-import com.backrooms.dto.ImageInsertDTO;
-import com.backrooms.dto.ImageKind;
-import com.backrooms.dto.ImageRequestDTO;
+import com.backrooms.dto.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

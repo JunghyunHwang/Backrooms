@@ -1,7 +1,6 @@
 package com.backrooms.dto;
 
 import lombok.Getter;
-import org.eclipse.jdt.internal.compiler.batch.Main;
 
 import java.util.ArrayList;
 import java.util.List;
