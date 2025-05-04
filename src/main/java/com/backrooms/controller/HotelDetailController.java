@@ -2,10 +2,10 @@ package com.backrooms.controller;
 
 import com.backrooms.dto.Hotel;
 import com.backrooms.dto.HotelDetailRequestDTO;
-import com.backrooms.dto.HotelRoomDTO;
 import com.backrooms.dto.ReviewDTO;
 import com.backrooms.service.HotelRoomService;
 import com.backrooms.service.ReviewService;
+import com.backrooms.external.HotelDataFetcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,11 +19,13 @@ import java.util.List;
 public class HotelDetailController {
     private final HotelRoomService hotelRoomService;
     private final ReviewService reviewService;
+    private final HotelDataFetcher hotelDataFetcher;
 
     @Autowired
-    public HotelDetailController(HotelRoomService hotelRoomService, ReviewService reviewService) {
+    public HotelDetailController(HotelRoomService hotelRoomService, ReviewService reviewService, HotelDataFetcher hotelDataFetcher) {
         this.hotelRoomService = hotelRoomService;
         this.reviewService = reviewService;
+        this.hotelDataFetcher = hotelDataFetcher;
     }
 
     @RequestMapping(value = "/HotelDetail", method = RequestMethod.POST)
@@ -39,5 +41,12 @@ public class HotelDetailController {
         mav.addObject("checkOut", filter.getCheckOut());
 
         return mav;
+    }
+
+    @RequestMapping(value = "/setHotelData", method = RequestMethod.GET)
+    public String setHotelData() {
+        hotelDataFetcher.fetchHotelData("서울", 10000);
+
+        return "redirect:/";
     }
 }

@@ -33,7 +33,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			)
 		ORDER BY r.roomNum ASC
 	</select>
-	
+
+	<select id="selectRoomNum" parameterType="RoomInsert" resultType="int">
+		SELECT
+			roomNum
+		FROM room
+		WHERE hotelNum = #{hotelNum} AND roomName = #{name}
+	</select>
+
 	<select id="selectRoom" parameterType="HotelRoomDTO" resultType="HotelRoomDTO">
 		SELECT
 			roomNum,

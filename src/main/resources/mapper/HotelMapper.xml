@@ -16,5 +16,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    JOIN ROOM R ON H.hotelNum = R.hotelNum
 	    WHERE R.roomNum = #{roomNum}
 	</select>
-	
+
+	<select id="selectHotelNumByName" resultType="int" parameterType="HotelInsert">
+		SELECT
+		    hotelNum
+		FROM hotel
+		WHERE hotelName = #{name}
+	</select>
+
+	<insert id="insertHotel" parameterType="HotelInsert">
+		INSERT INTO hotel(hotelNum, HOTELNAME, HOTELRATING, HOTELGRADE, HOTELADDRESS, HOTELCITY, LATITUDE, LONGITUDE, BREAKFASTPRICE)
+		VALUES(hotel_seq.nextval, #{name}, #{rating}, #{grade}, #{address}, #{cityName}, #{latitude}, #{longitude}, #{breakfastPrice})
+	</insert>
+
+	<insert id="insertRoom" parameterType="RoomInsert">
+		INSERT INTO room(roomNum, hotelNum, roomPrice, roomName, capacity, roomInfo, availableRooms)
+		VALUES(room_seq.nextval, #{hotelNum}, #{price}, #{name}, #{capacity}, #{amenities}, #{availableRooms})
+	</insert>
+
+	<insert id="insertHotels" parameterType="java.util.List">
+		insert all
+		<foreach collection="list" item="hotel">
+			into hotel(hotelNum, HOTELNAME, HOTELRATING, HOTELGRADE, HOTELADDRESS, HOTELCITY, LATITUDE, LONGITUDE, BREAKFASTPRICE)
+			values(hotel_seq.nextval, #{hotel.name}, #{hotel.rating}, #{hotel.grade}, #{hotel.address}, #{hotel.cityName}, #{hotel.latitude}, #{hotel.longitude}, #{hotel.breakfastPrice})
+		</foreach>
+		select * from dual
+	</insert>
+
+	<insert id="insertRooms" parameterType="java.util.List">
+		INSERT INTO room(roomNum, hotelNum, roomPrice, roomName, capacity, roomInfo, availableRooms)
+		<foreach collection="list" item="room" separator=",">
+			VALUES(room_seq.nextval, #{room.hotelNum}, #{room.price}, #{room.name}, #{room.capacity}, #{room.amenities}, #{room.availableRooms})
+		</foreach>
+	</insert>
 </mapper>
