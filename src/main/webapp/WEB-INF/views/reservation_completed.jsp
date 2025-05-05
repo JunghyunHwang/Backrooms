@@ -41,8 +41,20 @@
     <br><hr><br>
 
     <div style="text-align:center;">
-        <a href="/backrooms/MyPage?myPage=reservation">[마이페이지로 이동]</a>
-    </div>
+    <button onclick="confirmAndClose()">마이페이지로 이동</button>
+	</div>
+    <script>
+    function confirmAndClose() {
+        if (window.opener) {
+            window.opener.location.href = "MyPage?myPage=reservation";
+            window.close();
+        } else {
+            // 새 탭일 경우 그냥 마이페이지로로 이동
+            window.location.href = "backrooms/MyPage?myPage=reservation";
+        }
+    }
+</script>
+    
 </div>
 </body>
 </html>
