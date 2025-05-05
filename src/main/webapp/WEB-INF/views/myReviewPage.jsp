@@ -18,12 +18,7 @@
 	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
 	crossorigin="anonymous"></script>
 <script type="text/javascript">
- $(document).ready(function() {
-	$(".delBtn").click(function() {
-		var num = $(this).attr("data-xxx");
-		location.href = "/deleteReview";
-	});
-}); 
+
 </script>
 </head>
 
@@ -133,8 +128,8 @@
 											<th>${review.starRating}</th>
 											<th>${review.reviewText}</th>
 											<th>${review.reviewDate}</th>
-											<th>image</th>
-											<form class="delForm" action="/backrooms/deleteReview" method="post">
+											<th>${uploadFilename}<img src="<c:url value="/img/${uploadFilename}"/>" width="200"></th>
+											<form class="delForm" action="/backrooms/deleteReview" method="get">
 											 <input type="hidden" id="reviewNumInput" name="reviewNum" value="${review.reviewTitle}">
 											<th><button class="delBtn">삭제</button></th>
 											</form>

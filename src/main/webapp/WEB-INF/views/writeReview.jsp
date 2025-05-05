@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -6,22 +7,11 @@
   <title>리뷰 작성</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script type="text/javascript">
-/*  $(document).ready(function(){ // 페이지 로드 완료 후 실행되도록 보장
-    $("#submit").click(function(){
-        // 부모 창 새로고침
-        $("form").submit();
-          if (window.opener) { // 부모 창이 존재하는지 확인 (보안 및 안정성)
-             window.opener.location.reload();
-        }
-        // 자식 창 닫기
-        window.close();  
-        
-    });
-});  */
+
 </script>
 </head>
 <body>
-<form action="/backrooms/UploadReview" method="post">
+<form id="review" action="/backrooms/UploadReview" method="post" enctype="multipart/form-data">
   <div class="form-container">
     <h3>리뷰 작성</h3>
     <input type="text" id="reviewTitle" name="reviewTitle" placeholder="제목" required>
@@ -29,7 +19,6 @@
     <input type="hidden" id="roomNum" name="roomNum" value="1">
     <input type="hidden" id="hotelNum" name="hotelNum" value="1">
     <select id="rating" name="rating" required>
-    
       <option value="">별점 선택</option>
       <option value="1">⭐ (1점)</option>
       <option value="2">⭐⭐ (2점)</option>
@@ -38,9 +27,10 @@
       <option value="5">⭐⭐⭐⭐⭐ (5점)</option> 
     </select>
     <textarea id="reviewText" name="reviewText" placeholder="리뷰 내용을 입력하세요" required></textarea>
-    <input type="file" id="imageUpload" name="imageUpload" accept="image/*">
-    <img id="imagePreview" style="display:none;"><br>
-
+   <%-- <form id="img" action="<c:url value="/upload1"/>" method="post" enctype="multipart/form-data"> --%>
+   <input type="hidden" name="uploaderName">
+    <input type="file" name="uploaderFile"><br>
+	<!-- </form> -->
     <button type="submit" id="submit">등록</button>
     <button type="button" onclick="window.close()">취소</button>
   </div>
