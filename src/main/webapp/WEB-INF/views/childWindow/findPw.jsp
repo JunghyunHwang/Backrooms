@@ -57,7 +57,7 @@
 </head>
 <body>
 비밀번호를 재설정합니다.<br>
-<form action="../UpdatePasswd" method="post" onsubmit="return check()">
+<form action="UpdatePasswd" method="post" onsubmit="return check()">
 <table>
 <tr>
 <td>비밀번호</td>
