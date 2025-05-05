@@ -109,4 +109,22 @@ public class MemberController {
 		session.invalidate();
 		return "redirect:/";
 	}
+	@GetMapping("/FindId")
+	public String findIdGet(HttpSession session)
+	{
+		session.invalidate();
+		return "childWindow/findId";
+	}
+	@GetMapping("/ErrorToFind")
+	public String errorToFindGet(HttpSession session)
+	{
+		session.invalidate();
+		return "childWindow/errorToFind";
+	}
+	@GetMapping("/FindPw")
+	public String FindPwGet(HttpSession session)
+	{
+		session.invalidate();
+		return "childWindow/findPw";
+	}
 }

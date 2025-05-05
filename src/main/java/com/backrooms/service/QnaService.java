@@ -29,7 +29,7 @@ public class QnaService {
 
   private final QnaDAO dao;
   
-  @Value("${file.dir}")
+  @Value("${file.dir:}") 
   private String fileDir;  
   @Transactional
   public int qnaAdd(QnaDTO dto, MemberDTO member) {

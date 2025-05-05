@@ -24,11 +24,11 @@ $(document).ready(function(){
 				 window.name = "findAccount";
 				 
 				 $("#find_id_parent").val(data);
-				 var openWin = window.open("childWindow/findId.jsp", "findId", "width=570, height=350, resizable = no, scrollbars = no");
+				 var openWin = window.open("FindId", "findId", "width=570, height=350, resizable = no, scrollbars = no");
 			},
 			error:function(xhr, status, error){
 				window.name = "findAccount";
-				var openWin = window.open("childWindow/errorToFind.jsp", "findId", "width=570, height=350, resizable = no, scrollbars = no");
+				var openWin = window.open("ErrorToFind", "findId", "width=570, height=350, resizable = no, scrollbars = no");
 			}
 		});
 	});
@@ -51,10 +51,10 @@ $(document).ready(function(){
 			success :  function(data, status, xhr){
 				window.name = "findAccount";
 								 
-				 var openWin = window.open("childWindow/findPw.jsp", "findId", "width=570, height=350, resizable = no, scrollbars = no");
+				 var openWin = window.open("FindPw", "findId", "width=570, height=350, resizable = no, scrollbars = no");
 			},
 			error:function(xhr, status, error){
-				var openWin = window.open("childWindow/errorToFind.jsp", "findId", "width=570, height=350, resizable = no, scrollbars = no");
+				var openWin = window.open("ErrorToFind", "findId", "width=570, height=350, resizable = no, scrollbars = no");
 			}
 		});
 	});
