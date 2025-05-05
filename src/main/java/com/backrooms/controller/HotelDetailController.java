@@ -3,6 +3,7 @@ package com.backrooms.controller;
 import com.backrooms.dto.Hotel;
 import com.backrooms.dto.HotelDetailRequestDTO;
 import com.backrooms.dto.ReviewDTO;
+import com.backrooms.external.ApiKeyProvider;
 import com.backrooms.service.HotelRoomService;
 import com.backrooms.service.ReviewService;
 import com.backrooms.external.HotelDataFetcher;
@@ -20,12 +21,14 @@ public class HotelDetailController {
     private final HotelRoomService hotelRoomService;
     private final ReviewService reviewService;
     private final HotelDataFetcher hotelDataFetcher;
+    private final ApiKeyProvider apiKeyProvider;
 
     @Autowired
-    public HotelDetailController(HotelRoomService hotelRoomService, ReviewService reviewService, HotelDataFetcher hotelDataFetcher) {
+    public HotelDetailController(HotelRoomService hotelRoomService, ReviewService reviewService, HotelDataFetcher hotelDataFetcher, ApiKeyProvider apiKeyProvider) {
         this.hotelRoomService = hotelRoomService;
         this.reviewService = reviewService;
         this.hotelDataFetcher = hotelDataFetcher;
+        this.apiKeyProvider = apiKeyProvider;
     }
 
     @RequestMapping(value = "/HotelDetail", method = RequestMethod.POST)
@@ -34,11 +37,14 @@ public class HotelDetailController {
 
         Hotel hotel = hotelRoomService.getHotelWithRooms(filter);
         List<ReviewDTO> roomReviews = reviewService.reviewSelectRoom(hotel);
+        int maxMainRoomImageCount = Math.min(hotel.getRooms().size(), 2);
 
         mav.addObject("hotel", hotel);
         mav.addObject("roomReviews", roomReviews);
         mav.addObject("checkIn", filter.getCheckIn());
         mav.addObject("checkOut", filter.getCheckOut());
+        mav.addObject("embedMapKey", apiKeyProvider.getGoogleApiKey());
+        mav.addObject("maxMainRoomImageCount", maxMainRoomImageCount);
 
         return mav;
     }

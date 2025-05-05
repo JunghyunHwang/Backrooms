@@ -97,8 +97,8 @@
                     <div class="hotel-details-meta">
                         <div class="hotel-info d-flex justify-content-between align-items-center rounded">
                             <div>
-                                <div><h4>${ hotel.hotelName }</h4></div>
-                                <a href="https://www.google.com/maps/search/?api=1&query=${ hotel.hotelName }"
+                                <div><h4>${ hotel.name }</h4></div>
+                                <a href="https://www.google.com/maps/search/?api=1&query=${ hotel.name }"
                                    target="_blank">
                                     지도에서 보기
                                 </a>
@@ -109,14 +109,24 @@
                             </div>
                         </div>
                     </div>
-                    <c:set var="exteriorImageCount" value="${ hotel.hotelImageCount}" />
-                    <c:set var="hotelName" value="${ hotel.hotelName }"/>
 
                     <div class="gallery-grid">
-                        <img alt="main-exterior" src="assets/img/hotel-rooms/${ hotel.hotelName }_외관1.jpg" id="main-image" class="img-fluid photo-thumbnail" data-bs-toggle="modal" data-bs-target="#photoModal">
-                        <c:forEach var="mainImg" items="${ hotel.mainImageNames }">
-                            <img alt="main-images" src="assets/img/hotel-rooms/${ mainImg }" class="img-fluid photo-thumbnail" data-bs-toggle="modal" data-bs-target="#photoModal">
+                        <img alt="main-exterior" src="${ hotel.hotelImageUrls[0] }" id="main-image" class="img-fluid photo-thumbnail" data-bs-toggle="modal" data-bs-target="#photoModal">
+                        <c:forEach var="exteriorImg" items="${ hotel.hotelImageUrls }" begin="1">
+                            <img alt="main-images" src="${ exteriorImg }" class="img-fluid photo-thumbnail" data-bs-toggle="modal" data-bs-target="#photoModal">
                         </c:forEach>
+
+                        <c:forEach var="i" begin="0" end="${ maxMainRoomImageCount - 1 }">
+                            <c:forEach var="roomImg" items="${ hotel.rooms[i].imageUrls }">
+                                <img src="${ roomImg }" class="img-fluid" alt="객실">
+                            </c:forEach>
+                        </c:forEach>
+
+<%--                        <c:forEach var="room" items="${ hotel.rooms }">--%>
+<%--                            <c:forEach var="roomImg" items="${ room.imageUrls}">--%>
+<%--                                <img src="${ roomImg }" class="img-fluid" alt="객실">--%>
+<%--                            </c:forEach>--%>
+<%--                        </c:forEach>--%>
 
                         <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
@@ -127,17 +137,15 @@
                                     </div>
                                     <div class="modal-body">
                                         <h6>호텔 외관</h6>
-                                        <c:forEach var="i" begin="0" end="${ hotel.hotelImageCount - 1 }">
-                                            <img src="assets/img/hotel-rooms/${ hotelName }_외관${ i + 1 }.jpg" class="img-fluid mb-3" alt="호텔 외관">
+                                        <c:forEach var="hotelImg" items="${ hotel.hotelImageUrls }">
+                                            <img src="${ hotelImg }" class="img-fluid mb-3" alt="호텔 외관">
                                         </c:forEach>
 
                                         <h6>객실</h6>
                                         <div class="row">
                                             <c:forEach var="room" items="${ hotel.rooms }">
-                                                <c:forEach var="i" begin="0" end="${ room.roomImageCount - 1 }">
-                                                    <img
-                                                            src="assets/img/hotel-rooms/${ hotel.hotelName }_${ room.roomName }${ i + 1 }.jpg"
-                                                            class="img-fluid" alt="객실${ i + 1 }">
+                                                <c:forEach var="roomImg" items="${ room.imageUrls}">
+                                                    <img src="${ roomImg }" class="img-fluid" alt="객실">
                                                 </c:forEach>
                                             </c:forEach>
                                         </div>
@@ -150,13 +158,13 @@
 
                 <c:forEach var="room" items="${ hotel.rooms }">
                     <div class="section-hotel-details" id="select-rooms">
-                        <h4>${ room.roomName }</h4>
+                        <h4>${ room.name }</h4>
                         <div class="d-flex flex-row">
                             <div class="d-flex flex-column">
                                 <div class="room-meta-item">
-                                    <img src="assets/img/hotel-rooms/${ hotel.hotelName }_${ room.roomName }1.jpg" class="room-img" alt="room-img">
+                                    <img src="${ room.imageUrls[0] }" class="room-img" alt="room-img">
                                 </div>
-                                <c:forEach var="amenity" items="${ room.roomAmenity }">
+                                <c:forEach var="amenity" items="${ room.amenities }">
                                     <div> ${ amenity } </div>
                                 </c:forEach>
                             </div>
@@ -205,10 +213,10 @@
                         <h4>투숙객 리뷰</h4>
                     </div>
                     <div class="d-flex flex-row">
-                        <c:forEach var="review" items="${reviews}" varStatus="status">
+                        <c:forEach var="review" items="${ reviews }" varStatus="status">
                             <c:if test="${status.index < 3}">
                                 <!-- 리뷰 출력 -->
-                                <p>${review.content}</p>
+                                <p>${ review.content }</p>
                             </c:if>
                         </c:forEach>
 
@@ -276,7 +284,7 @@
                         <iframe
                                 height="300"
                                 id="gmap_canvas"
-                                src="https://www.google.com/maps/embed/v1/place?key==${ hotel.hotelName }">
+                                src="https://www.google.com/maps/embed/v1/place?key=${ embedMapKey }">
                         </iframe>
                     </div>
                     <!-- END MAP -->
