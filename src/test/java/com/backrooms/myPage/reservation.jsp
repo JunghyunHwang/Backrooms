@@ -17,31 +17,26 @@
     </c:when>
     <c:otherwise>
         <c:forEach var="res" items="${reservationList}">
+        <fmt:formatDate value="${res.checkOut}" pattern="yyyy-MM-dd" var="checkOutStr"/>
             <div class="card shadow-sm p-4 mb-4">
                 <div class="card-body">
                     <h5 class="card-title">${res.roomName}</h5>
-                    <p class="card-text"><strong>체크인:</strong> ${res.checkIn}</p>
-                    <p class="card-text"><strong>체크아웃:</strong> ${res.checkOut}</p>
-                    <p class="card-text"><strong>조식:</strong>
-                        <c:out value="${res.reservationBreakfast == 1 ? '포함' : '미포함'}" />
-                    </p>
-                    <p class="card-text"><strong>상태:</strong>
-                        <c:out value="${res.reservationState == 1 ? '✅ 결제 완료' : '❌ 결제 미완료'}" />
-                    </p>
+                    <p class="card-text"><strong>체크인:</strong>  <fmt:formatDate value="${res.checkIn}" pattern="yyyy-MM-dd" /></p>
+                    <p class="card-text"><strong>체크아웃:</strong>  <fmt:formatDate value="${res.checkOut}" pattern="yyyy-MM-dd" /></p>
+                    <p class="card-text"><strong>조식:</strong> <c:out value="${res.reservationBreakfast == 1 ? '포함' : '미포함'}"/></p>
+                    <p class="card-text"><strong>상태:</strong> <c:out value="${res.reservationState == 1 ? '✅ 결제 완료' : '❌ 결제 미완료'}"/></p>
+                   <div class="d-flex justify-content-end gap-2 mt-3">
+                            <button class="btn btn-outline-danger btn-sm cancel-btn" 
+                                    data-id="${res.reservationNum}">예약 취소</button>
+              
+						  <button class="btn btn-outline-primary btn-sm"
+						          onclick="window.open('writeReview.jsp?roomNum=${res.roomNum}&reservationNum=${res.reservationNum}', '리뷰 작성', 'width=600,height=600')">
+						    리뷰 작성
+						  </button>
+					
 
-                    <div class="d-flex justify-content-end gap-2 mt-3">
-                        <button class="btn btn-outline-danger btn-sm cancel-btn"
-                                data-id="${res.reservationNum}">예약 취소</button>
 
-                        <!-- 체크아웃 날짜가 오늘 이전이면 리뷰 버튼 표시 -->
-                        <c:if test="${res.reservationState == 1 && res.checkOut lt todayStr}">
-                            <button class="btn btn-outline-primary btn-sm"
-                                    onclick="window.open('writeReview.jsp?roomNum=${res.roomNum}&reservationNum=${res.reservationNum}',
-                                                 '리뷰 작성', 'width=600,height=600')">
-                                리뷰 작성
-                            </button>
-                        </c:if>
-                    </div>
+                        </div>
                 </div>
             </div>
         </c:forEach>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MyReservationMapper">
+
+    <select id="selectByMemberNum" parameterType="int" resultType="com.backrooms.dto.MyReservationDTO">
+        SELECT 
+            R.RESERVATIONNUM,
+            R.ROOMNUM,
+            RM.ROOMNAME,
+            TO_CHAR(R.CHECKIN, 'YYYY-MM-DD') AS CHECKIN,
+            TO_CHAR(R.CHECKOUT, 'YYYY-MM-DD') AS CHECKOUT,
+            R.RESERVATIONBREAKFAST,
+            R.RESERVATIONSTATE
+        FROM 
+            RESERVATION R
+        JOIN 
+            ROOM RM ON R.ROOMNUM = RM.ROOMNUM
+        WHERE 
+            R.MEMBERNUM = #{memberNum}
+        ORDER BY 
+            R.CHECKIN DESC
+    </select>
+
+</mapper>
