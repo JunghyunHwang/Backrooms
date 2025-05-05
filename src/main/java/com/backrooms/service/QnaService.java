@@ -1,5 +1,6 @@
 package com.backrooms.service;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -169,6 +170,11 @@ public void saveImage(String text) throws FileNotFoundException, IOException {
            // 고유한 파일명 생성
            String imageStoreFileName = UUID.randomUUID().toString()+extension;
            
+           // 디렉토리 없으면 생성
+           File dir = new File(imagePath);
+           if (!dir.exists()) {
+               dir.mkdirs();  // 상위 디렉토리까지 생성
+           }
            
            // 이미지 파일 저장
            try (FileOutputStream fos = new FileOutputStream(imagePath + fileName)) {
