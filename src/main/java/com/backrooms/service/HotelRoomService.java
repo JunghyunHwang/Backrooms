@@ -3,13 +3,9 @@ package com.backrooms.service;
 import com.backrooms.dao.HotelRoomDAO;
 import com.backrooms.dao.ImageDAO;
 
-import com.backrooms.dto.Hotel;
-import com.backrooms.dto.HotelDetailRequestDTO;
-import com.backrooms.dto.HotelRoomDTO;
-import com.backrooms.dto.ImageRequestDTO;
-import com.backrooms.dto.ImageKind;
-import com.backrooms.dto.Room;
+import com.backrooms.dto.*;
 
+import com.backrooms.external.ApiKeyProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,25 +14,17 @@ import java.util.List;
 @Service
 public class HotelRoomService {
     private final HotelRoomDAO hotelRoomDao;
-    private final ImageDAO imgDao;
+    private final ImageDAO imageDAO;
 
     @Autowired
-    public HotelRoomService(HotelRoomDAO hotelRoomDao, ImageDAO imgDao) {
+    public HotelRoomService(HotelRoomDAO hotelRoomDao, ImageDAO imageDAO) {
         this.hotelRoomDao = hotelRoomDao;
-        this.imgDao = imgDao;
+        this.imageDAO = imageDAO;
     }
 
     public Hotel getHotelWithRooms(HotelDetailRequestDTO filter) {
         List<HotelRoomDTO> availableRooms = hotelRoomDao.getAvailableRooms(filter);
-        ImageRequestDTO hotelImgFilter = new ImageRequestDTO(ImageKind.HOTEL.getValue());
-        hotelImgFilter.addUse(filter.getHotelNum());
-        int hotelImagesCount = imgDao.getImageCount(hotelImgFilter).get(0);
-
-        ImageRequestDTO roomImgFilter = new ImageRequestDTO(ImageKind.ROOM.getValue());
-        for (HotelRoomDTO r : availableRooms) {
-            roomImgFilter.addUse(r.getRoomNum());
-        }
-        List<Integer> roomImageCounts = imgDao.getImageCount(roomImgFilter);
+        assert(availableRooms != null) : "Available rooms is null";
 
         Hotel hotel = new Hotel(filter.getHotelNum(),
                 availableRooms.get(0).getHotelName(),
@@ -45,18 +33,31 @@ public class HotelRoomService {
                 availableRooms.get(0).getHotelGrade(),
                 availableRooms.get(0).getLatitude(),
                 availableRooms.get(0).getLongitude(),
-                hotelImagesCount,
                 availableRooms.get(0).getBreakfastPrice());
 
-        assert(availableRooms.size() == roomImageCounts.size());
-        for (int i = 0; i < availableRooms.size(); ++i) {
-            hotel.addRoom(new Room(
-                    availableRooms.get(i).getHotelNum(),
-                    availableRooms.get(i).getRoomName(),
-                    availableRooms.get(i).getRoomPrice(),
-                    availableRooms.get(i).getCapacity(),
-                    availableRooms.get(i).getRoomInfo().split("/"),
-                    roomImageCounts.get(i)));
+        ImageFileQueryDTO hotelImgFilter = new ImageFileQueryDTO(filter.getHotelNum(), ImageKind.HOTEL.getValue());
+        List<ImageFileNamesDTO> hotelImages = imageDAO.getUploadAndStoreFileNames(hotelImgFilter);
+
+        for (ImageFileNamesDTO hotelImage : hotelImages) {
+            hotel.addImageUrl(hotelImage.getImageStoreFileName());
+        }
+
+        for (HotelRoomDTO availableRoom : availableRooms) {
+            Room room = new Room(
+                    availableRoom.getRoomNum(),
+                    availableRoom.getRoomName(),
+                    availableRoom.getRoomPrice(),
+                    availableRoom.getCapacity(),
+                    availableRoom.getRoomInfo().split("/"));
+
+            hotel.addRoom(room);
+
+            List<ImageFileNamesDTO> roomsImages = imageDAO.getUploadAndStoreFileNames(
+                    new ImageFileQueryDTO(room.getRoomNum(), ImageKind.ROOM.getValue()));
+
+            for (ImageFileNamesDTO roomImage : roomsImages) {
+                room.addImageUrl(roomImage.getImageStoreFileName());
+            }
         }
 
         return hotel;
