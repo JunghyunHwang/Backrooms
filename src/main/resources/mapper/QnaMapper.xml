@@ -5,9 +5,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="QnaMapper">
 
 	<insert id="insert" parameterType="QnaDTO">
-		insert into qna (QnaNum, memberNum, QnADate, QnATitle, QnAText, QnAState, QnAreply)
-    VALUES (qna_seq.NEXTVAL, #{memberNum}, SYSDATE, #{qnaTitle}, #{qnaText}, 0, NULL)
-	</insert>
+  <selectKey resultType="int" keyProperty="qnaNum" order="BEFORE">
+    SELECT qna_seq.NEXTVAL FROM dual
+  </selectKey>
+  INSERT INTO qna (
+    QnaNum, memberNum, QnADate, QnATitle, QnAText, QnAState, QnAreply
+  ) VALUES (
+    #{qnaNum}, #{memberNum}, SYSDATE, #{qnaTitle}, #{qnaText}, 0, NULL
+  )
+</insert>
 	
 	<insert id="imageAdd" parameterType="ImageInsertDTO">
     INSERT INTO image (
@@ -20,13 +26,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         createdAt
     ) 
     VALUES (
-        image_seq.nextval,  <!-- imageNum은 시퀀스를 통해 자동으로 증가 -->
+        image_seq.nextval,
         #{imageKind},
         #{imageUse},
         #{imageUploadFileName},
         #{imageStoreFileName},
-        1,  <!-- 이미지 개수 (기본값 1) -->
-        SYSDATE  <!-- 생성일자는 현재 날짜 -->
+        1, 
+        SYSDATE
     )
 </insert>
 	<select id="list" resultType="QnaDTO">
@@ -167,6 +173,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
     
     
-  
+  <!-- QnA 게시물 번호(postNum)에 해당하는 이미지 목록 조회 -->
+<select id="getImage" resultType="string">
+    SELECT 
+        imageUploadFileName
+    FROM image
+    WHERE imageKind = 5
+      AND imageUse = #{postNum}
+</select>
 	
 </mapper>

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.backrooms.dao.QnaDAO;
+import com.backrooms.dto.ImageFileNamesDTO;
 import com.backrooms.dto.ImageInsertDTO;
 import com.backrooms.dto.MemberDTO;
 import com.backrooms.dto.QnaDTO;
@@ -68,7 +69,11 @@ public class QnaService {
     dto.setQnaText(qnaText);
     
     int check = dao.insert(dto);
-    return check;
+    if(check == 0) {
+    	return 0;
+    }
+    
+    return dto.getQnaNum();
     
   }
 
@@ -142,7 +147,7 @@ public class QnaService {
     return dao.delete(idsToDelete);
   }
 
-public void saveImage(String text) throws FileNotFoundException, IOException {
+public void saveImage(String text, int qnaNum) throws FileNotFoundException, IOException {
 	
 	
 	   // Base64 이미지 추출
@@ -182,7 +187,7 @@ public void saveImage(String text) throws FileNotFoundException, IOException {
            }
            
            // image 테이블에 저장할 데이터 생성
-           ImageInsertDTO imageInsertDTO = new ImageInsertDTO(5, 1, fileName, imageStoreFileName);
+           ImageInsertDTO imageInsertDTO = new ImageInsertDTO(5, qnaNum, fileName, imageStoreFileName);
          
            
          
@@ -190,6 +195,10 @@ public void saveImage(String text) throws FileNotFoundException, IOException {
            
        }
 		}
+
+public String getImagesByPostNum(int postNum) {
+    return dao.getImagesByPostNum(postNum);  // DAO에서 이미지를 가져오는 메소드 호출
+}
 	
      
 	

@@ -1,5 +1,6 @@
 package com.backrooms.dao;
 
+import com.backrooms.dto.ImageFileNamesDTO;
 import com.backrooms.dto.ImageInsertDTO;
 import com.backrooms.dto.QnaDTO;
 import java.util.List;
@@ -75,5 +76,10 @@ public class QnaDAO {
 public void saveImage(ImageInsertDTO imageInsertDTO) {
 	// TODO Auto-generated method stub
 	template.insert("QnaMapper.imageAdd", imageInsertDTO);
+}
+
+public String getImagesByPostNum(int postNum) {
+	// TODO Auto-generated method stub
+	return template.selectOne("QnaMapper.getImage", postNum);
 }
 }

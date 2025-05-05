@@ -290,6 +290,7 @@
 				const date = data.qnaDate;
 				const text = data.qnaText;
 				const replyText = data.qnaReply;
+				const file = data.imageFileName;
 				
 				$("#title").text(title);
 				$("#memberName").text(memberName);
@@ -298,6 +299,13 @@
 				$("#inputTitle").val(title);
 				$("#textarea").val(text);
 				$("#replyText").text(replyText);
+				
+				const contextPath = "${pageContext.request.contextPath}";
+				const imageUrl = contextPath + "/assets/img/qna/"+file;
+				console.log(imageUrl);
+				const imageElement = '<img src="' + imageUrl + '" alt="게시글 이미지" class="mt-3" style="width: 500px; height: auto;">';
+
+			    $("#text").after(imageElement); // 텍스트 아래에 이미지를 추가
 			}
 			
 			function bindBackBtnClickEvent(curPage) {
@@ -387,6 +395,7 @@
             </div>
 		 <!-- Pagination area: Centered pagination with a fixed margin at the bottom -->
           <!-- 페이지네이션 영역: 페이지 번호는 중앙에 고정되고, 적당한 마진을 갖습니다. -->
+          <div id="imageContainer"></div>
           <nav aria-label="Notice Pagination" class="mt-3">
             <ul class="pagination justify-content-center" id="pagination">
               <!-- Pagination start -->

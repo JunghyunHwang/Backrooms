@@ -1,5 +1,7 @@
 package com.backrooms.dto;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,4 +19,5 @@ public class QnaDTO {
   String qnaText;
   int qnaState;
   String qnaReply;
+  private String imageFileName;
 }

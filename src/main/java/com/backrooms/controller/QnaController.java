@@ -46,18 +46,22 @@ public class QnaController {
 		MemberDTO member = (MemberDTO) session.getAttribute("member");
 		
 		int imgcount = service.countImgTags(dto.getQnaText());
-		if(imgcount > 1) {
+		String originalText = dto.getQnaText();
+		
+		int qnaNum = service.qnaAdd(dto, member);
+	    if (qnaNum == 0) {
+	        model.addAttribute("errorMessage", "등록에 실패했습니다.");
+	        return "qna";
+	    }
+	    
+	    if(imgcount > 1) {
 			model.addAttribute("errorMessage", "이미지는 한개만 등록 가능합니다.");
 			return "qna";
 		}
-		
-		if(imgcount == 1) {
-			service.saveImage(dto.getQnaText()); //이미지 저장
-		}
-		
-		 int check = service.qnaAdd(dto, member);
-		  if (check != 1) { model.addAttribute("errorMessage", "등록에 실패했습니다.");
-		  return "qna"; }
+	    if (imgcount == 1) {
+	    	System.out.println(qnaNum);
+	        service.saveImage(originalText, qnaNum);
+	    }
 		 
 		return "main";
 	    }
@@ -78,6 +82,8 @@ public class QnaController {
 		public QnaDTO qnaDetail(@PathVariable int postNum) {
 		  System.out.println("detail");
 			QnaDTO qnaDTO = service.getQnaDetail(postNum);
+			qnaDTO.setImageFileName(service.getImagesByPostNum(postNum));
+			
 			return qnaDTO;
 		}
 	 
