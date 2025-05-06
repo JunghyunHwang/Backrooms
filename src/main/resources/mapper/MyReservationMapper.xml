@@ -20,8 +20,14 @@
             ROOM RM ON R.ROOMNUM = RM.ROOMNUM
         WHERE 
             R.MEMBERNUM = #{memberNum}
+             AND R.RESERVATIONSTATE = 1
         ORDER BY 
             R.CHECKIN DESC
     </select>
 
+	<update id="updateReservationStateToCancel" parameterType="int">
+	    UPDATE RESERVATION
+	    SET RESERVATIONSTATE = 2
+	    WHERE RESERVATIONNUM = #{reservationNum}
+	</update>
 </mapper>

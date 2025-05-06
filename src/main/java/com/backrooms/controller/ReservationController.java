@@ -15,7 +15,7 @@ import java.util.Map;
 public class ReservationController {
 
     @Autowired
-    private ReservationService reservationService;
+    private ReservationServiceImpl reservationService;
     @Autowired
     private HotelRoomService hotelRoomService;
     @Autowired

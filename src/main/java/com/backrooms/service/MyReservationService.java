@@ -5,4 +5,9 @@ import com.backrooms.dto.MyReservationDTO;
 
 public interface MyReservationService {
     List<MyReservationDTO> getReservationsByMemberNum(int memberNum);
+    
+  
+
+    public int cancelReservation(int reservationNum) ;
+    
 }

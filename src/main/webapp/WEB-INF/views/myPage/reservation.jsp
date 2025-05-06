@@ -57,7 +57,7 @@ $(document).on("click", ".cancel-btn", function () {
 
     if (!confirm("정말 이 예약을 취소하시겠습니까?")) return;
 
-    fetch("/Backrooms/CancelReservation", {
+    fetch("/backrooms/CancelReservation", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

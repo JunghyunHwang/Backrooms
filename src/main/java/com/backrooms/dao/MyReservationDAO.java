@@ -16,4 +16,7 @@ public class MyReservationDAO {
     public List<MyReservationDTO> getReservationsByMemberNum(int memberNum) {
         return session.selectList("MyReservationMapper.selectByMemberNum", memberNum);
     }
+    public int updateReservationStateToCancel(int reservationNum) {
+        return session.update("MyReservationMapper.updateReservationStateToCancel", reservationNum);
+    }
 }

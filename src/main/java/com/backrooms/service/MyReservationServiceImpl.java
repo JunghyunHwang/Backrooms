@@ -18,4 +18,9 @@ public class MyReservationServiceImpl implements MyReservationService {
     public List<MyReservationDTO> getReservationsByMemberNum(int memberNum) {
         return dao.getReservationsByMemberNum(memberNum);
     }
+    
+    @Override
+	public int cancelReservation(int reservationNum) {
+	    return dao.updateReservationStateToCancel(reservationNum);
+	}
 }
