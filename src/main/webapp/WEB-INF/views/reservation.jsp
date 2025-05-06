@@ -1,6 +1,8 @@
 <%@page import="java.lang.reflect.Parameter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
@@ -252,7 +254,11 @@
 			<div class = midpage-right>
 				<div class ="contact-info">
 					<div class = midpage-mid>
-						<image src="assets/img/sample/hotel-main.jpg">
+						<c:forEach var="room" items="${hotel.rooms}">
+						  <c:if test="${room.roomNum eq param.roomNum}">
+						    <img src="${room.imageUrls[0]}" class="room-img" alt="room-img"/>
+						  </c:if>
+						</c:forEach>
 						<h3>${hdto.hotelName}</h3>
 						<h6>객실 이름:${hrdto.roomName}</h6>
 						<h6>평점: ${hdto.hotelRating} </h6>

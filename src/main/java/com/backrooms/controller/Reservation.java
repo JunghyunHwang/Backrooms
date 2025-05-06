@@ -5,11 +5,14 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.backrooms.dto.Hotel;
 import com.backrooms.dto.HotelDTO;
+import com.backrooms.dto.HotelDetailRequestDTO;
 import com.backrooms.dto.HotelRoomDTO;
 import com.backrooms.dto.MemberDTO;
 import com.backrooms.dto.PayDTO;
@@ -26,23 +29,23 @@ public class Reservation {
 
     @Autowired
     HotelService hservice;
-
     @Autowired
     HotelRoomService hrservice;
-
     @Autowired
     ReservationService rservice;
-
     @Autowired
     PayService pservice;
 
     @PostMapping("/ReservationPage")
-    public ModelAndView reservation(@RequestParam Map<String, String> params, HttpSession session) {
+    public ModelAndView reservation(@RequestParam Map<String, String> params, 
+    		HttpSession session, @ModelAttribute HotelDetailRequestDTO filter) {
         int hotelNum = Integer.parseInt(params.get("hotelNum"));
         int roomNum = Integer.parseInt(params.get("roomNum"));
         String checkIn = params.get("checkIn");
         String checkOut = params.get("checkOut");
 
+        Hotel hotel = hrservice.getHotelWithRooms(filter);
+        
         long nights = hservice.calculateStayDays(checkIn, checkOut);
         String checkInDisp = hservice.toKorDate(checkIn);
         String checkOutDisp = hservice.toKorDate(checkOut);
@@ -54,6 +57,7 @@ public class Reservation {
         String totalPrice = hservice.formatTotalPrice(hrdto.getRoomPrice(), nights);
 
         ModelAndView mav = new ModelAndView();
+        mav.addObject("hotel", hotel);
         mav.addObject("hdto", hdto);
         mav.addObject("hrdto", hrdto);
         mav.addObject("parameterMap", parameterMap);
