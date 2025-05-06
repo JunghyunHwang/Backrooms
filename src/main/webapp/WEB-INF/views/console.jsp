@@ -333,7 +333,10 @@
             })
           }
 			function displayDetailData(data, category) {
-               displayFileAndAttach(data);
+              
+				if (category !== "qna") {
+			        displayFileAndAttach(data);
+			    }
               let title = "";
 				let memberName = "";
 				let date = "";
@@ -364,6 +367,8 @@
 				  default:
 				    console.log(`${category} 은 지원되지 않는 카테고리입니다.`);
 				}
+				
+				console.log(data);
 				
 				$("#title").text(title);
 				$("#memberName").text(memberName);
