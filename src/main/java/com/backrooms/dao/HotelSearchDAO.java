@@ -16,16 +16,6 @@ public class HotelSearchDAO {
 	private SqlSessionTemplate session;
 
 	public List<SeachResultDTO> getAvailableRooms(SearchCheckDTO map) {
-		List<SeachResultDTO> list = session.selectList("HotelSearchMapper.selectAvailableRooms", map);
-		System.out.println(list);
-		return list;
+		return session.selectList("HotelSearchMapper.selectAvailableRooms", map);
 	}
-
-//	public List<SeachResultDTO> selectAvailableRooms(Map<String, Object> paramMap) {
-//		System.out.println("paramMap");
-//		List<SeachResultDTO> list= session.selectList("HotelSearchMapper.selectAvailableRooms", paramMap);
-//		System.out.println(list);
-//		return list;
-//	}
-
 }

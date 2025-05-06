@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.backrooms.dto.SearchArrDTO" %>
-<%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -86,82 +84,9 @@
 	    <!-- Start Left Bar -->
 	     <!-- Start Left Bar -->
 	    <section class="tour_details section-padding">
-	    	<div class="container" id="search-container">
-		        <div class="col-xl-10 col-lg-12 col-md-10 col-10 mx-auto text-center">
-		          <div class="tr_search_filter">
-		            <form
-		              action="SearchResult"
-		              class="d-flex justify-content-center"
-		              method="post"
-		              id="searchForm"
-		            >
-		              <div class="tr_search_location">
-		                <label for="trs_location">Location*</label>
-		                <select id="trs_location" name="hotelCity">
-		                  <option>서울</option>
-		                  <option>부산</option>
-		                  <option>인천</option>
-		                  <option>강원</option>
-		                  <option>제주</option>
-		                  <option>전주</option>
-		                </select>
-		              </div>
-		
-		              <div class="check_in">
-		                <label for="checkin_field">Check - In*</label>
-		                <div class="trdate_picker date" id="tr_dpicker1">
-		                  <input
-		                    type="text"
-		                    class="form-control"
-		                    placeholder="Check In Date"
-		                    id="checkin_field"
-		                    name="checkIn"
-		                  />
-		                  <span class="input-group-append">
-		                    <i class="fa-solid fa-calendar-days"></i>
-		                  </span>
-		                </div>
-		              </div>
-		
-		              <div class="check_out">
-		                <label for="checkout_field">Check - Out*</label>
-		                <div class="trdate_picker date" id="tr_dpicker2">
-		                  <input
-		                    type="text"
-		                    class="form-control"
-		                    placeholder="Check Out Date"
-		                    id="checkout_field"
-		                    name="checkOut"
-		                  />
-		                  <span class="input-group-append">
-		                    <i class="fa-solid fa-calendar-days"></i>
-		                  </span>
-		                </div>
-		              </div>
-		
-		              <div class="adut_box">
-		                <label>Adult*</label>
-		                <select name="guestCount" id="adult">
-		                  <option>1</option>
-		                  <option>2</option>
-		                  <option>3</option>
-		                  <option>4</option>
-		                  <option>5</option>
-		                  <option>6</option>
-		                  <option>7</option>
-		                  <option>8</option>
-		                  <option>9</option>
-		                  <option>10</option>
-		                </select>
-		              </div>
-		
-		              <button type="button" id="searchBth">
-		                Search <i class="ph ph-magnifying-glass"></i>
-		              </button>
-		            </form>
-		          </div>
-		        </div>
-		      </div>
+			<!-- Start searchFilter -->
+			<jsp:include page="common/searchFilter.jsp"></jsp:include>
+			<!-- End searchFilter -->
 		      
 	      	<div class="container">
 			  <div class="row_search">
@@ -232,7 +157,7 @@
 		                  </c:forEach>
 		                  </div>
 		                  <div class="float-start com-rearch-img">
-		                    <img src="assets/img/hotel-rooms/${item.getName().trim()}_외관1.jpg" width="200" height="200" />
+		                    <img src="${ item.hotelImageUrl }" width="200" height="200" />
 		                  </div>
 		                  <div class="com-content">
 		                    	호텔 평점 : ${item.getRating()}

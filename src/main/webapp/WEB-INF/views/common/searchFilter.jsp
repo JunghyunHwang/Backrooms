@@ -15,11 +15,20 @@
             <label for="trs_location">Location*</label>
             <select id="trs_location" name="location">
               <option>서울</option>
-              <option>부산</option>
-              <option>인천</option>
-              <option>강원</option>
-              <option>제주</option>
-              <option>전주</option>
+              <option>베이징</option>
+              <option>도쿄</option>
+              <option>마닐라</option>
+              <option>하노이</option>
+              <option>방콕</option>
+              <option>뉴델리</option>
+              <option>카이로</option>
+              <option>런던</option>
+              <option>파리</option>
+              <option>베를린</option>
+              <option>바르셀로나</option>
+              <option>로마</option>
+              <option>호놀룰루</option>
+              <option>뉴욕</option>
             </select>
           </div>
 
