@@ -14,13 +14,6 @@ public class ImageDAO {
   @Autowired
   private SqlSessionTemplate template;
 
-  public List<Integer> getImageCount(ImageRequestDTO filter) {
-    assert (filter.getKind() != ImageKind.ERROR.getValue());
-    assert (filter.getUseList() != null);
-
-    return template.selectList("ImageMapper.getImageCountByList", filter);
-  }
-
   public int insertFile(ImageInsertDTO image) {
     return template.insert("ImageMapper.insertFile", image);
   }

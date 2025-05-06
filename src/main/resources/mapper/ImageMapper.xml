@@ -3,18 +3,6 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ImageMapper">
-	<select id="getImageCountByList" parameterType="ImageRequestDTO" resultType="int">
-		SELECT
-			imageCount
-		FROM image
-		WHERE imageKind = #{ kind } 
-			and imageUse IN
-			<foreach collection="useList" item="item" open="(" separator="," close=")">
-				#{ item }
-			</foreach>
-		ORDER BY imageUse ASC
-	</select>
-
 	<select id="insertFile" parameterType="ImageInsertDTO" resultType="ImageDTO">
 
 	insert into image
