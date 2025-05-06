@@ -59,7 +59,9 @@ public class PayController {
         // 숙박일수 및 가격 계산
         long nights = hservice.calculateStayDays(rdto.getCheckIn(), rdto.getCheckOut());
         int roomPrice = hrdto.getRoomPrice();
+        
         int payment = (int)(roomPrice * nights);
+       
         String formattedTotalPrice = hservice.formatTotalPrice(roomPrice, nights);
 
         ModelAndView mav = new ModelAndView("payment");
@@ -89,7 +91,9 @@ public class PayController {
         rdto.setCheckOut(params.get("checkOut"));
         rdto.setReservationState(0); // 결제 전 상태
         rdto.setReservationBreakfast(params.containsKey("reservationbreakfast") ? 1 : 0);
-
+        	
+        
+        HotelDTO hdto = hqservice.selectHotelByRoomNum(rdto.getRoomNum());
         // DB에 insert, 예약번호 획득
         rservice.insertReservationAndGetId(rdto);
         int reservationNum = rdto.getReservationNum();
@@ -101,7 +105,11 @@ public class PayController {
        
         long nights = hservice.calculateStayDays(checkInStr, checkOutStr);
         int payment = (int)(roomPrice * nights);
-
+        
+        
+        System.out.println("방 가격: "+roomPrice);
+        System.out.println("총 가격: "+payment);
+        
         ModelAndView mav = new ModelAndView("payment");
         mav.addObject("reservationNum", reservationNum);
         mav.addObject("member", member);
@@ -111,7 +119,8 @@ public class PayController {
 
         // 호텔, 객실명 등 추가 정보 필요 시 dto 조회
         mav.addObject("hrdto", hrservice.selectRoom(rdto.getRoomNum()));
-
+        //객실명 위한 hotelDTO 추가
+        mav.addObject("hdto", hdto);
         return mav;
     }
 
