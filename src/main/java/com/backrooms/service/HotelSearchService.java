@@ -5,19 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.backrooms.dao.ImageDAO;
+import com.backrooms.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.backrooms.dao.HotelSearchDAO;
-import com.backrooms.dto.SeachResultDTO;
-import com.backrooms.dto.SearchArrDTO;
-import com.backrooms.dto.SearchCheckDTO;
 
 @Service
 public class HotelSearchService {
 	@Autowired
 	private HotelSearchDAO dao;
+	@Autowired
+	private ImageDAO imageDAO;
+
 
 	public List<SeachResultDTO> getAvailableRooms(SearchCheckDTO map) {
 		return dao.getAvailableRooms(map);
@@ -97,8 +99,9 @@ public class HotelSearchService {
       		int one = Integer.parseInt(p[0]);
       		int two = Integer.parseInt(p[p.length-1]);
       		String price=df.format(one)+"~"+df.format(two);
-      		
-      		SearchArrDTO dto = new SearchArrDTO(name,price,hnum,grade,rating);
+
+			List<ImageFileNamesDTO> imgUrls = imageDAO.getUploadAndStoreFileNames(new ImageFileQueryDTO(hnum, ImageKind.HOTEL.getValue()));
+      		SearchArrDTO dto = new SearchArrDTO(name,price,hnum,grade,rating, imgUrls.get(0).getImageUploadFileName());
       		result.add(i, dto);
       		
 		}
