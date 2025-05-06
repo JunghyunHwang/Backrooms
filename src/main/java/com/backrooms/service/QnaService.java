@@ -16,8 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.backrooms.dao.QnaDAO;
+import com.backrooms.dto.EventDTO;
 import com.backrooms.dto.ImageFileNamesDTO;
 import com.backrooms.dto.ImageInsertDTO;
+import com.backrooms.dto.ImageKind;
 import com.backrooms.dto.MemberDTO;
 import com.backrooms.dto.QnaDTO;
 import com.backrooms.dto.QnaPageDTO;
@@ -30,6 +32,7 @@ import lombok.RequiredArgsConstructor;
 public class QnaService {
 
   private final QnaDAO dao;
+  private final ImageService imageService;
   
   @Value("${file.dir:}") 
   private String fileDir;  
@@ -114,7 +117,21 @@ public class QnaService {
   }
 
   public QnaDTO getQnaDetail(int postNum) {
-    return dao.selectOne(postNum);
+	  QnaDTO qnaDetail = dao.selectOne(postNum);
+	 
+	  List<ImageFileNamesDTO> imageFileNamesList = imageService.getUploadAndStoreFileNames(
+		        postNum,
+		        ImageKind.fromInt(5)  // QnA에 해당하는 ImageKind 값
+		    );
+	  if (!imageFileNamesList.isEmpty()) {
+		    ImageFileNamesDTO imageFileName = imageFileNamesList.get(0);
+		    qnaDetail.setImageFileName(imageFileName.getImageUploadFileName());
+		} else {
+		    qnaDetail.setImageFileName(null);
+		}
+	    
+	    
+	    return qnaDetail;
   }
 
   public QnaPageDTO getMyQna(int curPage, MemberDTO member) {
