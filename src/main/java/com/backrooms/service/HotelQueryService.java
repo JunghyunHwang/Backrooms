@@ -55,4 +55,8 @@ public class HotelQueryService {
 
         return result > 0;
     }
+
+    public int getHotelCount() {
+        return hotelQueryDao.getHotelCount();
+    }
 }

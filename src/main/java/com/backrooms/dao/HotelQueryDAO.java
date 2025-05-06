@@ -27,6 +27,10 @@ public class HotelQueryDAO {
         return template.selectOne("HotelMapper.selectHotelByRoomNum", roomNum);
     }
 
+    public int getHotelCount() {
+        return template.selectOne("HotelMapper.selectHotelCount");
+    }
+
     public int insertHotel(HotelInsert hotel) {
         return template.insert("HotelMapper.insertHotel", hotel);
     }

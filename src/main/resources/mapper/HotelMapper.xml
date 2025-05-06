@@ -9,7 +9,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from hotel where hotelnum = #{_parameter}
 	</select>
 	
-	
 	<select id="selectHotelByRoomNum" resultType="com.backrooms.dto.HotelDTO" parameterType="int">
 	    SELECT H.*
 	    FROM HOTEL H
@@ -22,6 +21,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    hotelNum
 		FROM hotel
 		WHERE hotelName = #{name}
+	</select>
+
+	<select id="selectHotelCount" resultType="int">
+		SELECT
+		    COUNT(*)
+		FROM hotel
 	</select>
 
 	<insert id="insertHotel" parameterType="HotelInsert">

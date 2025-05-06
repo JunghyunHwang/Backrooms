@@ -6,6 +6,7 @@ import com.backrooms.service.HotelQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -62,10 +63,11 @@ public class HotelDataFetcher {
         countryCoordinates.put("뉴욕", new double[]{40.7128, -74.0060});
     }
 
-    public boolean fetchHotelData(String cityName, int radiusByMeters) {
+    @Async
+    public void fetchHotelData(String cityName, int radiusByMeters) {
         if (!countryCoordinates.containsKey(cityName)) {
             assert(false) : "Wrong city name: " + cityName;
-            return false;
+            return;
         }
 
         double lat = countryCoordinates.get(cityName)[0];
@@ -107,10 +109,10 @@ public class HotelDataFetcher {
             hotels.add(new HotelInsert(name, rating, grade, address, cityName, latitude, longitude, breakfastPrice, images, rooms));
         }
 
-        return hotelQueryService.insertHotelsAndRooms(hotels);
+        hotelQueryService.insertHotelsAndRooms(hotels);
     }
 
-    public List<String> fetchHotelImages(String placeId) {
+    private List<String> fetchHotelImages(String placeId) {
         String url = String.format(
             "https://maps.googleapis.com/maps/api/place/details/json?place_id=%s&fields=photos&language=ko&key=%s",
             placeId, apiKeyProvider.getGoogleApiKey()
@@ -130,8 +132,8 @@ public class HotelDataFetcher {
                 for (int i = 0; i < Math.min(photos.size(), MAX_HOTEL_IMAGES_COUNT); ++i) {
                     String photoRef = (String) photos.get(i).get("photo_reference");
                     String photoUrl = String.format(
-                            "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=%s&key=%s",
-                            photoRef, apiKeyProvider.getGoogleApiKey()
+                        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=%s&key=%s",
+                        photoRef, apiKeyProvider.getGoogleApiKey()
                     );
                     imageUrls.add(photoUrl);
                 }
@@ -141,7 +143,7 @@ public class HotelDataFetcher {
         return imageUrls;
     }
 
-    public List<RoomInsert> createRooms() {
+    private List<RoomInsert> createRooms() {
         int numberOfRoomTypes = DEFAULT_ROOM_COUNT + random.nextInt(roomNames.size() - 2); // 3 ~ roomNames.size()
 
         // 방 종류 랜덤 3 ~ '방 종류 개수'개 선택
