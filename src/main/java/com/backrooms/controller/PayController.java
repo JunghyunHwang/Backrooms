@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -125,8 +126,11 @@ public class PayController {
     }
 
     @PostMapping("/paymentComplete")
-    public ModelAndView completePayment(@RequestParam Map<String, String> params, HttpSession session) {
+    public ModelAndView completePayment(@RequestBody Map<String, String> params, HttpSession session) {
         MemberDTO member = (MemberDTO) session.getAttribute("member");
+        if (params.get("reservationNum") == null) {
+            throw new IllegalArgumentException("reservationNum is required");
+        }
         int reservationNum = Integer.parseInt(params.get("reservationNum"));
         String payMethod = params.get("payMethod");
         int payment = Integer.parseInt(params.get("payment"));
