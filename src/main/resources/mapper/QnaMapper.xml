@@ -698,6 +698,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from qna
 		where qnaState in (0, 9)
 	</select>
+
+	<select id="getImage" resultType="string">
+		SELECT
+			imageUploadFileName
+		FROM image
+		WHERE imageKind = 5
+			AND imageUse = #{postNum}
+	</select>
     
   
 	
