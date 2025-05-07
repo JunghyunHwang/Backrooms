@@ -692,7 +692,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SET qnaReply = #{qnaReply}  <!-- 답변 수정 -->
        where qnaNum = #{qnaNum}
     </update>
-    
+
+	<select id="totalCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnaState in (0, 9)
+	</select>
     
   
 	
