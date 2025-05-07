@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </insert>
 	
 	
-	<select id="list" resultType="QnaDTO">
+	<select id="selectAllQNAs" resultType="QnaDTO">
 	SELECT
 		q.qnaNum,
 		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
@@ -643,7 +643,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	
 	<select id="detail" resultType="QnaDTO">
-	
+
 	SELECT
 		q.qnaNum,
 		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
