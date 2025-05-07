@@ -340,13 +340,15 @@
         })
       }
       function displayDetailData(data, category) {
-        displayFileAndAttach(data);
+    	  if (category !== "qna") {
+		        displayFileAndAttach(data);
+		    }
         let title = "";
         let memberName = "";
         let date = "";
         let text = "";
         let replayText = "";
-
+        let file = "";
         switch (category) {
           case "notice":
             title = data.noticeTitle;
@@ -367,6 +369,7 @@
             date = data.qnaDate;
             text = data.qnaText;
             replyText = data.qnaReply;
+            file = data.imageFileName;
             break;
           default:
             console.log(`${category} 은 지원되지 않는 카테고리입니다.`);
@@ -380,9 +383,17 @@
         $("#textarea").val(text);
 
         if (category == "qna") {
-          $("#replyText").text(replyText);
-          $("#editBtn").text(replyText == undefined ? "작성하기" : "수정하기");
-        }
+			$("#replyText").text(replyText);
+			$("#editBtn").text(replyText == undefined ? "작성하기" : "수정하기");
+			if(file){
+			const contextPath = "${pageContext.request.contextPath}";
+			const imageUrl = contextPath + "/assets/img/qna/"+file;
+			console.log(imageUrl);
+			const imageElement = '<img src="' + imageUrl + '" alt="게시글 이미지" class="mt-3" style="width: 500px; height: auto;">';
+
+		    $("#text").after(imageElement); // 텍스트 아래에 이미지를 추가
+			}
+		}
 
       }
 

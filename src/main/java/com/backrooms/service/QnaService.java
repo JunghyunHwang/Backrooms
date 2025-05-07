@@ -201,20 +201,21 @@ public class QnaService {
   }
 
   public QnaDTO getQnaDetail(int postNum) {
-    QnaDTO qnaDetail = dao.selectOne(postNum);
-
-    List<ImageFileNamesDTO> imageFileNamesList = imageService.getUploadAndStoreFileNames(
-      postNum,
-      ImageKind.fromInt(5) // QnA에 해당하는 ImageKind 값
-    );
-    if (!imageFileNamesList.isEmpty()) {
-      ImageFileNamesDTO imageFileName = imageFileNamesList.get(0);
-      qnaDetail.setImageFileName(imageFileName.getImageUploadFileName());
-    } else {
-      qnaDetail.setImageFileName(null);
-    }
-
-    return qnaDetail;
+	  QnaDTO qnaDetail = dao.selectOne(postNum);
+		 
+	  List<ImageFileNamesDTO> imageFileNamesList = imageService.getUploadAndStoreFileNames(
+		        postNum,
+		        ImageKind.fromInt(5)  // QnA에 해당하는 ImageKind 값
+		    );
+	  if (!imageFileNamesList.isEmpty()) {
+		    ImageFileNamesDTO imageFileName = imageFileNamesList.get(0);
+		    qnaDetail.setImageFileName(imageFileName.getImageUploadFileName());
+		} else {
+		    qnaDetail.setImageFileName(null);
+		}
+	    
+	    
+	    return qnaDetail;
   }
 
   public QnaPageDTO getMyQna(int curPage, MemberDTO member) {
