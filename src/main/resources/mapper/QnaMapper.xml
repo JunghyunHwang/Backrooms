@@ -15,26 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   )
 </insert>
 	
-	<insert id="imageAdd" parameterType="ImageInsertDTO">
-    INSERT INTO image (
-        imageNum,
-        imageKind,
-        imageUse,
-        ImageUploadFileName,
-        ImageStoreFileName,
-        imageCount,
-        createdAt
-    ) 
-    VALUES (
-        image_seq.nextval,
-        #{imageKind},
-        #{imageUse},
-        #{imageUploadFileName},
-        #{imageStoreFileName},
-        1, 
-        SYSDATE
-    )
-</insert>
+	
 	<select id="list" resultType="QnaDTO">
 	SELECT
 		q.qnaNum,
@@ -53,10 +34,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     q.qnaDate Desc,
     q.qnaNum Desc 
 	<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
-    
 	</select>
+
+	<select id="selectAllQnAsTotalCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnaState = 0
+	</select>
+
 	
-	<select id="selectPendingList" resultType="QnaDTO">
+	<select id="selectPendingQNAs" resultType="QnaDTO">
 	SELECT
 		q.qnaNum,
 		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
@@ -77,8 +64,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
     
 	</select>
-	
-	<select id="selectCompletion" resultType="QnaDTO">
+	<select id="selectPendingQNAsTotalCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnAState = 0
+			and qnAreply is null
+	</select>
+	<select id="selectCompletedQNAs" resultType="QnaDTO">
 	SELECT
 		q.qnaNum,
 		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
@@ -100,26 +92,555 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
 	</select>
 
-	<select id="totalCount" resultType="int">
+<!--	service -->
+	<select id="selectAllServices" resultType="QnaDTO">
+		SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+		from qna q
+		join member m
+		on q.memberNum = m.memberNum
+		where q.qnAState = 0
+		and q.qnaTitle = '서비스 문의'
+		Order by
+		q.qnaDate Desc,
+		q.qnaNum Desc
+		<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+	</select>
+
+	<select id="selectAllServicesTotalCount" resultType="int">
 		SELECT count(*)
 		from qna
-		where qnaState in (0, 9)
+		where qnaState = 0
+		and   qnaTitle = '서비스 문의'
 	</select>
-	
-	
-	<select id="totalPendingCount" resultType="int">
+
+
+	<select id="selectPendingService" resultType="QnaDTO">
+		SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+		from qna q
+		join member m
+		on q.memberNum = m.memberNum
+		where q.qnAState = 0
+		and q.qnaTitle = '서비스 문의'
+		and q.qnAreply is null
+		Order by
+		q.qnaDate Desc,
+		q.qnaNum Desc
+		<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+
+	</select>
+	<select id="selectPendingServicesTotalCount" resultType="int">
 		SELECT count(*)
 		from qna
 		where qnAState = 0
-	    and qnAreply is null
+		and   qnaTitle = '서비스 문의'
+		and qnAreply is null
 	</select>
-	
-		<select id="totalCompletionCount" resultType="int">
+	<select id="selectCompletedServices" resultType="QnaDTO">
+		SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+		from qna q
+		join member m
+		on q.memberNum = m.memberNum
+		WHERE q.qnAState = 0
+		and q.qnaTitle = '서비스 문의'
+		and q.qnAreply is not null
+		Order by
+		q.qnaDate Desc,
+		q.qnaNum Desc
+		<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+
+	</select>
+
+	<select id="selectCompletedServicesTotalCount" resultType="int">
 		SELECT count(*)
 		from qna
 		where qnAState = 0
-	    and qnAreply is not null
+		and qnaTitle = '서비스 문의'
+		and qnAreply is null
 	</select>
+
+<!--	room -->
+	<select id="selectAllRooms" resultType="QnaDTO">
+		SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+		from qna q
+		join member m
+		on q.memberNum = m.memberNum
+		where q.qnAState = 0
+		and q.qnaTitle = '객실 문의'
+		Order by
+		q.qnaDate Desc,
+		q.qnaNum Desc
+		<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+	</select>
+
+	<select id="selectAllRoomsTotalCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnaState = 0
+			and   qnaTitle = '객실 문의'
+	</select>
+
+
+	<select id="selectPendingRooms" resultType="QnaDTO">
+		SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+		from qna q
+		join member m
+		on q.memberNum = m.memberNum
+		where q.qnAState = 0
+		and q.qnaTitle = '객실 문의'
+		and q.qnAreply is null
+		Order by
+		q.qnaDate Desc,
+		q.qnaNum Desc
+		<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+
+	</select>
+	<select id="selectPendingRoomsTotalCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnAState = 0
+			and   qnaTitle = '객실 문의'
+			and qnAreply is null
+	</select>
+	<select id="selectCompletedRooms" resultType="QnaDTO">
+		SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+		from qna q
+		join member m
+		on q.memberNum = m.memberNum
+		WHERE q.qnAState = 0
+		and q.qnaTitle = '객실 문의'
+		and q.qnAreply is not null
+		Order by
+		q.qnaDate Desc,
+		q.qnaNum Desc
+		<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+
+	</select>
+
+	<select id="selectCompletedRoomsTotalCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnAState = 0
+			and   qnaTitle = '객실 문의'
+			and qnAreply is not null
+	</select>
+
+
+	<!--payment -->
+
+	<select id="selectAllPayment" resultType="QnaDTO">
+		SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+		from qna q
+		join member m
+		on q.memberNum = m.memberNum
+		where q.qnAState = 0
+		and q.qnaTitle = '객실 문의'
+		Order by
+		q.qnaDate Desc,
+		q.qnaNum Desc
+		<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+	</select>
+
+	<select id="selectAllPaymentTotalCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnaState = 0
+			and   qnaTitle = '객실 문의'
+	</select>
+
+
+	<select id="selectPendingPayment" resultType="QnaDTO">
+		SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+		from qna q
+		join member m
+		on q.memberNum = m.memberNum
+		where q.qnAState = 0
+		and q.qnaTitle = '객실 문의'
+		and q.qnAreply is null
+		Order by
+		q.qnaDate Desc,
+		q.qnaNum Desc
+		<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+
+	</select>
+	<select id="selectPendingPaymentTotalCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnAState = 0
+			and   qnaTitle = '객실 문의'
+			and qnAreply is null
+	</select>
+	<select id="selectCompletedPayment" resultType="QnaDTO">
+		SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+		from qna q
+		join member m
+		on q.memberNum = m.memberNum
+		WHERE q.qnAState = 0
+		and q.qnaTitle = '객실 문의'
+		and q.qnAreply is not null
+		Order by
+		q.qnaDate Desc,
+		q.qnaNum Desc
+		<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+
+	</select>
+
+	<select id="selectCompletedPaymentTotalCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnAState = 0
+			and   qnaTitle = '객실 문의'
+			and qnAreply is not null
+	</select>
+
+<!--	retund-->
+	<select id="selectAllRefund" resultType="QnaDTO">
+		SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+		from qna q
+		join member m
+		on q.memberNum = m.memberNum
+		where q.qnAState = 0
+		and q.qnaTitle = '취소 및 환불 문의'
+		Order by
+		q.qnaDate Desc,
+		q.qnaNum Desc
+		<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+	</select>
+
+	<select id="selectAllRefundTotalCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnaState = 0
+			and   qnaTitle = '취소 및 환불 문의'
+	</select>
+
+
+	<select id="selectPendingRefund" resultType="QnaDTO">
+		SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+		from qna q
+		join member m
+		on q.memberNum = m.memberNum
+		where q.qnAState = 0
+		and q.qnaTitle = '취소 및 환불 문의'
+		and q.qnAreply is null
+		Order by
+		q.qnaDate Desc,
+		q.qnaNum Desc
+		<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+
+	</select>
+	<select id="selectPendingRefundTotalCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnAState = 0
+			and   qnaTitle = '취소 및 환불 문의'
+			and qnAreply is null
+	</select>
+	<select id="selectCompletedRefund" resultType="QnaDTO">
+		SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+		from qna q
+		join member m
+		on q.memberNum = m.memberNum
+		WHERE q.qnAState = 0
+		and q.qnaTitle = '취소 및 환불 문의'
+		and q.qnAreply is not null
+		Order by
+		q.qnaDate Desc,
+		q.qnaNum Desc
+		<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+
+	</select>
+
+	<select id="selectCompletedRefundTotalCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnAState = 0
+			and   qnaTitle = '취소 및 환불 문의'
+			and qnAreply is not null
+	</select>
+
+
+
+	<!--	reservation-->
+
+	<select id="selectAllReservations" resultType="QnaDTO">
+		SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+		from qna q
+		join member m
+		on q.memberNum = m.memberNum
+		where q.qnAState = 0
+		and q.qnaTitle = '예약 문의'
+		Order by
+		q.qnaDate Desc,
+		q.qnaNum Desc
+		<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+	</select>
+
+	<select id="selectAllReservationsTotalCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnaState = 0
+			and   qnaTitle = '예약 문의'
+	</select>
+
+
+	<select id="selectPendingReservations" resultType="QnaDTO">
+		SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+		from qna q
+		join member m
+		on q.memberNum = m.memberNum
+		where q.qnAState = 0
+		and q.qnaTitle = '예약 문의'
+		and q.qnAreply is null
+		Order by
+		q.qnaDate Desc,
+		q.qnaNum Desc
+		<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+
+	</select>
+	<select id="selectPendingReservationsTotalCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnAState = 0
+			and   qnaTitle = '예약 문의'
+			and qnAreply is null
+	</select>
+	<select id="selectCompletedReservations" resultType="QnaDTO">
+		SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+		from qna q
+		join member m
+		on q.memberNum = m.memberNum
+		WHERE q.qnAState = 0
+		and q.qnaTitle = '예약 문의'
+		and q.qnAreply is not null
+		Order by
+		q.qnaDate Desc,
+		q.qnaNum Desc
+		<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+
+	</select>
+
+	<select id="selectCompletedReservationsTotalCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnAState = 0
+			and   qnaTitle = '예약 문의'
+			and qnAreply is not null
+	</select>
+
+
+
+<!--	etc -->
+	<select id="selectAllEtc" resultType="QnaDTO">
+		SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+		from qna q
+		join member m
+		on q.memberNum = m.memberNum
+		where q.qnAState = 0
+		and q.qnaTitle = '기타 문의'
+		Order by
+		q.qnaDate Desc,
+		q.qnaNum Desc
+		<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+	</select>
+
+	<select id="selectAllEtcTotalCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnaState = 0
+			and   qnaTitle = '기타 문의'
+	</select>
+
+
+	<select id="selectPendingEtc" resultType="QnaDTO">
+		SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+		from qna q
+		join member m
+		on q.memberNum = m.memberNum
+		where q.qnAState = 0
+		and q.qnaTitle = '기타 문의'
+		and q.qnAreply is null
+		Order by
+		q.qnaDate Desc,
+		q.qnaNum Desc
+		<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+
+	</select>
+	<select id="selectPendingEtcTotalCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnAState = 0
+			and   qnaTitle = '기타 문의'
+			and qnAreply is null
+	</select>
+	<select id="selectCompletedEtc" resultType="QnaDTO">
+		SELECT
+		q.qnaNum,
+		to_char(q.qnADate, 'YYYY-MM-DD') qnaDate,
+		q.qnaTitle,
+		q.qnAText,
+		q.qnAState,
+		q.qnAreply,
+		m.memberNum,
+		m.memberName
+		from qna q
+		join member m
+		on q.memberNum = m.memberNum
+		WHERE q.qnAState = 0
+		and q.qnaTitle = '기타 문의'
+		and q.qnAreply is not null
+		Order by
+		q.qnaDate Desc,
+		q.qnaNum Desc
+		<!--  정렬 순위를 1. 상태가 높은것(9 > 0), 2.(상태가 같을때)최근 날짜순으로 3.(날짜가 같을때는) 최근에 만들어진것 순(시퀀스값인 eventNum이 높은순)으로서 가져옵니다 -->
+
+	</select>
+
+	<select id="selectCompletedEtcTotalCount" resultType="int">
+		SELECT count(*)
+		from qna
+		where qnAState = 0
+			and   qnaTitle = '기타 문의'
+			and qnAreply is not null
+	</select>
+
+<!--	-->
+
 	
 	<select id="detail" resultType="QnaDTO">
 	
@@ -173,13 +694,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
     
     
-  <!-- QnA 게시물 번호(postNum)에 해당하는 이미지 목록 조회 -->
-<select id="getImage" resultType="string">
-    SELECT 
-        imageUploadFileName
-    FROM image
-    WHERE imageKind = 5
-      AND imageUse = #{postNum}
-</select>
+  
 	
 </mapper>

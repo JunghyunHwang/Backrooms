@@ -38,8 +38,12 @@ public class QnaConsoleController {
 
   @GetMapping("/list/{curPage}")
   @ResponseBody
-  public QnaPageDTO qnaList(@RequestParam String filter, @PathVariable int curPage) {
-    QnaPageDTO qnaPaination = qnaService.getQnaPagination(curPage, filter);
+  public QnaPageDTO qnaList(
+    @PathVariable int curPage,
+    @RequestParam String filter,
+    @RequestParam String qnaCategory
+  ) {
+    QnaPageDTO qnaPaination = qnaService.getQnaPagination(curPage, filter, qnaCategory);
     return qnaPaination;
   }
 

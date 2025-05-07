@@ -33,8 +33,8 @@ public class QnaDAO {
     return template.selectOne("QnaMapper.totalPendingCount");
   }
 
-  public int totalCompletionCount() {
-    return template.selectOne("QnaMapper.totalCompletionCount");
+  public int totalCompletedCount() {
+    return template.selectOne("QnaMapper.totalCompletedCount");
   }
 
   public List<QnaDTO> selectList(int offset, int perPage) {
@@ -51,9 +51,9 @@ public class QnaDAO {
     return qnaList;
   }
 
-  public List<QnaDTO> selectCompletionList(int offset, int perPage) {
+  public List<QnaDTO> selectCompletedList(int offset, int perPage) {
     List<QnaDTO> qnaList = template.selectList(
-      "QnaMapper.selectCompletion",
+      "QnaMapper.selectCompletedList",
       null,
       new RowBounds(offset, perPage)
     );
@@ -73,13 +73,191 @@ public class QnaDAO {
     return template.update("QnaMapper.delete", idsToDelete);
   }
 
-public void saveImage(ImageInsertDTO imageInsertDTO) {
-	// TODO Auto-generated method stub
-	template.insert("QnaMapper.imageAdd", imageInsertDTO);
-}
+  public void saveImage(ImageInsertDTO imageInsertDTO) {
+    // TODO Auto-generated method stub
+    template.insert("QnaMapper.imageAdd", imageInsertDTO);
+  }
 
-public String getImagesByPostNum(int postNum) {
-	// TODO Auto-generated method stub
-	return template.selectOne("QnaMapper.getImage", postNum);
-}
+  public String getImagesByPostNum(int postNum) {
+    // TODO Auto-generated method stub
+    return template.selectOne("QnaMapper.getImage", postNum);
+  }
+
+  //  All
+  public List<QnaDTO> getAllQNAs(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectAllQNAs", null, new RowBounds(offset, perPage));
+  }
+
+  public int getAllQnAsTotalCount() {
+    return template.selectOne("QnaMapper.selectAllQnAsTotalCount");
+  }
+
+  public List<QnaDTO> getPendingQNAs(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectPendingQNAs", null, new RowBounds(offset, perPage));
+  }
+
+  public int getPendingQNAsTotalCount() {
+    return template.selectOne("QnaMapper.selectPendingQNAsTotalCount");
+  }
+
+  public List<QnaDTO> getCompletedQNAs(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectCompletedQNAs", null, new RowBounds(offset, perPage));
+  }
+
+  public int getComplectedQNAsTotalCount() {
+    return template.selectOne("QnaMapper.selectPendingQNAsTotalCount");
+  }
+
+  // Service
+  public List<QnaDTO> getAllServices(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectAllServices", null, new RowBounds(offset, perPage));
+  }
+
+  public int getAllServicesTotalCount() {
+    return template.selectOne("QnaMapper.selectAllServicesTotalCount");
+  }
+
+  public List<QnaDTO> getPendingServices(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectPendingService", null, new RowBounds(offset, perPage));
+  }
+
+  public int getPendingServicesTotalCount() {
+    return template.selectOne("QnaMapper.selectPendingServicesTotalCount");
+  }
+
+  public List<QnaDTO> getCompletedServices(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectCompletedServices", null, new RowBounds(offset, perPage));
+  }
+
+  public int getCompletedServicesTotalCount() {
+    return template.selectOne("QnaMapper.selectCompletedServicesTotalCount");
+  }
+
+  //  romm
+
+  public List<QnaDTO> getAllRooms(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectAllRooms", null, new RowBounds(offset, perPage));
+  }
+
+  public int getAllRoomsTotalCount() {
+    return template.selectOne("QnaMapper.selectAllRoomsTotalCount");
+  }
+
+  public List<QnaDTO> getPendingRooms(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectPendingRooms", null, new RowBounds(offset, perPage));
+  }
+
+  public int getPendingRoomsTotalCount() {
+    return template.selectOne("QnaMapper.selectPendingRoomsTotalCount");
+  }
+
+  public List<QnaDTO> getCompletedRooms(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectCompletedRooms", null, new RowBounds(offset, perPage));
+  }
+
+  public int getCompletedRoomsTotalCount() {
+    return template.selectOne("QnaMapper.selectCompletedRoomsTotalCount");
+  }
+
+  // payment
+
+  public List<QnaDTO> getAllPayment(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectAllPayment", null, new RowBounds(offset, perPage));
+  }
+
+  public int getAllPaymentTotalCount() {
+    return template.selectOne("QnaMapper.selectAllPaymentTotalCount");
+  }
+
+  public List<QnaDTO> getPendingPayment(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectPendingPayment", null, new RowBounds(offset, perPage));
+  }
+
+  public int getPendingPaymentTotalCount() {
+    return template.selectOne("QnaMapper.selectPendingPaymentTotalCount");
+  }
+
+  public List<QnaDTO> getCompletedPayment(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectCompletedPayment", null, new RowBounds(offset, perPage));
+  }
+
+  public int getCompletedPaymentTotalCount() {
+    return template.selectOne("QnaMapper.selectCompletedPaymentTotalCount");
+  }
+
+  // refund
+  public List<QnaDTO> getAllRefund(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectAllRefund", null, new RowBounds(offset, perPage));
+  }
+
+  public int getAllRefundTotalCount() {
+    return template.selectOne("QnaMapper.selectAllRefundTotalCount");
+  }
+
+  public List<QnaDTO> getPendingRefund(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectPendingRefund", null, new RowBounds(offset, perPage));
+  }
+
+  public int getPendingRefundTotalCount() {
+    return template.selectOne("QnaMapper.selectPendingRefundTotalCount");
+  }
+
+  public List<QnaDTO> getCompletedRefund(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectCompletedRefund", null, new RowBounds(offset, perPage));
+  }
+
+  public int getCompletedRefundTotalCount() {
+    return template.selectOne("QnaMapper.selectCompletedRefundTotalCount");
+  }
+
+  //   rservation
+  public List<QnaDTO> getAllReservations(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectAllReservations", null, new RowBounds(offset, perPage));
+  }
+
+  public int getAllReservationsTotalCount() {
+    return template.selectOne("QnaMapper.selectAllReservationsTotalCount");
+  }
+
+  public List<QnaDTO> getPendingReservations(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectPendingReservations", null, new RowBounds(offset, perPage));
+  }
+
+  public int getPendingReservationsTotalCount() {
+    return template.selectOne("QnaMapper.selectPendingReservationsTotalCount");
+  }
+
+  public List<QnaDTO> getCompletedReservations(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectCompletedReservations", null, new RowBounds(offset, perPage));
+  }
+
+  public int getCompletedReservationsTotalCount() {
+    return template.selectOne("QnaMapper.selectCompletedReservationsTotalCount");
+  }
+
+  // etc
+
+  public List<QnaDTO> getAllEtc(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectAllEtc", null, new RowBounds(offset, perPage));
+  }
+
+  public int getAllEtcTotalCount() {
+    return template.selectOne("QnaMapper.selectAllEtcTotalCount");
+  }
+
+  public List<QnaDTO> getPendingEtc(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectPendingEtc", null, new RowBounds(offset, perPage));
+  }
+
+  public int getPendingEtcTotalCount() {
+    return template.selectOne("QnaMapper.selectPendingEtcTotalCount");
+  }
+
+  public List<QnaDTO> getCompletedEtc(int offset, int perPage) {
+    return template.selectList("QnaMapper.selectCompletedEtc", null, new RowBounds(offset, perPage));
+  }
+
+  public int getCompletedEtcTotalCount() {
+    return template.selectOne("QnaMapper.selectCompletedEtcTotalCount");
+  }
 }
