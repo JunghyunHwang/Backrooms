@@ -707,6 +707,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			AND imageUse = #{postNum}
 	</select>
     
-  
+ <insert id="imageAdd" parameterType="ImageInsertDTO">
+    INSERT INTO image (
+        imageNum,
+        imageKind,
+        imageUse,
+        imageUploadFileName,
+        imageStoreFileName,
+        imageCount,
+        createdAt
+    ) 
+    VALUES (
+        image_seq.nextval,
+        #{imageKind},
+        #{imageUse},
+        #{imageUploadFileName},
+        #{imageStoreFileName},
+        1,
+        SYSDATE
+    )
+</insert>
 	
 </mapper>
