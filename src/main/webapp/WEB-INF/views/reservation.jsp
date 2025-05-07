@@ -78,7 +78,7 @@
 
 		            // 새 창을 팝업으로 연다 (크기 제한, 툴바/크기 변경 불가)
 		            const popup = window.open('', 'paymentPopup',
-		                'width=600,height=800,scrollbars=no,resizable=no,toolbar=no,location=no,status=no');
+		                'width=1000,height=1200,scrollbars=no,resizable=no,toolbar=no,location=no,status=no');
 
 		            // 팝업 타겟으로 설정 후 제출
 		            form.target = 'paymentPopup';

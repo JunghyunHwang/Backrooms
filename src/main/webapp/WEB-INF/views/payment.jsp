@@ -88,7 +88,6 @@
     <p><strong>객실명:</strong> ${hrdto.roomName}</p>
     <p><strong>숙박일수:</strong> ${nights}박</p>
     <p><strong>결제 금액:</strong> ${payment} 원</p>
-	<p>예약 번호: ${reservationNum}</p>
     <form id="paymentForm" action="${pageContext.request.contextPath}/paymentComplete" method="post">
         <input type="hidden" name="reservationNum" value="${reservationNum}" />
         <input type="hidden" name="memberNum" value="${member.memberNum}" />

@@ -35,9 +35,7 @@
 
                         <!-- 체크아웃 날짜가 오늘 이전이면 리뷰 버튼 표시 -->
                         <c:if test="${res.reservationState == 1 && res.checkOut lt todayStr}">
-                            <button class="btn btn-outline-primary btn-sm"
-                                    onclick="window.open('writeReview.jsp?roomNum=${res.roomNum}&reservationNum=${res.reservationNum}',
-                                                 '리뷰 작성', 'width=600,height=600')">
+                            <button class="btn btn-outline-primary btn-sm" onclick="openReviewWrite()">
                                 리뷰 작성
                             </button>
                         </c:if>
@@ -82,8 +80,7 @@ $(document).on("click", ".write-review", function () {
 });
 
 
-function openReviewWrite(reservationNum, roomNum) {
-	  window.open('writeReview.jsp?reservationNum=' + reservationNum + '&roomNum=' + roomNum,
-	              '리뷰 작성', 'width=600,height=600');
-	}
+function openReviewWrite() {
+    window.open('/backrooms/WriteReview', '리뷰 작성', 'width=600,height=600');
+  }
 </script>
