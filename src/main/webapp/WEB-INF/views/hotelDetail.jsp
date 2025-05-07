@@ -122,12 +122,6 @@
                             </c:forEach>
                         </c:forEach>
 
-<%--                        <c:forEach var="room" items="${ hotel.rooms }">--%>
-<%--                            <c:forEach var="roomImg" items="${ room.imageUrls}">--%>
-<%--                                <img src="${ roomImg }" class="img-fluid" alt="객실">--%>
-<%--                            </c:forEach>--%>
-<%--                        </c:forEach>--%>
-
                         <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
@@ -284,7 +278,7 @@
                         <iframe
                                 height="300"
                                 id="gmap_canvas"
-                                src="https://www.google.com/maps/embed/v1/place?key=${ embedMapKey }">
+                                src="https://www.google.com/maps/embed/v1/place?key=${ embedMapKey }&q=${ hotel.latitude },${ hotel.longitude }">
                         </iframe>
                     </div>
                     <!-- END MAP -->
