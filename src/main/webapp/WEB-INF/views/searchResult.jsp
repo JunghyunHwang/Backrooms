@@ -13,13 +13,12 @@
     		$(function(){
     			$(".btn_idpw_search").click(function(){
     				$("#detallsForm").submit();
-    			})
-    			
-	  			$("#searchBth").click(function(){
-	  				$("#searchForm").submit()
-	  			})//end #searchBth click
+    			});
 
-    		})// function end
+				$("#searchBth").click(function(){
+					$("#searchForm").attr("action","SearchResult").submit()
+				});
+    		});
 
     	</script>
 	</head>
@@ -82,11 +81,91 @@
 	    <!-- Start Header -->
 	    <jsp:include page="common/header.jsp"></jsp:include>
 	    <!-- Start Left Bar -->
-	     <!-- Start Left Bar -->
 	    <section class="tour_details section-padding">
-			<!-- Start searchFilter -->
-			<jsp:include page="common/searchFilter.jsp"></jsp:include>
-			<!-- End searchFilter -->
+			<!-- Start Searh filter -->
+			<div class="container">
+				<div class="row">
+					<div class="col-xl-10 col-lg-12 col-md-10 col-10 mx-auto text-center">
+						<div class="tr_search_filter">
+							<form action="#" class="d-flex justify-content-center" method="post" id="searchForm">
+								<div class="tr_search_location">
+									<label for="trs_location">Location*</label>
+									<select id="trs_location" name="hotelCity">
+										<option <c:if test="${condition.hotelCity == '서울'}">selected</c:if>>서울</option>
+										<option <c:if test="${condition.hotelCity == '베이징'}">selected</c:if>>베이징</option>
+										<option <c:if test="${condition.hotelCity == '도쿄'}">selected</c:if>>도쿄</option>
+										<option <c:if test="${condition.hotelCity == '마닐라'}">selected</c:if>>마닐라</option>
+										<option <c:if test="${condition.hotelCity == '하노이'}">selected</c:if>>하노이</option>
+										<option <c:if test="${condition.hotelCity == '방콕'}">selected</c:if>>방콕</option>
+										<option <c:if test="${condition.hotelCity == '뉴델리'}">selected</c:if>>뉴델리</option>
+										<option <c:if test="${condition.hotelCity == '카이로'}">selected</c:if>>카이로</option>
+										<option <c:if test="${condition.hotelCity == '런던'}">selected</c:if>>런던</option>
+										<option <c:if test="${condition.hotelCity == '파리'}">selected</c:if>>파리</option>
+										<option <c:if test="${condition.hotelCity == '베를린'}">selected</c:if>>베를린</option>
+										<option <c:if test="${condition.hotelCity == '바르셀로나'}">selected</c:if>>바르셀로나</option>
+										<option <c:if test="${condition.hotelCity == '로마'}">selected</c:if>>로마</option>
+										<option <c:if test="${condition.hotelCity == '호놀룰루'}">selected</c:if>>호놀룰루</option>
+										<option <c:if test="${condition.hotelCity == '뉴욕'}">selected</c:if>>뉴욕</option>
+									</select>
+								</div>
+
+								<div class="check_in">
+									<label for="checkin_field">Check - In*</label>
+									<div class="trdate_picker date" id="tr_dpicker1">
+										<input
+												type="text"
+												class="form-control"
+												placeholder="Check In Date"
+												id="checkin_field"
+												name="checkIn"
+										/>
+										<span class="input-group-append">
+                							<i class="fa-solid fa-calendar-days"></i>
+              							</span>
+									</div>
+								</div>
+
+								<div class="check_out">
+									<label for="checkout_field">Check - Out*</label>
+									<div class="trdate_picker date" id="tr_dpicker2">
+										<input
+												type="text"
+												class="form-control"
+												placeholder="Check Out Date"
+												id="checkout_field"
+												name="checkOut"
+										/>
+										<span class="input-group-append">
+                							<i class="fa-solid fa-calendar-days"></i>
+              							</span>
+									</div>
+								</div>
+
+								<div class="adut_box">
+									<label>Adult*</label>
+									<select name="guestCount" id="adult">
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+										<option>6</option>
+										<option>7</option>
+										<option>8</option>
+										<option>9</option>
+										<option>10</option>
+									</select>
+								</div>
+
+								<button type="button" id="searchBth">
+									Search <i class="ph ph-magnifying-glass"></i>
+								</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Searh filter -->
 		      
 	      	<div class="container">
 			  <div class="row_search">

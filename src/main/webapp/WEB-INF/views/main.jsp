@@ -12,12 +12,9 @@
   	<script type="text/javascript">
   		$(function(){
   			$("#searchBth").click(function(){
-  				$("#searchForm").attr("action","SearchResult").submit()
-  			})//end #searchBth click
-  			
-  			
-  		})//end function
-  		
+  				$("#searchForm").attr("action","SearchResult").submit();
+  			});
+  		});
   	</script>
   </head>
 
