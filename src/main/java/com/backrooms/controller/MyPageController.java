@@ -35,7 +35,7 @@ public class MyPageController {
 
         MemberDTO member = (MemberDTO) session.getAttribute("member");
         if (member == null) {
-            return "redirect:/login";
+            return "redirect:/SignIn";
         }
 
         if ("reservation".equals(myPage)) {

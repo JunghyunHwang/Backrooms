@@ -18,8 +18,8 @@ public class MemberService {
 	 var dto = dao.SignIn(memberId);
 	 if(dto==null) return null;
 	 
-	 var pw = Utility.encrypt(passwd);
-	 if(pw.equals(dto.getPasswd()) == false) {
+	 
+	 if(passwd.equals(dto.getPasswd()) == false) {
 		 return null;
 	 }
 	 return dto;

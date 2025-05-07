@@ -29,7 +29,8 @@ public class MemberController {
 	@PostMapping(value= "/SignIn" )
 	public String signInPost(String memberId, String passwd, HttpSession session)
 	{
-		var dto = service.signIn(memberId, passwd);
+		var pw = Utility.encrypt(passwd);
+		var dto = service.signIn(memberId, pw);
 		if(dto==null)
 		{
 			return "redirect:SignIn";			
@@ -97,7 +98,11 @@ public class MemberController {
 	    
 	    map.put("memberId", memberId);
 	    service.modifyProfile(map);
+	    System.out.println(member.getPasswd());
 	    member = service.signIn(memberId, member.getPasswd());
+	    System.out.println(member.getPasswd());
+	    
+	    
 	    session.setAttribute("member", member);
 	    
 		return "redirect:MyPage";
