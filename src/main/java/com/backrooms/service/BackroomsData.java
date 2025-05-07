@@ -20,7 +20,7 @@ public class BackroomsData {
         System.out.println("Checking hotel data...");
         if (hotelQueryService.getHotelCount() == 0) {
             System.out.println("Insert hotel data...");
-            hotelDataFetcher.fetchHotelData("서울", 10000);
+            hotelDataFetcher.setHotelData();
         }
     }
 }

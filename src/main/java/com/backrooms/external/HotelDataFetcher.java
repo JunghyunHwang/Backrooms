@@ -24,6 +24,7 @@ public class HotelDataFetcher {
     public static final int DEFAULT_ROOM_COUNT = 3;
     private static final int MAX_HOTEL_IMAGES_COUNT = 3;
     private static final int MAX_ROOM_IMAGES_COUNT = 3;
+    private static final int DEFAULT_RADIUS_BY_METERS = 10000;
 
     private final HotelQueryService hotelQueryService;
     private final ApiKeyProvider apiKeyProvider;
@@ -64,7 +65,13 @@ public class HotelDataFetcher {
     }
 
     @Async
-    public void fetchHotelData(String cityName, int radiusByMeters) {
+    public void setHotelData() {
+        for (String key : countryCoordinates.keySet()) {
+            fetchHotelData(key);
+        }
+    }
+
+    private void fetchHotelData(String cityName) {
         if (!countryCoordinates.containsKey(cityName)) {
             assert(false) : "Wrong city name: " + cityName;
             return;
@@ -75,7 +82,7 @@ public class HotelDataFetcher {
 
         String url = String.format(
             "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=%d&type=lodging&language=ko&key=%s",
-            lat, lng, radiusByMeters, apiKeyProvider.getGoogleApiKey()
+            lat, lng, DEFAULT_RADIUS_BY_METERS, apiKeyProvider.getGoogleApiKey()
         );
 
         RestTemplate restTemplate = new RestTemplate();
@@ -102,7 +109,9 @@ public class HotelDataFetcher {
             int breakfastPrice = 20000 + random.nextInt(20001);
 
             List<String> images = fetchHotelImages((String)result.get("place_id"));
-            assert(!images.isEmpty()) : "Hotel images are empty";
+            if (images.isEmpty()) {
+                continue;
+            }
             
             List<RoomInsert> rooms = createRooms();
 

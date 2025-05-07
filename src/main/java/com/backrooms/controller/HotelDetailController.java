@@ -51,7 +51,7 @@ public class HotelDetailController {
 
     @RequestMapping(value = "/setHotelData", method = RequestMethod.GET)
     public String setHotelData() {
-        hotelDataFetcher.fetchHotelData("서울", 10000);
+        hotelDataFetcher.setHotelData();
 
         return "redirect:/";
     }
