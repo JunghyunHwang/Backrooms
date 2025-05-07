@@ -300,12 +300,14 @@
 				$("#textarea").val(text);
 				$("#replyText").text(replyText);
 				
+				if (file) {
 				const contextPath = "${pageContext.request.contextPath}";
 				const imageUrl = contextPath + "/assets/img/qna/"+file;
 				console.log(imageUrl);
 				const imageElement = '<img src="' + imageUrl + '" alt="게시글 이미지" class="mt-3" style="width: 500px; height: auto;">';
 
 			    $("#text").after(imageElement); // 텍스트 아래에 이미지를 추가
+				}
 			}
 			
 			function bindBackBtnClickEvent(curPage) {
