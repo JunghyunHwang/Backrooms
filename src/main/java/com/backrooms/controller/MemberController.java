@@ -89,14 +89,13 @@ public class MemberController {
 	}
 	@PostMapping("/ModifyProfile")
 	public String modifyProfilePost(
-			HashMap<String, String> map,
+			@RequestParam HashMap<String, String> map,
 			HttpSession session)
 	{
 		var member = (MemberDTO)session.getAttribute("member");
 		var memberId = member.getMemberId();
-		
+	    
 	    map.put("memberId", memberId);
-		
 	    service.modifyProfile(map);
 	    member = service.signIn(memberId, member.getPasswd());
 	    session.setAttribute("member", member);
